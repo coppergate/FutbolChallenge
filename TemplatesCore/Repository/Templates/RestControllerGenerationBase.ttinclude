@@ -1,0 +1,40 @@
+﻿
+
+namespace ControllerImplementation {
+
+
+using <#=Namespace #>.Keys;
+using <#=Namespace #>.DomainModel;
+using <#=Namespace #>.Repository;
+
+<#
+foreach(Table tbl in tables.All){
+#> 
+	public interface I<#=tbl.ClassName #>Controller  {
+
+		<#=tbl.ClassName #> FindByID(<#=tbl.ClassName #>ID key);
+
+	}
+
+	public class <#=tbl.ClassName #>Controller : I<#=tbl.ClassName #>Controller {
+		public <#=tbl.ClassName #>Controller(ISyncsConnectionFactory syncsConnectionFactory) {
+			SyncsConnectionFactory = syncsConnectionFactory;
+		}
+
+		private ISyncsConnectionFactory SyncsConnectionFactory { get; }
+		
+		public  <#=tbl.ClassName #> FindByID(<#=tbl.ClassName #>ID key) {
+			var repository = new <#=tbl.ClassName #>Repository(SyncsConnectionFactory); ;
+
+			var dbResults = repository.get( key.ID );
+
+			return dbResults?.ToDomainObject();
+		}
+
+	}
+
+
+<#}#>
+
+
+}

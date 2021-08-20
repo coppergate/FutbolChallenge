@@ -1,0 +1,43 @@
+﻿<viewmodels:BindableUserControlBase
+	xmlns:viewmodels="using:FutbolChallengeUI.ViewModels"
+    x:Class="FutbolChallengeUI.Controls.SeasonComboView"
+	x:Name="SeasonComboViewControl"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:model="using:FutbolChallenge.Data.Repository.Model"
+	xmlns:view="using:FutbolChallengeUI.Controls"
+	mc:Ignorable="d"
+    HorizontalAlignment="Left"
+	VerticalAlignment="Top"
+	DataContext="{x:Bind SeasonListViewModel, Mode=OneWay}"
+
+	>
+	<ContentControl HorizontalAlignment="Left"
+					HorizontalContentAlignment="Left"
+					Padding="5,5,5,5">
+		<StackPanel Orientation="Horizontal"
+					HorizontalAlignment="Stretch" VerticalAlignment="Top"
+					 BorderBrush="WhiteSmoke" BorderThickness="1"
+					Padding="5,2,5,5"
+					x:Name="ControlsStackPanel">
+
+			<ComboBox Header="Seasons" PlaceholderText="Select a Season" 
+					  Width="500" 
+					  ItemsSource="{x:Bind Seasons, Mode=OneWay}"
+					   >
+				<ComboBox.ItemTemplate>
+					<DataTemplate x:DataType="model:Season">
+						<view:SeasonPanelView Season="{x:Bind Mode=OneWay}"
+											  Mode="None" 
+											  EnableTextEditing="False" 
+											  ShowEdit="True"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+
+		</StackPanel>
+	</ContentControl>
+
+</viewmodels:BindableUserControlBase>

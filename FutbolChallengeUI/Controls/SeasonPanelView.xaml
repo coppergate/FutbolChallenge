@@ -1,0 +1,103 @@
+﻿<viewmodels:BindableUserControlBase
+	xmlns:viewmodels="using:FutbolChallengeUI.ViewModels"
+    x:Class="FutbolChallengeUI.Controls.SeasonPanelView"
+	x:Name="SeasonPanel"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:model="using:FutbolChallenge.Data.Repository.Model"
+	mc:Ignorable="d"
+    HorizontalAlignment="Left"
+	VerticalAlignment="Top"
+	DataContext="{x:Bind Season, Mode=OneWay}"
+
+	>
+	<ContentControl HorizontalAlignment="Left"
+					HorizontalContentAlignment="Left"
+					Padding="5,5,5,5">
+		<StackPanel Orientation="Horizontal"
+					HorizontalAlignment="Stretch" VerticalAlignment="Top"
+					 BorderBrush="WhiteSmoke" BorderThickness="1"
+					Padding="5,2,5,5"
+					x:Name="ControlsStackPanel">
+
+			<Button x:Name="EditSeasonButton" FontSize="12" 
+					Content="{x:Bind Id}" Tag="{x:Bind Id}" 
+					x:DefaultBindMode="OneWay"
+					Margin="0,0,5,0" 
+					Height="30" Width="40" 
+					HorizontalAlignment="Right" VerticalAlignment="Center" 
+					BorderBrush="Black" BorderThickness="1"
+					Click="EditSeasonButton_Click"
+					/>
+
+			<StackPanel Orientation="Vertical">
+
+				<StackPanel Orientation="Horizontal" Height="15">
+
+
+					<TextBox x:Name="SeasonNameLabel" Width="200"
+						 VerticalAlignment="Top" HorizontalAlignment="Left" 
+						 BorderBrush="Transparent" Padding="0"  Margin="0" 
+						 Text="Season Name" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						 AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						 IsHitTestVisible="False"
+						/>
+					<TextBox x:Name="SeasonStartDateLabel" Width="200"
+						 VerticalAlignment="Top" HorizontalAlignment="Left" 
+						 BorderBrush="Transparent" Padding="0"  Margin="0" 
+						 Text="Start Date" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						 IsHitTestVisible="False"/>
+
+					<TextBox x:Name="SeasonEndDateLabel" Width="200"
+						 VerticalAlignment="Top" HorizontalAlignment="Left" 
+						 BorderBrush="Transparent" Padding="0"  Margin="0" 
+						 Text="End Date" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						 AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						IsHitTestVisible="False"/>
+
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+
+					<TextBox x:Name="SeasonNameTextBox" Width="200" x:DefaultBindMode="TwoWay" Text="{x:Bind SeasonName}" />
+					<TextBox x:Name="SeasonStartDateTextBox" Width="200" x:DefaultBindMode="TwoWay" Text="{x:Bind StartDate}" />
+					<TextBox x:Name="SeasonEndDateTextBox" Width="200" x:DefaultBindMode="TwoWay" Text="{x:Bind EndDate}" />
+
+				</StackPanel>
+
+
+			</StackPanel>
+
+
+			<Button x:Name="SeasonActionButton" FontSize="15" 
+					x:DefaultBindMode="OneWay" 
+					Margin="5,0,5,0" 
+					Height="30" Width="30" 
+					HorizontalAlignment="Right" VerticalAlignment="Center" 
+					BorderBrush="Black" BorderThickness="1"
+					Click="SeasonActionButton_Click" 
+					Tag="{x:Bind Id}"
+					/>
+
+			<ContentDialog x:Name="EditInProgressDialog" 
+						Title = "Edit in progress"
+						Content = "Currently in edit mode.  Save current changes?"
+						PrimaryButtonText = "Yes"
+						CloseButtonText = "No" />
+
+
+		</StackPanel>
+	</ContentControl>
+
+</viewmodels:BindableUserControlBase>

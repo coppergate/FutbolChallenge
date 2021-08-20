@@ -1,0 +1,53 @@
+﻿<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	THIS IS A GENERATED FILE.  ANY EDITS MADE TO THIS FILE WILL BE LOST WHEN IT IS REGENERATED
+///////////////////////////////////////////////////////////////////////////////////////////////
+<# 
+	AssemblyResolver.Enable();
+	ICrossGeneratorNameHandler crossGenNameHandler = new CrossGeneratorNameHandler();
+	crossGenNameHandler.BaseNamespace = "TaxBuildSubmit.Engine.Infrastructure.BuildDataRepository";
+	crossGenNameHandler.DomainModelNameFormat = "{0}";
+
+	string[] ExcludeTablePrefixes = new string[]{"aspnet_","webpages_","bak_"}; 
+	
+	string dacPacResourceName = @"FedDatasetRepo";
+	SchemaReader reader = new DacPacSchemaReader(dacPacResourceName, crossGenNameHandler);
+
+	//reader.AddExcludedTable("[dbo].[__TBS_EFMigrationsHistory]");
+
+	reader.AddEnumMapping("[dbo].[TBS_Returns].[Status]", "ReturnStatus");
+	
+	reader.AddEnumMapping("[dbo].[TBS_FilingRules].[Type]", "FilingType");
+	reader.AddEnumMapping("[dbo].[TBS_FilingRules].[Jurisdiction]", "Jurisdiction");
+
+	reader.AddEnumMapping("[dbo].[TBS_FilingGroups].[Type]", "FilingType");
+	reader.AddEnumMapping("[dbo].[TBS_FilingGroups].[Jurisdiction]", "Jurisdiction");
+	reader.AddEnumMapping("[dbo].[TBS_FilingGroups].[Status]", "FilingGroupStatus");
+	
+	reader.AddEnumMapping("[dbo].[TBS_Filings].[Type]", "FilingType");
+	reader.AddEnumMapping("[dbo].[TBS_Filings].[Jurisdiction]", "Jurisdiction");
+	reader.AddEnumMapping("[dbo].[TBS_Filings].[Status]", "FilingStatus");
+	
+	reader.AddEnumMapping("[dbo].[TBS_Builds].[Status]", "BuildStatus");
+	
+	reader.AddEnumMapping("[dbo].[TBS_BuildFiles].[ContentType]", "ContentType");
+	reader.AddEnumMapping("[dbo].[TBS_BuildFiles].[FilePurpose]", "BuildFilePurpose");
+
+	reader.AddEnumMapping("[dbo].[TBS_LegacyEvents].[EventType]", "LegacyEventType");
+	
+	reader.AddEnumMapping("[dbo].[TBS_DownloadTokens].[ContentType]", "ContentType");
+	
+	reader.AddEnumMapping("[dbo].[TBS_Submissions].[Status]", "SubmissionStatus");
+	reader.AddEnumMapping("[dbo].[TBS_Submissions].[ReturnStatus]", "SubmissionItemStatus");
+	reader.AddEnumMapping("[dbo].[TBS_Submissions].[PaymentStatus]", "SubmissionItemStatus");
+
+	reader.AddTableStripString("TBS_");
+	reader.IncludeViews = true;
+	reader.GeneratedClassPrefix = "";
+	reader.GeneratedClassSuffix = "";
+	reader.SingularizeTableNames = true;
+	reader.SchemaName = "dbo";
+	
+	Tables tables = reader.GetTables();
+#>

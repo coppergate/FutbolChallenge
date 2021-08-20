@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplateCodeGenerator", "TemplateCodeGenerator.csproj", "{F24F9CAE-E729-4AFD-ABE2-0871A7D6FCF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F24F9CAE-E729-4AFD-ABE2-0871A7D6FCF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F24F9CAE-E729-4AFD-ABE2-0871A7D6FCF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F24F9CAE-E729-4AFD-ABE2-0871A7D6FCF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F24F9CAE-E729-4AFD-ABE2-0871A7D6FCF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {90447C23-B629-40ED-99D6-167238BC6C87}
+	EndGlobalSection
+EndGlobal

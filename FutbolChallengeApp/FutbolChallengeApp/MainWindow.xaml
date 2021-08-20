@@ -1,0 +1,14 @@
+﻿<Window
+    x:Class="FutbolChallengeApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FutbolChallengeApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+	<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+		<Button x:Name="ParticipantMaintenanceButton" Click="ParticipantMaintenanceButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Center">Participants</Button>
+		<Button x:Name="SeasonScheduleMaintenanceButton" Click="SeasonScheduleMaintenanceButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Center">Seasons</Button>
+	</StackPanel>
+</Window>

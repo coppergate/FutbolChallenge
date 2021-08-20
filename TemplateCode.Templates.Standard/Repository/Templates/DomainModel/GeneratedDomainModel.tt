@@ -1,0 +1,23 @@
+<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Windows.Forms" #>
+<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #> 
+<#@ output extension=".cs" #>
+<#@ include file="..\CrossGeneratorInstanceHandler.ttinclude" #> 
+<# 
+	// Settings
+	bool CreateExplicitConstructor = true;
+	string DomainModelObjectBaseTypeName = "DomainModelBase";
+
+
+#>
+using System;
+using TemplateCodeGenerator.SchemaRead;
+
+<#@ include file="DomainModelGenerationBase.ttinclude" #> 

@@ -1,0 +1,47 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Windows.Forms" #>
+<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #> 
+<#@ output extension=".cs" #>
+<#@ include file="CrossGeneratorInstanceHandler.ttinclude" #> 
+<#
+	// Settings
+	//	Data model values
+	bool IncludeRelationships = true;
+	string ModelBaseName = "WorkspaceModelBase";
+
+	//	Domain model values
+	string DomainModelObjectBaseTypeName = "DomainModelBase";
+	bool CreateExplicitConstructor = true;
+
+	//	Repository values
+	string ConnectionFactory = "IDbConnectionFactory";
+	string DataServiceProviderName = "ImplementedDataServiceProvider";
+
+
+#>
+using Attributes.Core;
+using Helpers.Core;
+using System;
+using System.ComponentModel.DataAnnotations;
+
+#pragma warning disable CS8618	//	 Non-nullable field '' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
+#pragma warning disable CS8629	//	Nullable value type may be null.
+#pragma warning disable CS8603	//	Possible null reference return.
+
+<#@ include file="DataModel\DataModelGenerationBase.ttinclude" #> 
+<#@ include file="DataModel\DataModelExtensionsGeneratorBase.ttinclude" #> 
+
+<#@ include file="DomainModel\DomainModelGenerationBase.ttinclude" #>
+
+<#@ include file="Repository\RepositoryGenerationBase.ttinclude" #>
+
+#pragma warning restore CS8603	//	Possible null reference return.
+#pragma warning restore CS8629	//	Nullable value type may be null.
+#pragma warning restore CS8618	//	Non-nullable field '' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.

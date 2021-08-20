@@ -1,0 +1,186 @@
+﻿<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+
+namespace <#=reader.NameHandler.RepositoryNamespace #> {
+
+	using <#=reader.NameHandler.DataModelNamespace #>;
+
+	using Helpers.Core.ConnectionFactory;
+	using Helpers.Core.DataServiceProvider;
+	using System.Collections.Generic;
+	using System.Linq;
+	using System.Text;
+	using System.Threading.Tasks;	
+
+<#
+foreach(Table tbl in tables.All){
+	tbl.BuildSql();
+#> 
+
+	//	<#=tbl.SchemaQualifiedName#> 
+	 public partial interface I<#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #> {	 
+		
+		Task<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>> Get(<#= string.Join(", ", tbl.Columns.Where(c => c.IsPK).Select(k => $"{k.PropertyType} {k.PropertyName}")) #> );
+		Task<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>> Get(string whereClause, object parameters);
+		Task<List<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>>> GetList(dynamic filter);
+		Task<List<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>>> GetList(string whereClause, object parameters); 
+
+<#
+if(!tbl.MakeReadOnly)
+{
+#>
+		Task<bool> Update(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value);
+
+		<# if (tbl.AutoIncrementPK) { #>Task<<#=tbl.AutoIncrementingPKType #>><#} else {#>Task<#}#> Insert(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value);
+		
+		<# if (tbl.AutoIncrementPK) { #>Task<<#=tbl.AutoIncrementingPKType #>><#} else {#>Task<#}#> Merge(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value);
+
+		<# if (tbl.AutoIncrementPK) { #>Task<<#=tbl.AutoIncrementingPKType #>><#} else {#>Task<#}#> MergeWithKeep(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value);
+
+		Task<bool> Delete(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value);
+
+		Task<int> ExecuteSql(string sql, object param);
+
+		Task<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>> FetchSingleWithSql(string sql, object parameters);
+<#}#>
+	}
+<#}#> 
+	public interface IDataRepositoryProvider {
+<#
+foreach(Table tbl in tables.All){
+#> 
+		I<#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #> <#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #> { get; } 
+<#}#>
+	}
+
+
+	public class DataRepositoryProvider : IDataRepositoryProvider {
+		public DataRepositoryProvider (
+<#
+int count = 0;
+int tablesCount = tables.All.Count();
+foreach(Table tbl in tables.All){
+#> 
+			I<#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #> <#= tbl.LowerCamelClassName #>Repo<# if (++count < tablesCount) {#>,<# }#>
+<#}#>
+
+		) {<#
+count = 0;
+foreach(Table tbl in tables.All){
+#> 
+			<#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #> = <#= tbl.LowerCamelClassName #>Repo;<#}#>
+		
+		}
+
+<#
+foreach(Table tbl in tables.All){
+#> 
+		public I<#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #> <#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #> { get; } 
+<#}#>
+
+
+	}
+
+<#
+foreach(Table tbl in tables.All){
+#>
+	//	<#=tbl.SchemaQualifiedName#> 
+	 public partial class <#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #> : <#=DataServiceProviderName #>, I<#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #> {
+
+		public <#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #>(<#=ConnectionFactory #> connectionFactory) : base(connectionFactory)  {
+		}
+
+		
+		async public Task<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>> Get(<#=string.Join(", ", tbl.Columns.Where(c => c.IsPK).Select(k => $"{k.PropertyType} {k.PropertyName}")) #>) {
+			<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value = await FetchValueWithSql<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>>(<#=tbl.QuotedSelectSqlWithPK#>, new { <#=tbl.PkParameter#> });
+			if(null != value) {
+				value.CurrentState = ObjectRecordState.EXISTING;
+			}
+			return value;
+		}
+
+		async public Task<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>> Get(string whereClause, object parameters) {
+			return (await GetList(whereClause, parameters)).SingleOrDefault();
+		}
+
+		async public Task<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>> FetchSingleWithSql(string sql, object parameters) {
+			
+			<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> retVal = await FetchValueWithSql<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>>(sql, parameters);
+			if (null != retVal) {
+				retVal.CurrentState = ObjectRecordState.EXISTING;
+			}
+			return retVal;
+		}
+
+		async public Task<List<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>>> GetList(dynamic filter) {
+			List<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>> localList = await FetchListEntity<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>>(filter);
+			if(null != localList)
+			{
+				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
+			}
+			return localList;
+		}
+
+		async public Task<List<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>>> GetList(string whereClause, object parameters) {
+			StringBuilder bldr = new StringBuilder(<#=$"{tbl.QuotedSelectSql}"#>);
+			if(!string.IsNullOrEmpty(whereClause)) {
+				if(!whereClause.Trim().StartsWith("where",System.StringComparison.OrdinalIgnoreCase)) {
+					bldr.Append(" WHERE ");
+				}
+				bldr.Append($" {whereClause} ");
+			}
+			List<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>> localList = await FetchListEntityWithSql<<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#>>(bldr.ToString(), parameters);
+			if(null != localList) {
+				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
+			}
+			return localList;
+		}
+
+
+<#
+if(!tbl.MakeReadOnly)
+{
+#>
+		async public Task<bool> Update(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value) {
+			int rowCount = await ExecuteSql(<#=tbl.QuotedUpdateSql#>, new { <#=tbl.ValueParameter#> });
+			return rowCount == 1;
+		}
+
+		async public <# if (tbl.AutoIncrementPK) { #>Task<<#=tbl.AutoIncrementingPKType #>><#} else {#>Task<#}#> Insert(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value) {
+<#if(tbl.AutoIncrementPK) {#>
+			<#=tbl.AutoIncrementingPKType#> keyValue = await ExecuteSql<<#=tbl.AutoIncrementingPKType#>>(<#=tbl.QuotedInsertSql#> , new {<#=tbl.ValueParameter#>});
+<#} else {#>
+			await ExecuteSql(<#=tbl.QuotedInsertSql#> , new {<#=tbl.ValueParameter#>});
+<#}#><#if(tbl.AutoIncrementPK) {#>
+			return keyValue;
+<#}#>
+		}
+
+		async public <# if (tbl.AutoIncrementPK) { #>Task<<#=tbl.AutoIncrementingPKType #>><#} else {#>Task<#}#> Merge(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value) {
+<#if(tbl.AutoIncrementPK) {#>
+			<#=tbl.AutoIncrementingPKType#> keyValue = await ExecuteSql<<#=tbl.AutoIncrementingPKType#>>(<#=tbl.QuotedMergeSql#> , new {<#=tbl.ValueParameter#>});
+<#} else {#>
+			await ExecuteSql(<#=tbl.QuotedMergeSql#> , new {<#=tbl.ValueParameter#>});
+<#}#><#if(tbl.AutoIncrementPK) {#>
+			return keyValue;
+<#}#>
+		}
+		
+		async public <# if (tbl.AutoIncrementPK) { #>Task<<#=tbl.AutoIncrementingPKType #>><#} else {#>Task<#}#> MergeWithKeep(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value) {
+		<#if(tbl.AutoIncrementPK) {#>
+		<#=tbl.AutoIncrementingPKType#> keyValue = await ExecuteSql<<#=tbl.AutoIncrementingPKType#>>(<#=tbl.QuotedMergeWithKeepSql#> , new {<#=tbl.ValueParameter#>});
+		<#} else {#>await ExecuteSql(<#=tbl.QuotedMergeWithKeepSql#> , new {<#=tbl.ValueParameter#>});
+		<#}#><#if(tbl.AutoIncrementPK){#>return keyValue;<#}
+		#>
+		}
+				 
+		async public Task<bool> Delete(<#=reader.NameHandler.ToDataModelName(tbl.ClassName)#> value) {
+			int count = await ExecuteSql(<#=tbl.QuotedDeleteSql#>, new { <#=tbl.DeleteParameter#> });
+			return count != 1;
+		}
+
+<#}#>
+	}
+<#}#>
+
+}

@@ -1,0 +1,13 @@
+﻿<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+		public  <#=crossGenNameHandler.ToDomainModelName(tbl.ClassName)#>(
+<#
+	int colCnt1 = 0; 
+	foreach(Column col in tbl.Columns) {#>
+					<#= col.ToPropertyType(true) #> <#=col.PropertyName.ToLower() #><# if(++colCnt1 != tbl.Columns.Count){ #>,
+<#}#><#}#>) {
+<#
+foreach(Column col1 in tbl.Columns) { #>
+			this.<#=col1.PropertyName #> = <#=col1.PropertyName.ToLower() #>;
+<#}#>
+		}

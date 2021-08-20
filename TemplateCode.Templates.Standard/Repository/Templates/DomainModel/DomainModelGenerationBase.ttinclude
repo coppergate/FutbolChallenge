@@ -1,0 +1,64 @@
+﻿<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+
+namespace <#=crossGenNameHandler.DomainModelNamespace #> {
+	using <#=crossGenNameHandler.DataModelNamespace #>;
+	using System.Text.Json.Serialization;
+	using System.Text.Json;
+
+<# if(!string.IsNullOrWhiteSpace(DomainModelObjectBaseTypeName)) { #>
+	public class <#=DomainModelObjectBaseTypeName #> { 
+		[JsonIgnore]
+		public ObjectRecordState CurrentState {get; set;}
+	}
+<#}#>
+
+<#  foreach(Table tbl in tables.All ) {  #>
+	public partial class <#=crossGenNameHandler.ToDomainModelName(tbl.ClassName)#> <# if(!string.IsNullOrWhiteSpace(DomainModelObjectBaseTypeName)) { #> : <#= DomainModelObjectBaseTypeName #><#}#> {
+
+		public  <#=crossGenNameHandler.ToDomainModelName(tbl.ClassName)#>() { }
+<# if(CreateExplicitConstructor) {#>
+<#@ include file="ConstructorCreation.ttinclude" #> 
+<#}#>
+<#	foreach(Column col1 in tbl.Columns) {
+#>
+<#=col1.ToCodePropertyWithBackingField(2, true) #><#}#>
+
+		public <#=crossGenNameHandler.ToDataModelName(tbl.ClassName)#> ToDataModel() {
+			return new <#=crossGenNameHandler.ToDataModelName(tbl.ClassName)#>(){
+<#
+foreach(Column col1 in tbl.Columns) { #>
+				<#=col1.PropertyName #> = <#=col1.ToCopyToDTO("this", true) #>, 
+<# } #>
+				CurrentState = CurrentState,
+			};
+		}
+
+		static public <#=crossGenNameHandler.ToDomainModelName(tbl.ClassName)#> FromDataModel(<#=crossGenNameHandler.ToDataModelName(tbl.ClassName)#> source) {
+			if(source == null) {
+				return new <#=crossGenNameHandler.ToDomainModelName(tbl.ClassName)#>();
+			}
+
+			return new <#=crossGenNameHandler.ToDomainModelName(tbl.ClassName)#>() {
+<#
+foreach(Column col1 in tbl.Columns) { #>
+				<#=col1.PropertyName #> = <#= col1.ToCopyToDomain("source", true) #>,
+<#}#>
+				CurrentState = source.CurrentState,
+			};
+		}
+
+		static public <#=crossGenNameHandler.ToDomainModelName(tbl.ClassName)#> FromJSON(string json) {
+			var retVal = JsonSerializer.Deserialize<<#= tbl.ClassName #>>(json);
+			retVal.CurrentState = ObjectRecordState.EXISTING;
+			return retVal;
+		}
+
+		public string ToJson() {
+			return JsonSerializer.Serialize(this);
+		}
+
+	}
+<#	} #>
+	
+}

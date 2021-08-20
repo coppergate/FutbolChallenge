@@ -1,0 +1,48 @@
+﻿<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+namespace <#=Namespace #>.Keys {
+<#
+List<string> listedTableKeys = new List<string>();
+foreach(Table tbl in tables.All ){
+	if(listedTableKeys.Contains($"{tbl.ClassName}ID")) continue;
+	listedTableKeys.Add($"{tbl.ClassName}ID");
+#>
+
+	public class <#= tbl.ClassName #>ID : Greenshades.Abstractions.Domain.Key, IEquatable<<#= tbl.ClassName #>ID> {
+		public <#= tbl.ClassName #>ID(int id) {
+			ID = id;
+		}
+		public int ID { get; }
+
+		public static implicit operator int(<#= tbl.ClassName #>ID id) => id?.ID ?? 0;
+
+		public bool Equals(<#= tbl.ClassName #>ID other) {
+			return this.ID == other.ID;
+		}
+
+	}
+<#
+foreach(var key in tbl.OuterKeys){
+	if(listedTableKeys.Contains(key.ReferencingTableColumnName)) continue;
+	listedTableKeys.Add(key.ReferencingTableColumnName);
+#>
+<# if(key.ReferencingTableColumnName != null){ #>
+	public class <#= key.ReferencingTableColumnName #> : Greenshades.Abstractions.Domain.Key, IEquatable<<#= key.ReferencingTableColumnName #>> {
+		public <#= key.ReferencingTableColumnName #>(int id) {
+			ID = id;
+		}
+		public int ID { get; }
+		public static implicit operator int(<#= key.ReferencingTableColumnName #> id) => id?.ID ?? 0;
+
+		public bool Equals(<#= key.ReferencingTableColumnName #> other) {
+			return this.ID == other.ID;
+		}
+
+
+	}
+<#}#>
+<#}#>
+<#}#>
+
+
+}

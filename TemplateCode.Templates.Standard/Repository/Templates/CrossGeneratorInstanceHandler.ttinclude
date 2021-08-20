@@ -1,0 +1,27 @@
+﻿<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+///////////////////////////////////////////////////////////////////////////////////////////////
+//	THIS IS A GENERATED FILE.  ANY EDITS MADE TO THIS FILE WILL BE LOST WHEN IT IS REGENERATED
+///////////////////////////////////////////////////////////////////////////////////////////////
+<# 
+	AssemblyResolver.Enable();
+	ICrossGeneratorNameHandler crossGenNameHandler = new CrossGeneratorNameHandler();
+	crossGenNameHandler.BaseNamespace = "FutbolChallenge.Data.Repository";
+	crossGenNameHandler.DomainModelNameFormat = "{0}";
+
+	string[] ExcludeTablePrefixes = new string[]{"aspnet_","webpages_","bak_"}; 
+	
+	SchemaReader reader = new InformationSchemaReader("Server=.;Database=FutbolChallenge;User Id=sa;Password=Grsh@des1;", "System.Data.SqlClient", crossGenNameHandler);
+
+	//reader.AddEnumMapping("[dbo].[TableName].[FieldName]", "EnumName");
+
+	reader.AddExcludedTable("sysdiagrams");
+
+	reader.IncludeViews = true;
+	reader.GeneratedClassPrefix = "";
+	reader.GeneratedClassSuffix = "";
+	reader.SingularizeTableNames = true;
+	reader.SchemaName = "dbo";
+	
+	Tables tables = reader.GetTables();
+#>

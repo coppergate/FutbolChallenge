@@ -1,0 +1,63 @@
+﻿<viewmodels:BindableUserControlBase
+	xmlns:viewmodels="using:FutbolChallengeUI.ViewModels"
+    x:Class="FutbolChallengeUI.Controls.ParticipantListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FutbolChallengeUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:collections="using:System.Collections" xmlns:model="using:FutbolChallenge.Data.Repository.Model"
+	mc:Ignorable="d"
+	DataContext="{x:Bind ParticipantListViewModel, Mode=OneWay}"
+	 x:Name="ParticipantListViewControl"
+	VerticalAlignment="Top"
+	>
+
+
+	<Grid CanBeScrollAnchor="True"	>
+
+			<GridView x:Name="ParticipantViewGrid" TabIndex="1"
+				Margin="10,0,20,0" 
+				VerticalAlignment="Top" 
+				HorizontalAlignment="Stretch"
+				SelectionMode="None" 
+				Height="550"
+				Padding="10,0,0,0"
+				BorderBrush="White" BorderThickness="2"
+				ItemsSource="{x:Bind Participants, Mode=OneWay}"
+				CanBeScrollAnchor="True"
+				ShowsScrollingPlaceholders="True"
+				ScrollViewer.VerticalScrollBarVisibility="Auto" 
+				
+		  >
+				<GridView.HeaderTemplate>
+					<DataTemplate>
+						<GridViewHeaderItem HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+						<TextBox Text="Participants" />
+					</GridViewHeaderItem>
+					</DataTemplate>
+				</GridView.HeaderTemplate>
+				
+				<GridView.ItemTemplate>
+
+					<DataTemplate x:DataType="model:Participant" >
+
+						<local:ParticipantPanelView  
+							x:Name="participantPanel"
+						Mode="Delete" ShowEdit="True" EnableTextEditing="False" 
+						BorderBrush="WhiteSmoke" BorderThickness="1" 
+						HorizontalAlignment="Stretch"  
+						VerticalAlignment="Stretch"
+						Participant="{x:Bind Mode=OneWay}" />
+
+					</DataTemplate>
+				</GridView.ItemTemplate>
+
+				<GridView.ItemsPanel>
+
+					<ItemsPanelTemplate>
+						<ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Left"  MaximumRowsOrColumns="2" />
+					</ItemsPanelTemplate>
+				</GridView.ItemsPanel>
+			</GridView>
+	</Grid>
+</viewmodels:BindableUserControlBase>
