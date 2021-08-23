@@ -1,4 +1,4 @@
-﻿using FutbolChallenge.Data.Repository;
+﻿using FutbolChallenge.Data;
 using Helpers.Core;
 using Ninject.Modules;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace DataControllers
 		{
 			return new List<INinjectModule>()
 				{
-					new FutbolChallengeDataRepositoryModule(),
+					new DataRepositoryModule(),
 					new DataControllersModule(),
 				};
 		}

@@ -1,0 +1,37 @@
+﻿<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+
+namespace <#=reader.NameHandler.DataBaseNamespace #> 
+{
+
+		
+	public class DataRepositoryModule : NinjectModule
+	{
+
+		public override void Load() 
+		{
+
+			Rebind<IDbConnectionFactory>().To<ImplementedServiceFabricDbConnectionFactory>();
+
+<#
+foreach(Table tbl in tables.All){
+#> 			Bind<I<#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #>>().To<<#=reader.NameHandler.ToRepositoryName(tbl.ClassName) #>>();
+<#}#>
+
+			Bind<IDataRepositoryProvider>().To<DataRepositoryProvider>();
+
+		}
+	}
+
+	public class DataRepositoryBootstrapper : INinjectBootstrapper
+	{
+		public IList<INinjectModule> GetModules()
+		{
+			return new List<INinjectModule>()
+				{
+					new HelpersCoreModule(),
+					new DataRepositoryModule(),
+				};
+		}
+	}
+}

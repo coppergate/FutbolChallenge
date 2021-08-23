@@ -1,4 +1,4 @@
-﻿using FutbolChallenge.Data.Repository.Model;
+﻿using FutbolChallenge.Data.Model;
 using FutbolChallengeUI;
 using FutbolChallengeUI.Controls;
 using FutbolChallengeUI.ViewModels;
@@ -60,7 +60,7 @@ namespace FutbolChallengeApp
 			}
 			else
 			{
-				Participant local = new Participant() {
+				Participant local = new () {
 					EmailAddress = participantAddView.EmailAddress,
 					LastName = participantAddView.LastName,
 					FirstName = participantAddView.FirstName,

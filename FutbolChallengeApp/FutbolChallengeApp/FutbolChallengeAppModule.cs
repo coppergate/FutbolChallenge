@@ -1,4 +1,4 @@
-﻿using FutbolChallenge.Data.Repository;
+﻿using FutbolChallenge.Data;
 using FutbolChallengeUI;
 using Helpers.Core;
 using Helpers.Core.ConnectionFactory;
@@ -24,7 +24,7 @@ namespace FutbolChallengeApp
 			return new List<INinjectModule>()
 				{
 					new HelpersCoreModule(),
-					new FutbolChallengeDataRepositoryModule(),
+					new DataRepositoryModule(),
 					new FutbolChallengeAppModule(),
 				};
 		}

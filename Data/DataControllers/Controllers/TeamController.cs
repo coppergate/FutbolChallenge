@@ -1,5 +1,5 @@
-﻿using FutbolChallenge.Data.Repository.Dto;
-using FutbolChallenge.Data.Repository.Repository;
+﻿using FutbolChallenge.Data.Dto;
+using FutbolChallenge.Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;

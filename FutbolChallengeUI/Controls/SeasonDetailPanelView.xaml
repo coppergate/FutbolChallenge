@@ -1,0 +1,163 @@
+﻿<viewmodels:BindableUserControlBase
+	xmlns:viewmodels="using:FutbolChallengeUI.ViewModels"
+    x:Class="FutbolChallengeUI.Controls.SeasonDetailPanelView"
+	x:Name="SeasonDetailPanel"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:model="using:FutbolChallenge.Data.Repository.Model"
+	mc:Ignorable="d"
+    HorizontalAlignment="Left"
+	VerticalAlignment="Top"
+	DataContext="{x:Bind SeasonDetailViewModel}"
+	>
+	<ContentControl HorizontalAlignment="Left"
+					HorizontalContentAlignment="Left"
+					Padding="5,5,5,5">
+		<StackPanel Orientation="Vertical"
+					HorizontalAlignment="Stretch" VerticalAlignment="Top"
+					 BorderBrush="WhiteSmoke" BorderThickness="1"
+					Padding="5,2,5,5"
+					x:Name="ControlsStackPanel">
+
+			<StackPanel Orientation="Vertical">
+
+				<StackPanel Orientation="Horizontal" Height="25">
+
+					<TextBox x:Name="SeasonIdLabel" Width="10"
+						 VerticalAlignment="Top" HorizontalAlignment="Left" 
+						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+						 Text="Season Id" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						 AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						 IsHitTestVisible="False"
+						/>
+					<TextBox x:Name="SeasonNameLabel" Width="200"
+						 VerticalAlignment="Top" HorizontalAlignment="Left" 
+						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+						 Text="Season Name" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						 IsHitTestVisible="False"/>
+					<TextBox x:Name="SeasonStartDateLabel" Width="200"
+						 VerticalAlignment="Top" HorizontalAlignment="Left" 
+						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+						 Text="Start Date" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						 AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						IsHitTestVisible="False"/>
+					<TextBox x:Name="SeasonEndDateLabel" Width="200"
+						 VerticalAlignment="Top" HorizontalAlignment="Left" 
+						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+						 Text="End Date" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						 AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						IsHitTestVisible="False"/>
+					<TextBox x:Name="SeasonNextMatchDateLabel" Width="200"
+						 VerticalAlignment="Top" HorizontalAlignment="Left" 
+						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+						 Text="Next Match Date" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						 AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						IsHitTestVisible="False"/>
+
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+
+					<TextBox x:Name="SeasonId" Width="10" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.Id}"  Margin="5"
+							 AllowFocusOnInteraction="False"
+							AllowFocusWhenDisabled="False"
+							IsHitTestVisible="False"/>
+					<TextBox x:Name="SeasonName" Width="200" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.Name}"  Margin="5"
+							 AllowFocusOnInteraction="False"
+							AllowFocusWhenDisabled="False"
+							 IsHitTestVisible="False"/>
+					<TextBox x:Name="SeasonStartDate" Width="200" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.StartDate}"  Margin="5"
+							 AllowFocusOnInteraction="False"
+							AllowFocusWhenDisabled="False"
+							 IsHitTestVisible="False"/>
+					<TextBox x:Name="SeasonEndDate" Width="200" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.EndDate}"  Margin="5"
+							 AllowFocusOnInteraction="False"
+							AllowFocusWhenDisabled="False"
+							IsHitTestVisible="False"/>
+					<TextBox x:Name="SeasonNextMatchDate" Width="200" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.NextMatchDate}"  Margin="5"
+							 AllowFocusOnInteraction="False"
+							AllowFocusWhenDisabled="False"
+							IsHitTestVisible="False"/>
+
+				</StackPanel>
+
+
+			</StackPanel>
+
+			<StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+
+				<StackPanel Orientation="Vertical"  Padding="0" Margin="0">
+					
+					<TextBox x:Name="SeasonGameLabel" Width="120" Height="10"
+						 BorderBrush="Transparent" Padding="0,0,0,0"  Margin="0,0,0,0" 
+						 Text="Total Games In Season" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						 AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						 IsHitTestVisible="False"
+						/>
+
+					<TextBox x:Name="SeasonTotalGames" Width="120" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.SeasonGameCount}"  Margin="0,0,0,0"
+							 AllowFocusOnInteraction="False"
+							AllowFocusWhenDisabled="False"
+							IsHitTestVisible="False"/>
+				</StackPanel>
+
+				<StackPanel Orientation="Vertical">
+					<TextBox x:Name="SeasonGamesRemainingLabel" Width="120" Height="10"
+						 BorderBrush="Transparent" Padding="0,0,0,0"  Margin="0,0,0,0" 
+						 Text="Games Played To Date" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						 IsHitTestVisible="False"/>
+
+					<TextBox x:Name="SeasonGamesPlayed" Width="120" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.SeasonGamesPlayedCount}"  Margin="0,0,0,0"
+							 AllowFocusOnInteraction="False"
+							AllowFocusWhenDisabled="False"
+							 IsHitTestVisible="False"/>
+				</StackPanel>
+				
+				<StackPanel Orientation="Vertical">
+					<TextBox x:Name="ParticipantCountLabel" Width="120" Height="10"
+						 BorderBrush="Transparent" Padding="0,0,0,0"  Margin="0,0,0,0" 
+						 Text="Number of Participants" 
+						 FontSize="10" Foreground="Yellow" 
+						 IsReadOnly="True"
+						 AllowFocusOnInteraction="False"
+						AllowFocusWhenDisabled="False"
+						IsHitTestVisible="False"/>
+					<TextBox x:Name="SeasonParticipants" Width="120" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.ParticipantCount}"  Margin="0,0,0,0"
+							 AllowFocusOnInteraction="False"
+							AllowFocusWhenDisabled="False"
+							 IsHitTestVisible="False"/>
+
+
+				</StackPanel>
+
+
+			</StackPanel>
+
+		</StackPanel>
+	</ContentControl>
+
+</viewmodels:BindableUserControlBase>

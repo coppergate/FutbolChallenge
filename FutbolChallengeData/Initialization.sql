@@ -14,6 +14,11 @@ DELETE Season;
 
 INSERT Season VALUES ('First Test Season', '2021-08-01', '2022-06-12');
 
+INSERT Season VALUES ('Second Test Season', '2021-12-01', '2022-10-12');
+INSERT Season VALUES ('Third Test Season', '2022-03-01', '2022-09-12');
+INSERT Season VALUES ('Cup Test Season', '2022-06-01', '2022-08-12');
+
+
 DECLARE @cnt int = 0;
 DECLARE @date datetime = '2021-08-01'
 

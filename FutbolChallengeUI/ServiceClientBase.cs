@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -120,7 +121,9 @@ namespace FutbolChallengeUI
 			Uri target = GetTarget(targetRelativeUri);
 			try
 			{
-				StreamContent streamContent = new StreamContent(stream);
+				using MemoryStream memStrm = new MemoryStream();
+				await stream.CopyToAsync(memStrm);
+				ByteArrayContent streamContent = new ByteArrayContent(memStrm.ToArray());
 				var response = await this.PostAsync(target, streamContent);
 				response.EnsureSuccessStatusCode();
 

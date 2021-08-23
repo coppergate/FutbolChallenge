@@ -1,4 +1,4 @@
-﻿using FutbolChallenge.Data.Repository.Model;
+﻿using FutbolChallenge.Data.Model;
 using System.Collections.ObjectModel;
 
 namespace FutbolChallengeUI.ViewModels
@@ -18,10 +18,14 @@ namespace FutbolChallengeUI.ViewModels
 			set
 			{
 				this._Seasons = value;
-		//		this.OnPropertyChanged();
+				this.OnPropertyChanged();
 			}
 		}
 
+		public int SelectedSeasonIndex {  get; set; }
+
+		public Season SelectedSeason =>
+			Seasons?[SelectedSeasonIndex];
 	}
 
 }

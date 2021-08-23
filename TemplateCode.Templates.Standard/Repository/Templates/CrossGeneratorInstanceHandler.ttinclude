@@ -6,7 +6,7 @@
 <# 
 	AssemblyResolver.Enable();
 	ICrossGeneratorNameHandler crossGenNameHandler = new CrossGeneratorNameHandler();
-	crossGenNameHandler.BaseNamespace = "FutbolChallenge.Data.Repository";
+	crossGenNameHandler.BaseNamespace = "FutbolChallenge.Data";
 	crossGenNameHandler.DomainModelNameFormat = "{0}";
 
 	string[] ExcludeTablePrefixes = new string[]{"aspnet_","webpages_","bak_"}; 

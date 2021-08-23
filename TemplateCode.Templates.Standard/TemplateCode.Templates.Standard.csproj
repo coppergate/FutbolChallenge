@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repository\Templates\GeneratedBackend - Copy.cs" />
     <Compile Remove="Repository\Templates\GeneratedBackend.cs" />
+    <Compile Remove="Repository\Templates\GeneratedNInjectModule.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +18,7 @@
     <None Remove="Repository\Templates\DomainModel\GeneratedDomainModel.tt" />
     <None Remove="Repository\Templates\GeneratedBackend.cs~RFa9248e6.TMP" />
     <None Remove="Repository\Templates\GeneratedBackend.tt" />
+    <None Remove="Repository\Templates\GeneratedNInjectModule.tt" />
     <None Remove="Repository\Templates\Repository\TaxBuildSubmitGeneratedRepository.tt" />
   </ItemGroup>
 
@@ -26,6 +29,10 @@
     </Content>
     <Content Include="Repository\Templates\DomainModel\GeneratedDomainModel.tt">
       <LastGenOutput>GeneratedDomainModel.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+    <Content Include="Repository\Templates\GeneratedNInjectModule.tt">
+      <LastGenOutput>GeneratedNInjectModule.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </Content>
     <Content Include="Repository\Templates\GeneratedBackend.tt">
@@ -47,6 +54,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>GeneratedBackend.tt</DependentUpon>
+    </None>
+    <None Include="Repository\Templates\GeneratedNInjectModule.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GeneratedNInjectModule.tt</DependentUpon>
     </None>
   </ItemGroup>
 

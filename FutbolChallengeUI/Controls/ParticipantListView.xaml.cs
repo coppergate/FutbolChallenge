@@ -1,4 +1,4 @@
-﻿using FutbolChallenge.Data.Repository.Model;
+﻿using FutbolChallenge.Data.Model;
 using FutbolChallengeUI.ViewModels;
 using System.Collections.Generic;
 

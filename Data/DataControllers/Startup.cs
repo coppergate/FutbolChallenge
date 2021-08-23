@@ -1,4 +1,4 @@
-using FutbolChallenge.Data.Repository.Repository;
+using FutbolChallenge.Data.Repository;
 using Helpers.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

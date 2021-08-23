@@ -75,6 +75,8 @@
     <Build Include="dbo\Tables\MatchGroup.sql" />
     <Build Include="Security\futbolchallenge.sql" />
     <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="dbo\Views\SeasonMatchGroupDetail.sql" />
+    <Build Include="dbo\Views\SeasonDetails.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalDbToProject.scmp" />

@@ -12,6 +12,7 @@
     <None Remove="Controls\ParticipantListView.xaml" />
     <None Remove="Controls\ParticpantPanelView.xaml" />
     <None Remove="Controls\SeasonComboView.xaml" />
+    <None Remove="Controls\SeasonDetailPanelView.xaml" />
     <None Remove="Controls\SeasonPanelView.xaml" />
     <None Remove="FutbolChallengeUIModule.cs~RFd8b3d96.TMP" />
   </ItemGroup>
@@ -21,6 +22,7 @@
       <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.0.0-experimental1" />
       <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.0.0-experimental1" />
       <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.0.0-experimental1" />
+      <PackageReference Include="PInvoke.User32" Version="0.7.104" />
       <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
@@ -30,6 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Controls\SeasonDetailPanelView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\SeasonComboView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

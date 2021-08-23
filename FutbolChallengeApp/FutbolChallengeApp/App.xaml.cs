@@ -1,6 +1,8 @@
-﻿using Helpers.Core;
+﻿using FutbolChallengeUI;
+using Helpers.Core;
 using Microsoft.UI.Xaml;
 using Ninject;
+using System;
 using System.Configuration;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -34,8 +36,18 @@ namespace FutbolChallengeApp
 		protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
 		{
 			m_window = _StandardKernel.Get<MainWindow>();
+			IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
+			m_window.Title = "Futbol Challenge (.NET 5 Desktop WinUI 3)";
+
+			// The Window object doesn't have Width and Height properties in WInUI 3.
+			// You can use the Win32 API SetWindowPos to set the Width and Height.
+			UIHelpers.SetWindowSize(hwnd, 800, 600);
+
 			m_window.Activate();
 		}
+
+
+
 
 		private Window m_window;
 	}

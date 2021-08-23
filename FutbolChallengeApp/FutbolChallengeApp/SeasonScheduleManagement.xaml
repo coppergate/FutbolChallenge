@@ -6,18 +6,44 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:view="using:FutbolChallengeUI.Controls"
 	mc:Ignorable="d"
-	
->
+	>
+
+
 	<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
 				Margin="5,5,5,5"
-				MaxWidth="1600" >
-		
-		<view:SeasonComboView SeasonListViewModel="{x:Bind SeasonListViewModel}" />
+				MaxWidth="1600"
+				BorderBrush="red"
+				BorderThickness="3">
 
-		<StackPanel Margin="10,20,10,20" Padding="5,5,5,5" >
-			<Button Content="Upload Schedule" VerticalAlignment="Top" HorizontalAlignment="Center"  Margin="0,0,20,30"  Click="UploadScheduleButton_Click"/>
+		<view:SeasonComboView  x:Name="SelectSeasonComboBox" SeasonListViewModel="{x:Bind SeasonListViewModel, Mode=OneWay}" />
+
+		<view:SeasonDetailPanelView x:Name="SeasonDetailPanel" SeasonDetailViewModel="{x:Bind SeasonDetailViewModel, Mode=OneWay}" />
+
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" FlowDirection="RightToLeft" BorderBrush="green" BorderThickness="3">
+			<Button	VerticalAlignment="Center" HorizontalAlignment="Left" Content="Close" Margin="10" Click="CloseButton_Click"/>
+			<Button	VerticalAlignment="Center" HorizontalAlignment="Right" Content="Schedule Upload" Margin="10" Click="ScheduleUploadButton_Click"/>
 		</StackPanel>
-		
-		<Button	VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Close" Margin="0,0,20,30"  Click="CloseButton_Click"/>
+
+		<StackPanel Margin="30,20,2,2" Padding="5"  
+					Orientation="Vertical" HorizontalAlignment="Stretch"
+					BorderBrush="Blue" BorderThickness="2"
+					Visibility="Collapsed"
+					x:Name="UploadFilePickPanel">
+
+			<TextBox IsReadOnly="True" AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False"
+					 Text="Choose Schedule File To Upload"
+					 HorizontalAlignment="Left"
+					 HorizontalContentAlignment="Left"
+					 Margin="0,0,0,5"
+					 Padding="0"
+					 BorderBrush="Black"
+					 />
+			<StackPanel Orientation="Horizontal">
+				<TextBox x:Name="FileToUploadPathTextBox" Width="500" Height="35"/>
+				<Button x:Name="PickFileButton" Width="30" Margin="5,0,0,0"  Content="..." Click="PickFileButton_Click" />
+			</StackPanel>
+
+			<Button Content="Upload Schedule" VerticalAlignment="Bottom" HorizontalAlignment="Left"  Margin="0,10,20,30"  Click="UploadScheduleButton_Click"/>
+		</StackPanel>
 	</StackPanel>
 </Window>

@@ -1,0 +1,37 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="System.Windows.Forms" #>
+<#@ assembly name="$(TemplateGeneratorLibFolder)TemplateCodeGenerator.dll" #>
+<#@ import namespace="TemplateCodeGenerator.SchemaRead" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.SqlClient" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #> 
+<#@ output extension=".cs" #>
+<#@ include file="CrossGeneratorInstanceHandler.ttinclude" #> 
+<#
+	// Settings
+	//	Data model values
+	bool IncludeRelationships = true;
+	string ModelBaseName = "WorkspaceModelBase";
+
+	//	Domain model values
+	string DomainModelObjectBaseTypeName = "DomainModelBase";
+	bool CreateExplicitConstructor = true;
+
+	//	Repository values
+	string ConnectionFactory = "IDbConnectionFactory";
+	string DataServiceProviderName = "ImplementedDataServiceProvider";
+
+
+#>
+using FutbolChallenge.Data.Repository;
+using Helpers.Core;
+using Helpers.Core.ConnectionFactory;
+using Ninject.Modules;
+using System.Collections.Generic;
+
+
+
+<#@ include file="Repository\RepositoryNInjectModuleGenerationBase.ttinclude" #>

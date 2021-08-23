@@ -1,9 +1,9 @@
-﻿using FutbolChallenge.Data.Repository.Repository;
+﻿using FutbolChallenge.Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FutbolChallenge.Data.Repository.Dto;
+using FutbolChallenge.Data.Dto;
 
 namespace DataControllers.Controllers
 {
@@ -36,14 +36,22 @@ namespace DataControllers.Controllers
 		}
 
 		[HttpPost("upload-schedule/{seasonId}")]
-		public async Task<IEnumerable<SeasonScheduleDto>> UploadSchedule()
+		public async Task<IEnumerable<SeasonScheduleDto>> UploadSchedule(int seasonId)
 		{
 			using System.IO.MemoryStream memoryStrm = new System.IO.MemoryStream();
-			Request.Body.CopyTo(memoryStrm);
+			await Request.Body.CopyToAsync(memoryStrm);
 			string bodyString = System.Text.Encoding.UTF8.GetString(memoryStrm.GetBuffer());
-			var ret = await _repositoryProvider.SeasonScheduleRepository.GetList("", null);
+			var ret = await _repositoryProvider.SeasonScheduleRepository.GetList($"id = {seasonId}", null);
 			return ret;
 		}
+
+		[HttpGet("season-details/{seasonId}")]
+		public async Task<SeasonDetailDto> GetSeasonDetails(int seasonId)
+		{
+			var ret = await _repositoryProvider.SeasonDetailRepository.Get($"id = {seasonId}",null);
+			return ret;
+		}
+
 
 
 	}

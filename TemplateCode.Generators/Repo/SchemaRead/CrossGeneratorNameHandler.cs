@@ -11,6 +11,7 @@
 		string DomainModelNamespace { get; }
 		string RepositoryNamespace { get; }
 		string ControllerNamespace { get; }
+		string DataBaseNamespace { get; }
 
 		string DataModelNamespaceSuffix { set; }
 		string DomainModelNamespaceSuffix { set; }
@@ -42,6 +43,9 @@
 		public string DomainModelNamespace => $"{BaseNamespace}.{DomainModelNamespaceSuffix}";
 		public string RepositoryNamespace => $"{BaseNamespace}.{RepositoryNamespaceSuffix}";
 		public string ControllerNamespace => $"{BaseNamespace}.{ControllerNameFormat}";
+
+		public string DataBaseNamespace => $"{BaseNamespace}";
+
 
 		public string ToControllerName(string name) {
 			return string.Format(ControllerNameFormat, name);

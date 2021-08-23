@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;
 
 
 
-namespace FutbolChallenge.Data.Repository.Dto {
+namespace FutbolChallenge.Data.Dto {
 
 
 	public enum ObjectRecordState {
@@ -268,38 +268,6 @@ namespace FutbolChallenge.Data.Repository.Dto {
 
 
 	/// <summary>
-	/// A class which represents the MatchGroup table.
-	/// </summary>
-	[Dapper.Table("MatchGroup", Schema="dbo")]
-	sealed public partial class MatchGroupDto  : WorkspaceModelBase {
-
-		[DataColumn(DataType="datetime2", UnderlyingColumn="EndDate", AllowNulls=false )]
-		public DateTime? EndDate { get; set; }
-		public static string EndDateColumnName { get; } = "EndDate";
-
-		[DataColumn(DataType="int", UnderlyingColumn="Id", AllowNulls=false, NumericPrecision=10, AutoIncrement=true )]
-
-		[Dapper.Key]
-
-		public int Id { get; set; }
-		public static string IdColumnName { get; } = "Id";
-
-		[DataColumn(DataType="int", UnderlyingColumn="MatchGroupSequence", AllowNulls=false, NumericPrecision=10 )]
-		public int? MatchGroupSequence { get; set; }
-		public static string MatchGroupSequenceColumnName { get; } = "MatchGroupSequence";
-
-		[DataColumn(DataType="int", UnderlyingColumn="SeasonId", AllowNulls=false, NumericPrecision=10 )]
-		public int? SeasonId { get; set; }
-		public static string SeasonIdColumnName { get; } = "SeasonId";
-
-		[DataColumn(DataType="datetime2", UnderlyingColumn="StartDate", AllowNulls=false )]
-		public DateTime? StartDate { get; set; }
-		public static string StartDateColumnName { get; } = "StartDate";
-
-	}
-
-
-	/// <summary>
 	/// A class which represents the ScheduledGame table.
 	/// </summary>
 	[Dapper.Table("ScheduledGame", Schema="dbo")]
@@ -338,9 +306,119 @@ namespace FutbolChallenge.Data.Repository.Dto {
 
 	}
 
+
+	/// <summary>
+	/// A class which represents the MatchGroup table.
+	/// </summary>
+	[Dapper.Table("MatchGroup", Schema="dbo")]
+	sealed public partial class MatchGroupDto  : WorkspaceModelBase {
+
+		[DataColumn(DataType="datetime2", UnderlyingColumn="EndDate", AllowNulls=false )]
+		public DateTime? EndDate { get; set; }
+		public static string EndDateColumnName { get; } = "EndDate";
+
+		[DataColumn(DataType="int", UnderlyingColumn="Id", AllowNulls=false, NumericPrecision=10, AutoIncrement=true )]
+
+		[Dapper.Key]
+
+		public int Id { get; set; }
+		public static string IdColumnName { get; } = "Id";
+
+		[DataColumn(DataType="int", UnderlyingColumn="MatchGroupSequence", AllowNulls=false, NumericPrecision=10 )]
+		public int? MatchGroupSequence { get; set; }
+		public static string MatchGroupSequenceColumnName { get; } = "MatchGroupSequence";
+
+		[DataColumn(DataType="varchar(50)", UnderlyingColumn="MatchGroupTitle", AllowNulls=true, MaxLength=50 )]
+		public string MatchGroupTitle { get; set; }
+		public static string MatchGroupTitleColumnName { get; } = "MatchGroupTitle";
+
+		[DataColumn(DataType="int", UnderlyingColumn="SeasonId", AllowNulls=false, NumericPrecision=10 )]
+		public int? SeasonId { get; set; }
+		public static string SeasonIdColumnName { get; } = "SeasonId";
+
+		[DataColumn(DataType="datetime2", UnderlyingColumn="StartDate", AllowNulls=false )]
+		public DateTime? StartDate { get; set; }
+		public static string StartDateColumnName { get; } = "StartDate";
+
+	}
+
+
+	/// <summary>
+	/// A class which represents the SeasonMatchGroupDetail view.
+	/// </summary>
+	[Dapper.Table("SeasonMatchGroupDetail", Schema="dbo")]
+	sealed public partial class SeasonMatchGroupDetailDto  : WorkspaceModelBase {
+
+		[DataColumn(DataType="datetime2", UnderlyingColumn="GroupEndDate", AllowNulls=false )]
+		public DateTime? GroupEndDate { get; set; }
+		public static string GroupEndDateColumnName { get; } = "GroupEndDate";
+
+		[DataColumn(DataType="datetime2", UnderlyingColumn="GroupStartDate", AllowNulls=false )]
+		public DateTime? GroupStartDate { get; set; }
+		public static string GroupStartDateColumnName { get; } = "GroupStartDate";
+
+		[DataColumn(DataType="int", UnderlyingColumn="MatchGroupGameCount", AllowNulls=true, NumericPrecision=10 )]
+		public int? MatchGroupGameCount { get; set; }
+		public static string MatchGroupGameCountColumnName { get; } = "MatchGroupGameCount";
+
+		[DataColumn(DataType="int", UnderlyingColumn="MatchGroupSequence", AllowNulls=false, NumericPrecision=10 )]
+		public int? MatchGroupSequence { get; set; }
+		public static string MatchGroupSequenceColumnName { get; } = "MatchGroupSequence";
+
+		[DataColumn(DataType="varchar(50)", UnderlyingColumn="MatchGroupTitle", AllowNulls=true, MaxLength=50 )]
+		public string MatchGroupTitle { get; set; }
+		public static string MatchGroupTitleColumnName { get; } = "MatchGroupTitle";
+
+		[DataColumn(DataType="int", UnderlyingColumn="SeasonId", AllowNulls=false, NumericPrecision=10 )]
+		public int? SeasonId { get; set; }
+		public static string SeasonIdColumnName { get; } = "SeasonId";
+
+	}
+
+
+	/// <summary>
+	/// A class which represents the SeasonDetails view.
+	/// </summary>
+	[Dapper.Table("SeasonDetails", Schema="dbo")]
+	sealed public partial class SeasonDetailDto  : WorkspaceModelBase {
+
+		[DataColumn(DataType="datetime2", UnderlyingColumn="EndDate", AllowNulls=false )]
+		public DateTime? EndDate { get; set; }
+		public static string EndDateColumnName { get; } = "EndDate";
+
+		[DataColumn(DataType="int", UnderlyingColumn="Id", AllowNulls=false, NumericPrecision=10 )]
+		public int? Id { get; set; }
+		public static string IdColumnName { get; } = "Id";
+
+		[DataColumn(DataType="varchar(100)", UnderlyingColumn="Name", AllowNulls=false, MaxLength=100 )]
+		public string Name { get; set; }
+		public static string NameColumnName { get; } = "Name";
+
+		[DataColumn(DataType="datetime2", UnderlyingColumn="NextMatchDate", AllowNulls=true )]
+		public DateTime? NextMatchDate { get; set; }
+		public static string NextMatchDateColumnName { get; } = "NextMatchDate";
+
+		[DataColumn(DataType="int", UnderlyingColumn="ParticipantCount", AllowNulls=false, NumericPrecision=10 )]
+		public int? ParticipantCount { get; set; }
+		public static string ParticipantCountColumnName { get; } = "ParticipantCount";
+
+		[DataColumn(DataType="int", UnderlyingColumn="SeasonGameCount", AllowNulls=false, NumericPrecision=10 )]
+		public int? SeasonGameCount { get; set; }
+		public static string SeasonGameCountColumnName { get; } = "SeasonGameCount";
+
+		[DataColumn(DataType="int", UnderlyingColumn="SeasonGamesPlayedCount", AllowNulls=false, NumericPrecision=10 )]
+		public int? SeasonGamesPlayedCount { get; set; }
+		public static string SeasonGamesPlayedCountColumnName { get; } = "SeasonGamesPlayedCount";
+
+		[DataColumn(DataType="datetime2", UnderlyingColumn="StartDate", AllowNulls=false )]
+		public DateTime? StartDate { get; set; }
+		public static string StartDateColumnName { get; } = "StartDate";
+
+	}
+
 } 
 
-namespace FutbolChallenge.Data.Repository.Dto {
+namespace FutbolChallenge.Data.Dto {
 #pragma warning disable S1125 // Boolean literals should not be redundant
 #pragma warning disable S2589 // Boolean literals should not be redundant
 #nullable enable
@@ -462,22 +540,6 @@ namespace FutbolChallenge.Data.Repository.Dto {
 		
 	}
 	/// <summary>
-	/// A class which Extends the MatchGroup table.
-	/// </summary>
-	public partial class MatchGroupDto : IEquatable<MatchGroupDto> {
-
-		public bool Equals(MatchGroupDto? other) {
-				return other != null &&
-					DataCompare.CheckEqual(this.EndDate, other.EndDate) &&
-					DataCompare.CheckEqual(this.Id, other.Id) &&
-					DataCompare.CheckEqual(this.MatchGroupSequence, other.MatchGroupSequence) &&
-					DataCompare.CheckEqual(this.SeasonId, other.SeasonId) &&
-					DataCompare.CheckEqual(this.StartDate, other.StartDate) &&
-					true;
-		}
-		
-	}
-	/// <summary>
 	/// A class which Extends the ScheduledGame table.
 	/// </summary>
 	public partial class ScheduledGameDto : IEquatable<ScheduledGameDto> {
@@ -495,14 +557,67 @@ namespace FutbolChallenge.Data.Repository.Dto {
 		}
 		
 	}
+	/// <summary>
+	/// A class which Extends the MatchGroup table.
+	/// </summary>
+	public partial class MatchGroupDto : IEquatable<MatchGroupDto> {
+
+		public bool Equals(MatchGroupDto? other) {
+				return other != null &&
+					DataCompare.CheckEqual(this.EndDate, other.EndDate) &&
+					DataCompare.CheckEqual(this.Id, other.Id) &&
+					DataCompare.CheckEqual(this.MatchGroupSequence, other.MatchGroupSequence) &&
+					DataCompare.CheckEqual(this.MatchGroupTitle, other.MatchGroupTitle) &&
+					DataCompare.CheckEqual(this.SeasonId, other.SeasonId) &&
+					DataCompare.CheckEqual(this.StartDate, other.StartDate) &&
+					true;
+		}
+		
+	}
+	/// <summary>
+	/// A class which Extends the SeasonMatchGroupDetail view.
+	/// </summary>
+	public partial class SeasonMatchGroupDetailDto : IEquatable<SeasonMatchGroupDetailDto> {
+
+		public bool Equals(SeasonMatchGroupDetailDto? other) {
+				return other != null &&
+					DataCompare.CheckEqual(this.GroupEndDate, other.GroupEndDate) &&
+					DataCompare.CheckEqual(this.GroupStartDate, other.GroupStartDate) &&
+					DataCompare.CheckEqual<int>(this.MatchGroupGameCount, other.MatchGroupGameCount) &&
+					DataCompare.CheckEqual(this.MatchGroupSequence, other.MatchGroupSequence) &&
+					DataCompare.CheckEqual(this.MatchGroupTitle, other.MatchGroupTitle) &&
+					DataCompare.CheckEqual(this.SeasonId, other.SeasonId) &&
+					true;
+		}
+		
+	}
+	/// <summary>
+	/// A class which Extends the SeasonDetails view.
+	/// </summary>
+	public partial class SeasonDetailDto : IEquatable<SeasonDetailDto> {
+
+		public bool Equals(SeasonDetailDto? other) {
+				return other != null &&
+					DataCompare.CheckEqual(this.EndDate, other.EndDate) &&
+					DataCompare.CheckEqual(this.Id, other.Id) &&
+					DataCompare.CheckEqual(this.Name, other.Name) &&
+					DataCompare.CheckEqual<DateTime>(this.NextMatchDate, other.NextMatchDate) &&
+					DataCompare.CheckEqual(this.ParticipantCount, other.ParticipantCount) &&
+					DataCompare.CheckEqual(this.SeasonGameCount, other.SeasonGameCount) &&
+					DataCompare.CheckEqual(this.SeasonGamesPlayedCount, other.SeasonGamesPlayedCount) &&
+					DataCompare.CheckEqual(this.StartDate, other.StartDate) &&
+					true;
+		}
+		
+	}
 #nullable restore
 #pragma warning restore S1125 // Boolean literals should not be redundant
 #pragma warning restore S2589 // Boolean literals should not be redundant
 } 
 
 
-namespace FutbolChallenge.Data.Repository.Model {
-	using FutbolChallenge.Data.Repository.Dto;
+namespace FutbolChallenge.Data.Model {
+	using FutbolChallenge.Data.Dto;
 	using System.Text.Json.Serialization;
 	using System.Text.Json;
 
@@ -1002,70 +1117,6 @@ namespace FutbolChallenge.Data.Repository.Model {
 		}
 
 	}
-	public partial class MatchGroup  : DomainModelBase {
-
-		public  MatchGroup() { }
-		public  MatchGroup(
-					DateTime  enddate,
-					int  id,
-					int  matchgroupsequence,
-					int  seasonid,
-					DateTime  startdate) {
-			this.EndDate = enddate;
-			this.Id = id;
-			this.MatchGroupSequence = matchgroupsequence;
-			this.SeasonId = seasonid;
-			this.StartDate = startdate;
-		}
- 
-		private DateTime  EndDateField;
-		public DateTime  EndDate { get { return EndDateField; } set { EndDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
-		private int  IdField;
-		public int  Id { get { return IdField; } set { IdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
-		private int  MatchGroupSequenceField;
-		public int  MatchGroupSequence { get { return MatchGroupSequenceField; } set { MatchGroupSequenceField = value; CurrentState = ObjectRecordState.MODIFIED;} }
-		private int  SeasonIdField;
-		public int  SeasonId { get { return SeasonIdField; } set { SeasonIdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
-		private DateTime  StartDateField;
-		public DateTime  StartDate { get { return StartDateField; } set { StartDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
-
-		public MatchGroupDto ToDataModel() {
-			return new MatchGroupDto(){
-				EndDate = this.EndDate, 
-				Id = this.Id, 
-				MatchGroupSequence = this.MatchGroupSequence, 
-				SeasonId = this.SeasonId, 
-				StartDate = this.StartDate, 
-				CurrentState = CurrentState,
-			};
-		}
-
-		static public MatchGroup FromDataModel(MatchGroupDto source) {
-			if(source == null) {
-				return new MatchGroup();
-			}
-
-			return new MatchGroup() {
-				EndDate = source.EndDate.Value,
-				Id = source.Id,
-				MatchGroupSequence = source.MatchGroupSequence.Value,
-				SeasonId = source.SeasonId.Value,
-				StartDate = source.StartDate.Value,
-				CurrentState = source.CurrentState,
-			};
-		}
-
-		static public MatchGroup FromJSON(string json) {
-			var retVal = JsonSerializer.Deserialize<MatchGroup>(json);
-			retVal.CurrentState = ObjectRecordState.EXISTING;
-			return retVal;
-		}
-
-		public string ToJson() {
-			return JsonSerializer.Serialize(this);
-		}
-
-	}
 	public partial class ScheduledGame  : DomainModelBase {
 
 		public  ScheduledGame() { }
@@ -1142,13 +1193,238 @@ namespace FutbolChallenge.Data.Repository.Model {
 		}
 
 	}
+	public partial class MatchGroup  : DomainModelBase {
+
+		public  MatchGroup() { }
+		public  MatchGroup(
+					DateTime  enddate,
+					int  id,
+					int  matchgroupsequence,
+					string  matchgrouptitle,
+					int  seasonid,
+					DateTime  startdate) {
+			this.EndDate = enddate;
+			this.Id = id;
+			this.MatchGroupSequence = matchgroupsequence;
+			this.MatchGroupTitle = matchgrouptitle;
+			this.SeasonId = seasonid;
+			this.StartDate = startdate;
+		}
+ 
+		private DateTime  EndDateField;
+		public DateTime  EndDate { get { return EndDateField; } set { EndDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  IdField;
+		public int  Id { get { return IdField; } set { IdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  MatchGroupSequenceField;
+		public int  MatchGroupSequence { get { return MatchGroupSequenceField; } set { MatchGroupSequenceField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private string  MatchGroupTitleField;
+		[StringLength(50)]
+		public string  MatchGroupTitle { get { return MatchGroupTitleField; } set { MatchGroupTitleField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  SeasonIdField;
+		public int  SeasonId { get { return SeasonIdField; } set { SeasonIdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private DateTime  StartDateField;
+		public DateTime  StartDate { get { return StartDateField; } set { StartDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+
+		public MatchGroupDto ToDataModel() {
+			return new MatchGroupDto(){
+				EndDate = this.EndDate, 
+				Id = this.Id, 
+				MatchGroupSequence = this.MatchGroupSequence, 
+				MatchGroupTitle = this.MatchGroupTitle, 
+				SeasonId = this.SeasonId, 
+				StartDate = this.StartDate, 
+				CurrentState = CurrentState,
+			};
+		}
+
+		static public MatchGroup FromDataModel(MatchGroupDto source) {
+			if(source == null) {
+				return new MatchGroup();
+			}
+
+			return new MatchGroup() {
+				EndDate = source.EndDate.Value,
+				Id = source.Id,
+				MatchGroupSequence = source.MatchGroupSequence.Value,
+				MatchGroupTitle = source.MatchGroupTitle,
+				SeasonId = source.SeasonId.Value,
+				StartDate = source.StartDate.Value,
+				CurrentState = source.CurrentState,
+			};
+		}
+
+		static public MatchGroup FromJSON(string json) {
+			var retVal = JsonSerializer.Deserialize<MatchGroup>(json);
+			retVal.CurrentState = ObjectRecordState.EXISTING;
+			return retVal;
+		}
+
+		public string ToJson() {
+			return JsonSerializer.Serialize(this);
+		}
+
+	}
+	public partial class SeasonMatchGroupDetail  : DomainModelBase {
+
+		public  SeasonMatchGroupDetail() { }
+		public  SeasonMatchGroupDetail(
+					DateTime  groupenddate,
+					DateTime  groupstartdate,
+					int?  matchgroupgamecount,
+					int  matchgroupsequence,
+					string  matchgrouptitle,
+					int  seasonid) {
+			this.GroupEndDate = groupenddate;
+			this.GroupStartDate = groupstartdate;
+			this.MatchGroupGameCount = matchgroupgamecount;
+			this.MatchGroupSequence = matchgroupsequence;
+			this.MatchGroupTitle = matchgrouptitle;
+			this.SeasonId = seasonid;
+		}
+ 
+		private DateTime  GroupEndDateField;
+		public DateTime  GroupEndDate { get { return GroupEndDateField; } set { GroupEndDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private DateTime  GroupStartDateField;
+		public DateTime  GroupStartDate { get { return GroupStartDateField; } set { GroupStartDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int?  MatchGroupGameCountField;
+		public int?  MatchGroupGameCount { get { return MatchGroupGameCountField; } set { MatchGroupGameCountField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  MatchGroupSequenceField;
+		public int  MatchGroupSequence { get { return MatchGroupSequenceField; } set { MatchGroupSequenceField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private string  MatchGroupTitleField;
+		[StringLength(50)]
+		public string  MatchGroupTitle { get { return MatchGroupTitleField; } set { MatchGroupTitleField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  SeasonIdField;
+		public int  SeasonId { get { return SeasonIdField; } set { SeasonIdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+
+		public SeasonMatchGroupDetailDto ToDataModel() {
+			return new SeasonMatchGroupDetailDto(){
+				GroupEndDate = this.GroupEndDate, 
+				GroupStartDate = this.GroupStartDate, 
+				MatchGroupGameCount = this.MatchGroupGameCount, 
+				MatchGroupSequence = this.MatchGroupSequence, 
+				MatchGroupTitle = this.MatchGroupTitle, 
+				SeasonId = this.SeasonId, 
+				CurrentState = CurrentState,
+			};
+		}
+
+		static public SeasonMatchGroupDetail FromDataModel(SeasonMatchGroupDetailDto source) {
+			if(source == null) {
+				return new SeasonMatchGroupDetail();
+			}
+
+			return new SeasonMatchGroupDetail() {
+				GroupEndDate = source.GroupEndDate.Value,
+				GroupStartDate = source.GroupStartDate.Value,
+				MatchGroupGameCount = source.MatchGroupGameCount,
+				MatchGroupSequence = source.MatchGroupSequence.Value,
+				MatchGroupTitle = source.MatchGroupTitle,
+				SeasonId = source.SeasonId.Value,
+				CurrentState = source.CurrentState,
+			};
+		}
+
+		static public SeasonMatchGroupDetail FromJSON(string json) {
+			var retVal = JsonSerializer.Deserialize<SeasonMatchGroupDetail>(json);
+			retVal.CurrentState = ObjectRecordState.EXISTING;
+			return retVal;
+		}
+
+		public string ToJson() {
+			return JsonSerializer.Serialize(this);
+		}
+
+	}
+	public partial class SeasonDetail  : DomainModelBase {
+
+		public  SeasonDetail() { }
+		public  SeasonDetail(
+					DateTime  enddate,
+					int  id,
+					string  name,
+					DateTime?  nextmatchdate,
+					int  participantcount,
+					int  seasongamecount,
+					int  seasongamesplayedcount,
+					DateTime  startdate) {
+			this.EndDate = enddate;
+			this.Id = id;
+			this.Name = name;
+			this.NextMatchDate = nextmatchdate;
+			this.ParticipantCount = participantcount;
+			this.SeasonGameCount = seasongamecount;
+			this.SeasonGamesPlayedCount = seasongamesplayedcount;
+			this.StartDate = startdate;
+		}
+ 
+		private DateTime  EndDateField;
+		public DateTime  EndDate { get { return EndDateField; } set { EndDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  IdField;
+		public int  Id { get { return IdField; } set { IdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private string  NameField;
+		[StringLength(100)]
+		public string  Name { get { return NameField; } set { NameField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private DateTime?  NextMatchDateField;
+		public DateTime?  NextMatchDate { get { return NextMatchDateField; } set { NextMatchDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  ParticipantCountField;
+		public int  ParticipantCount { get { return ParticipantCountField; } set { ParticipantCountField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  SeasonGameCountField;
+		public int  SeasonGameCount { get { return SeasonGameCountField; } set { SeasonGameCountField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  SeasonGamesPlayedCountField;
+		public int  SeasonGamesPlayedCount { get { return SeasonGamesPlayedCountField; } set { SeasonGamesPlayedCountField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private DateTime  StartDateField;
+		public DateTime  StartDate { get { return StartDateField; } set { StartDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+
+		public SeasonDetailDto ToDataModel() {
+			return new SeasonDetailDto(){
+				EndDate = this.EndDate, 
+				Id = this.Id, 
+				Name = this.Name, 
+				NextMatchDate = this.NextMatchDate, 
+				ParticipantCount = this.ParticipantCount, 
+				SeasonGameCount = this.SeasonGameCount, 
+				SeasonGamesPlayedCount = this.SeasonGamesPlayedCount, 
+				StartDate = this.StartDate, 
+				CurrentState = CurrentState,
+			};
+		}
+
+		static public SeasonDetail FromDataModel(SeasonDetailDto source) {
+			if(source == null) {
+				return new SeasonDetail();
+			}
+
+			return new SeasonDetail() {
+				EndDate = source.EndDate.Value,
+				Id = source.Id.Value,
+				Name = source.Name,
+				NextMatchDate = source.NextMatchDate,
+				ParticipantCount = source.ParticipantCount.Value,
+				SeasonGameCount = source.SeasonGameCount.Value,
+				SeasonGamesPlayedCount = source.SeasonGamesPlayedCount.Value,
+				StartDate = source.StartDate.Value,
+				CurrentState = source.CurrentState,
+			};
+		}
+
+		static public SeasonDetail FromJSON(string json) {
+			var retVal = JsonSerializer.Deserialize<SeasonDetail>(json);
+			retVal.CurrentState = ObjectRecordState.EXISTING;
+			return retVal;
+		}
+
+		public string ToJson() {
+			return JsonSerializer.Serialize(this);
+		}
+
+	}
 	
 }
 
 
-namespace FutbolChallenge.Data.Repository.Repository {
+namespace FutbolChallenge.Data.Repository {
 
-	using FutbolChallenge.Data.Repository.Dto;
+	using FutbolChallenge.Data.Dto;
 
 	using Helpers.Core.ConnectionFactory;
 	using Helpers.Core.DataServiceProvider;
@@ -1301,6 +1577,30 @@ namespace FutbolChallenge.Data.Repository.Repository {
 	}
  
 
+	//	[dbo].[ScheduledGame] 
+	 public partial interface IScheduledGameRepository {	 
+		
+		Task<ScheduledGameDto> Get(int Id );
+		Task<ScheduledGameDto> Get(string whereClause, object parameters);
+		Task<List<ScheduledGameDto>> GetList(dynamic filter);
+		Task<List<ScheduledGameDto>> GetList(string whereClause, object parameters); 
+
+		Task<bool> Update(ScheduledGameDto value);
+
+		Task<int> Insert(ScheduledGameDto value);
+		
+		Task<int> Merge(ScheduledGameDto value);
+
+		Task<int> MergeWithKeep(ScheduledGameDto value);
+
+		Task<bool> Delete(ScheduledGameDto value);
+
+		Task<int> ExecuteSql(string sql, object param);
+
+		Task<ScheduledGameDto> FetchSingleWithSql(string sql, object parameters);
+	}
+ 
+
 	//	[dbo].[MatchGroup] 
 	 public partial interface IMatchGroupRepository {	 
 		
@@ -1325,27 +1625,25 @@ namespace FutbolChallenge.Data.Repository.Repository {
 	}
  
 
-	//	[dbo].[ScheduledGame] 
-	 public partial interface IScheduledGameRepository {	 
+	//	[dbo].[SeasonMatchGroupDetail] 
+	 public partial interface ISeasonMatchGroupDetailRepository {	 
 		
-		Task<ScheduledGameDto> Get(int Id );
-		Task<ScheduledGameDto> Get(string whereClause, object parameters);
-		Task<List<ScheduledGameDto>> GetList(dynamic filter);
-		Task<List<ScheduledGameDto>> GetList(string whereClause, object parameters); 
+		Task<SeasonMatchGroupDetailDto> Get( );
+		Task<SeasonMatchGroupDetailDto> Get(string whereClause, object parameters);
+		Task<List<SeasonMatchGroupDetailDto>> GetList(dynamic filter);
+		Task<List<SeasonMatchGroupDetailDto>> GetList(string whereClause, object parameters); 
 
-		Task<bool> Update(ScheduledGameDto value);
+	}
+ 
 
-		Task<int> Insert(ScheduledGameDto value);
+	//	[dbo].[SeasonDetails] 
+	 public partial interface ISeasonDetailRepository {	 
 		
-		Task<int> Merge(ScheduledGameDto value);
+		Task<SeasonDetailDto> Get( );
+		Task<SeasonDetailDto> Get(string whereClause, object parameters);
+		Task<List<SeasonDetailDto>> GetList(dynamic filter);
+		Task<List<SeasonDetailDto>> GetList(string whereClause, object parameters); 
 
-		Task<int> MergeWithKeep(ScheduledGameDto value);
-
-		Task<bool> Delete(ScheduledGameDto value);
-
-		Task<int> ExecuteSql(string sql, object param);
-
-		Task<ScheduledGameDto> FetchSingleWithSql(string sql, object parameters);
 	}
  
 	public interface IDataRepositoryProvider {
@@ -1364,9 +1662,13 @@ namespace FutbolChallenge.Data.Repository.Repository {
  
 		IParticipantGamePredictionRepository ParticipantGamePredictionRepository { get; } 
  
+		IScheduledGameRepository ScheduledGameRepository { get; } 
+ 
 		IMatchGroupRepository MatchGroupRepository { get; } 
  
-		IScheduledGameRepository ScheduledGameRepository { get; } 
+		ISeasonMatchGroupDetailRepository SeasonMatchGroupDetailRepository { get; } 
+ 
+		ISeasonDetailRepository SeasonDetailRepository { get; } 
 	}
 
 
@@ -1380,8 +1682,10 @@ namespace FutbolChallenge.Data.Repository.Repository {
 			IParticipantPredictionRepository participantPredictionRepo, 
 			ISeasonScheduleRepository seasonScheduleRepo, 
 			IParticipantGamePredictionRepository participantGamePredictionsRepo, 
+			IScheduledGameRepository scheduledGameRepo, 
 			IMatchGroupRepository matchGroupRepo, 
-			IScheduledGameRepository scheduledGameRepo
+			ISeasonMatchGroupDetailRepository seasonMatchGroupDetailRepo, 
+			ISeasonDetailRepository seasonDetailsRepo
 		) { 
 			TeamRepository = teamRepo; 
 			SeasonRepository = seasonRepo; 
@@ -1390,8 +1694,10 @@ namespace FutbolChallenge.Data.Repository.Repository {
 			ParticipantPredictionRepository = participantPredictionRepo; 
 			SeasonScheduleRepository = seasonScheduleRepo; 
 			ParticipantGamePredictionRepository = participantGamePredictionsRepo; 
+			ScheduledGameRepository = scheduledGameRepo; 
 			MatchGroupRepository = matchGroupRepo; 
-			ScheduledGameRepository = scheduledGameRepo;		
+			SeasonMatchGroupDetailRepository = seasonMatchGroupDetailRepo; 
+			SeasonDetailRepository = seasonDetailsRepo;		
 		}
 
  
@@ -1409,9 +1715,13 @@ namespace FutbolChallenge.Data.Repository.Repository {
  
 		public IParticipantGamePredictionRepository ParticipantGamePredictionRepository { get; } 
  
+		public IScheduledGameRepository ScheduledGameRepository { get; } 
+ 
 		public IMatchGroupRepository MatchGroupRepository { get; } 
  
-		public IScheduledGameRepository ScheduledGameRepository { get; } 
+		public ISeasonMatchGroupDetailRepository SeasonMatchGroupDetailRepository { get; } 
+ 
+		public ISeasonDetailRepository SeasonDetailRepository { get; } 
 
 
 	}
@@ -1912,84 +2222,6 @@ namespace FutbolChallenge.Data.Repository.Repository {
 
 
 	}
-	//	[dbo].[MatchGroup] 
-	 public partial class MatchGroupRepository : ImplementedDataServiceProvider, IMatchGroupRepository {
-
-		public MatchGroupRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory)  {
-		}
-
-		
-		async public Task<MatchGroupDto> Get(int Id) {
-			MatchGroupDto value = await FetchValueWithSql<MatchGroupDto>("SELECT [EndDate],[Id],[MatchGroupSequence],[SeasonId],[StartDate] FROM [dbo].[MatchGroup] WHERE [Id] = @Id;", new { @Id = Id });
-			if(null != value) {
-				value.CurrentState = ObjectRecordState.EXISTING;
-			}
-			return value;
-		}
-
-		async public Task<MatchGroupDto> Get(string whereClause, object parameters) {
-			return (await GetList(whereClause, parameters)).SingleOrDefault();
-		}
-
-		async public Task<MatchGroupDto> FetchSingleWithSql(string sql, object parameters) {
-			
-			MatchGroupDto retVal = await FetchValueWithSql<MatchGroupDto>(sql, parameters);
-			if (null != retVal) {
-				retVal.CurrentState = ObjectRecordState.EXISTING;
-			}
-			return retVal;
-		}
-
-		async public Task<List<MatchGroupDto>> GetList(dynamic filter) {
-			List<MatchGroupDto> localList = await FetchListEntity<MatchGroupDto>(filter);
-			if(null != localList)
-			{
-				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
-			}
-			return localList;
-		}
-
-		async public Task<List<MatchGroupDto>> GetList(string whereClause, object parameters) {
-			StringBuilder bldr = new StringBuilder("SELECT [EndDate],[Id],[MatchGroupSequence],[SeasonId],[StartDate] FROM [dbo].[MatchGroup] ");
-			if(!string.IsNullOrEmpty(whereClause)) {
-				if(!whereClause.Trim().StartsWith("where",System.StringComparison.OrdinalIgnoreCase)) {
-					bldr.Append(" WHERE ");
-				}
-				bldr.Append($" {whereClause} ");
-			}
-			List<MatchGroupDto> localList = await FetchListEntityWithSql<MatchGroupDto>(bldr.ToString(), parameters);
-			if(null != localList) {
-				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
-			}
-			return localList;
-		}
-
-
-		async public Task<bool> Update(MatchGroupDto value) {
-			int rowCount = await ExecuteSql("UPDATE [dbo].[MatchGroup] SET [EndDate] = @EndDate, [MatchGroupSequence] = @MatchGroupSequence, [SeasonId] = @SeasonId, [StartDate] = @StartDate WHERE [Id] = @Id ", new { @EndDate = value.EndDate, @Id = value.Id, @MatchGroupSequence = value.MatchGroupSequence, @SeasonId = value.SeasonId, @StartDate = value.StartDate });
-			return rowCount == 1;
-		}
-
-		async public Task<int> Insert(MatchGroupDto value) {
-			int keyValue = await ExecuteSql<int>("INSERT [dbo].[MatchGroup] ([EndDate], [MatchGroupSequence], [SeasonId], [StartDate]) VALUES (@EndDate, @MatchGroupSequence, @SeasonId, @StartDate);  SELECT SCOPE_IDENTITY(); " , new {@EndDate = value.EndDate, @Id = value.Id, @MatchGroupSequence = value.MatchGroupSequence, @SeasonId = value.SeasonId, @StartDate = value.StartDate});
-			return keyValue;
-		}
-
-		async public Task<int> Merge(MatchGroupDto value) {
-			int keyValue = await ExecuteSql<int>(" WITH input as (SELECT [EndDate] = @EndDate, [Id] = @Id, [MatchGroupSequence] = @MatchGroupSequence, [SeasonId] = @SeasonId, [StartDate] = @StartDate) MERGE [dbo].[MatchGroup] AS T USING input ON T.[Id] = input.[Id]  WHEN MATCHED THEN UPDATE SET [EndDate] = input.[EndDate], [MatchGroupSequence] = input.[MatchGroupSequence], [SeasonId] = input.[SeasonId], [StartDate] = input.[StartDate] WHEN NOT MATCHED THEN INSERT ([EndDate], [MatchGroupSequence], [SeasonId], [StartDate]) VALUES(input.[EndDate], input.[MatchGroupSequence], input.[SeasonId], input.[StartDate]) ; SELECT SCOPE_IDENTITY();" , new {@EndDate = value.EndDate, @Id = value.Id, @MatchGroupSequence = value.MatchGroupSequence, @SeasonId = value.SeasonId, @StartDate = value.StartDate});
-			return keyValue;
-		}
-		
-		async public Task<int> MergeWithKeep(MatchGroupDto value) {
-				int keyValue = await ExecuteSql<int>(" WITH input as (SELECT [EndDate] = @EndDate, [Id] = @Id, [MatchGroupSequence] = @MatchGroupSequence, [SeasonId] = @SeasonId, [StartDate] = @StartDate) MERGE [dbo].[MatchGroup] AS T USING input ON T.[Id] = input.[Id]  WHEN MATCHED THEN UPDATE SET [EndDate] = ISNULL(input.[EndDate], T.[EndDate] ), [MatchGroupSequence] = ISNULL(input.[MatchGroupSequence], T.[MatchGroupSequence] ), [SeasonId] = ISNULL(input.[SeasonId], T.[SeasonId] ), [StartDate] = ISNULL(input.[StartDate], T.[StartDate] ) WHEN NOT MATCHED THEN INSERT ([EndDate], [MatchGroupSequence], [SeasonId], [StartDate]) VALUES(input.[EndDate], input.[MatchGroupSequence], input.[SeasonId], input.[StartDate]) ; SELECT SCOPE_IDENTITY();" , new {@EndDate = value.EndDate, @Id = value.Id, @MatchGroupSequence = value.MatchGroupSequence, @SeasonId = value.SeasonId, @StartDate = value.StartDate});
-		return keyValue;		}
-				 
-		async public Task<bool> Delete(MatchGroupDto value) {
-			int count = await ExecuteSql("DELETE [dbo].[MatchGroup] WHERE [Id] = @Id;", new { Id = value.Id });
-			return count != 1;
-		}
-
-	}
 	//	[dbo].[ScheduledGame] 
 	 public partial class ScheduledGameRepository : ImplementedDataServiceProvider, IScheduledGameRepository {
 
@@ -2066,6 +2298,192 @@ namespace FutbolChallenge.Data.Repository.Repository {
 			int count = await ExecuteSql("DELETE [dbo].[ScheduledGame] WHERE [Id] = @Id;", new { Id = value.Id });
 			return count != 1;
 		}
+
+	}
+	//	[dbo].[MatchGroup] 
+	 public partial class MatchGroupRepository : ImplementedDataServiceProvider, IMatchGroupRepository {
+
+		public MatchGroupRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory)  {
+		}
+
+		
+		async public Task<MatchGroupDto> Get(int Id) {
+			MatchGroupDto value = await FetchValueWithSql<MatchGroupDto>("SELECT [EndDate],[Id],[MatchGroupSequence],[MatchGroupTitle],[SeasonId],[StartDate] FROM [dbo].[MatchGroup] WHERE [Id] = @Id;", new { @Id = Id });
+			if(null != value) {
+				value.CurrentState = ObjectRecordState.EXISTING;
+			}
+			return value;
+		}
+
+		async public Task<MatchGroupDto> Get(string whereClause, object parameters) {
+			return (await GetList(whereClause, parameters)).SingleOrDefault();
+		}
+
+		async public Task<MatchGroupDto> FetchSingleWithSql(string sql, object parameters) {
+			
+			MatchGroupDto retVal = await FetchValueWithSql<MatchGroupDto>(sql, parameters);
+			if (null != retVal) {
+				retVal.CurrentState = ObjectRecordState.EXISTING;
+			}
+			return retVal;
+		}
+
+		async public Task<List<MatchGroupDto>> GetList(dynamic filter) {
+			List<MatchGroupDto> localList = await FetchListEntity<MatchGroupDto>(filter);
+			if(null != localList)
+			{
+				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
+			}
+			return localList;
+		}
+
+		async public Task<List<MatchGroupDto>> GetList(string whereClause, object parameters) {
+			StringBuilder bldr = new StringBuilder("SELECT [EndDate],[Id],[MatchGroupSequence],[MatchGroupTitle],[SeasonId],[StartDate] FROM [dbo].[MatchGroup] ");
+			if(!string.IsNullOrEmpty(whereClause)) {
+				if(!whereClause.Trim().StartsWith("where",System.StringComparison.OrdinalIgnoreCase)) {
+					bldr.Append(" WHERE ");
+				}
+				bldr.Append($" {whereClause} ");
+			}
+			List<MatchGroupDto> localList = await FetchListEntityWithSql<MatchGroupDto>(bldr.ToString(), parameters);
+			if(null != localList) {
+				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
+			}
+			return localList;
+		}
+
+
+		async public Task<bool> Update(MatchGroupDto value) {
+			int rowCount = await ExecuteSql("UPDATE [dbo].[MatchGroup] SET [EndDate] = @EndDate, [MatchGroupSequence] = @MatchGroupSequence, [MatchGroupTitle] = @MatchGroupTitle, [SeasonId] = @SeasonId, [StartDate] = @StartDate WHERE [Id] = @Id ", new { @EndDate = value.EndDate, @Id = value.Id, @MatchGroupSequence = value.MatchGroupSequence, @MatchGroupTitle = value.MatchGroupTitle, @SeasonId = value.SeasonId, @StartDate = value.StartDate });
+			return rowCount == 1;
+		}
+
+		async public Task<int> Insert(MatchGroupDto value) {
+			int keyValue = await ExecuteSql<int>("INSERT [dbo].[MatchGroup] ([EndDate], [MatchGroupSequence], [MatchGroupTitle], [SeasonId], [StartDate]) VALUES (@EndDate, @MatchGroupSequence, @MatchGroupTitle, @SeasonId, @StartDate);  SELECT SCOPE_IDENTITY(); " , new {@EndDate = value.EndDate, @Id = value.Id, @MatchGroupSequence = value.MatchGroupSequence, @MatchGroupTitle = value.MatchGroupTitle, @SeasonId = value.SeasonId, @StartDate = value.StartDate});
+			return keyValue;
+		}
+
+		async public Task<int> Merge(MatchGroupDto value) {
+			int keyValue = await ExecuteSql<int>(" WITH input as (SELECT [EndDate] = @EndDate, [Id] = @Id, [MatchGroupSequence] = @MatchGroupSequence, [MatchGroupTitle] = @MatchGroupTitle, [SeasonId] = @SeasonId, [StartDate] = @StartDate) MERGE [dbo].[MatchGroup] AS T USING input ON T.[Id] = input.[Id]  WHEN MATCHED THEN UPDATE SET [EndDate] = input.[EndDate], [MatchGroupSequence] = input.[MatchGroupSequence], [MatchGroupTitle] = input.[MatchGroupTitle], [SeasonId] = input.[SeasonId], [StartDate] = input.[StartDate] WHEN NOT MATCHED THEN INSERT ([EndDate], [MatchGroupSequence], [MatchGroupTitle], [SeasonId], [StartDate]) VALUES(input.[EndDate], input.[MatchGroupSequence], input.[MatchGroupTitle], input.[SeasonId], input.[StartDate]) ; SELECT SCOPE_IDENTITY();" , new {@EndDate = value.EndDate, @Id = value.Id, @MatchGroupSequence = value.MatchGroupSequence, @MatchGroupTitle = value.MatchGroupTitle, @SeasonId = value.SeasonId, @StartDate = value.StartDate});
+			return keyValue;
+		}
+		
+		async public Task<int> MergeWithKeep(MatchGroupDto value) {
+				int keyValue = await ExecuteSql<int>(" WITH input as (SELECT [EndDate] = @EndDate, [Id] = @Id, [MatchGroupSequence] = @MatchGroupSequence, [MatchGroupTitle] = @MatchGroupTitle, [SeasonId] = @SeasonId, [StartDate] = @StartDate) MERGE [dbo].[MatchGroup] AS T USING input ON T.[Id] = input.[Id]  WHEN MATCHED THEN UPDATE SET [EndDate] = ISNULL(input.[EndDate], T.[EndDate] ), [MatchGroupSequence] = ISNULL(input.[MatchGroupSequence], T.[MatchGroupSequence] ), [MatchGroupTitle] = ISNULL(input.[MatchGroupTitle], T.[MatchGroupTitle] ), [SeasonId] = ISNULL(input.[SeasonId], T.[SeasonId] ), [StartDate] = ISNULL(input.[StartDate], T.[StartDate] ) WHEN NOT MATCHED THEN INSERT ([EndDate], [MatchGroupSequence], [MatchGroupTitle], [SeasonId], [StartDate]) VALUES(input.[EndDate], input.[MatchGroupSequence], input.[MatchGroupTitle], input.[SeasonId], input.[StartDate]) ; SELECT SCOPE_IDENTITY();" , new {@EndDate = value.EndDate, @Id = value.Id, @MatchGroupSequence = value.MatchGroupSequence, @MatchGroupTitle = value.MatchGroupTitle, @SeasonId = value.SeasonId, @StartDate = value.StartDate});
+		return keyValue;		}
+				 
+		async public Task<bool> Delete(MatchGroupDto value) {
+			int count = await ExecuteSql("DELETE [dbo].[MatchGroup] WHERE [Id] = @Id;", new { Id = value.Id });
+			return count != 1;
+		}
+
+	}
+	//	[dbo].[SeasonMatchGroupDetail] 
+	 public partial class SeasonMatchGroupDetailRepository : ImplementedDataServiceProvider, ISeasonMatchGroupDetailRepository {
+
+		public SeasonMatchGroupDetailRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory)  {
+		}
+
+		
+		async public Task<SeasonMatchGroupDetailDto> Get() {
+			SeasonMatchGroupDetailDto value = await FetchValueWithSql<SeasonMatchGroupDetailDto>("SELECT [GroupEndDate],[GroupStartDate],[MatchGroupGameCount],[MatchGroupSequence],[MatchGroupTitle],[SeasonId] FROM [dbo].[SeasonMatchGroupDetail] ", new {  });
+			if(null != value) {
+				value.CurrentState = ObjectRecordState.EXISTING;
+			}
+			return value;
+		}
+
+		async public Task<SeasonMatchGroupDetailDto> Get(string whereClause, object parameters) {
+			return (await GetList(whereClause, parameters)).SingleOrDefault();
+		}
+
+		async public Task<SeasonMatchGroupDetailDto> FetchSingleWithSql(string sql, object parameters) {
+			
+			SeasonMatchGroupDetailDto retVal = await FetchValueWithSql<SeasonMatchGroupDetailDto>(sql, parameters);
+			if (null != retVal) {
+				retVal.CurrentState = ObjectRecordState.EXISTING;
+			}
+			return retVal;
+		}
+
+		async public Task<List<SeasonMatchGroupDetailDto>> GetList(dynamic filter) {
+			List<SeasonMatchGroupDetailDto> localList = await FetchListEntity<SeasonMatchGroupDetailDto>(filter);
+			if(null != localList)
+			{
+				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
+			}
+			return localList;
+		}
+
+		async public Task<List<SeasonMatchGroupDetailDto>> GetList(string whereClause, object parameters) {
+			StringBuilder bldr = new StringBuilder("SELECT [GroupEndDate],[GroupStartDate],[MatchGroupGameCount],[MatchGroupSequence],[MatchGroupTitle],[SeasonId] FROM [dbo].[SeasonMatchGroupDetail] ");
+			if(!string.IsNullOrEmpty(whereClause)) {
+				if(!whereClause.Trim().StartsWith("where",System.StringComparison.OrdinalIgnoreCase)) {
+					bldr.Append(" WHERE ");
+				}
+				bldr.Append($" {whereClause} ");
+			}
+			List<SeasonMatchGroupDetailDto> localList = await FetchListEntityWithSql<SeasonMatchGroupDetailDto>(bldr.ToString(), parameters);
+			if(null != localList) {
+				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
+			}
+			return localList;
+		}
+
+
+	}
+	//	[dbo].[SeasonDetails] 
+	 public partial class SeasonDetailRepository : ImplementedDataServiceProvider, ISeasonDetailRepository {
+
+		public SeasonDetailRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory)  {
+		}
+
+		
+		async public Task<SeasonDetailDto> Get() {
+			SeasonDetailDto value = await FetchValueWithSql<SeasonDetailDto>("SELECT [EndDate],[Id],[Name],[NextMatchDate],[ParticipantCount],[SeasonGameCount],[SeasonGamesPlayedCount],[StartDate] FROM [dbo].[SeasonDetails] ", new {  });
+			if(null != value) {
+				value.CurrentState = ObjectRecordState.EXISTING;
+			}
+			return value;
+		}
+
+		async public Task<SeasonDetailDto> Get(string whereClause, object parameters) {
+			return (await GetList(whereClause, parameters)).SingleOrDefault();
+		}
+
+		async public Task<SeasonDetailDto> FetchSingleWithSql(string sql, object parameters) {
+			
+			SeasonDetailDto retVal = await FetchValueWithSql<SeasonDetailDto>(sql, parameters);
+			if (null != retVal) {
+				retVal.CurrentState = ObjectRecordState.EXISTING;
+			}
+			return retVal;
+		}
+
+		async public Task<List<SeasonDetailDto>> GetList(dynamic filter) {
+			List<SeasonDetailDto> localList = await FetchListEntity<SeasonDetailDto>(filter);
+			if(null != localList)
+			{
+				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
+			}
+			return localList;
+		}
+
+		async public Task<List<SeasonDetailDto>> GetList(string whereClause, object parameters) {
+			StringBuilder bldr = new StringBuilder("SELECT [EndDate],[Id],[Name],[NextMatchDate],[ParticipantCount],[SeasonGameCount],[SeasonGamesPlayedCount],[StartDate] FROM [dbo].[SeasonDetails] ");
+			if(!string.IsNullOrEmpty(whereClause)) {
+				if(!whereClause.Trim().StartsWith("where",System.StringComparison.OrdinalIgnoreCase)) {
+					bldr.Append(" WHERE ");
+				}
+				bldr.Append($" {whereClause} ");
+			}
+			List<SeasonDetailDto> localList = await FetchListEntityWithSql<SeasonDetailDto>(bldr.ToString(), parameters);
+			if(null != localList) {
+				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
+			}
+			return localList;
+		}
+
 
 	}
 

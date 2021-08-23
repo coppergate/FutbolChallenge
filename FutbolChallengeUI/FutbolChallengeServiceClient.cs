@@ -1,6 +1,6 @@
-﻿using FutbolChallenge.Data.Repository.Dto;
-using FutbolChallenge.Data.Repository.Model;
-using FutbolChallenge.Data.Repository.Repository;
+﻿using FutbolChallenge.Data.Dto;
+using FutbolChallenge.Data.Model;
+using FutbolChallenge.Data.Repository;
 using Helpers.Core;
 using System;
 using System.Collections.Generic;
@@ -29,6 +29,8 @@ namespace FutbolChallengeUI
 		Task<IEnumerable<ScheduledGame>> GetSeasonGames(int seasonId);
 	
 		Task<IEnumerable<Season>> FetchAllSeasons();
+
+		Task<SeasonDetail> FetchSeasonDetails(int seasionId);
 
 	}
 
@@ -110,6 +112,12 @@ namespace FutbolChallengeUI
 			return result?.Select(g => ScheduledGame.FromDataModel(g));
 		}
 
+		async public Task<SeasonDetail> FetchSeasonDetails(int seasonId)
+		{
+			var targetRelativeUri = $"schedule/season-details/{seasonId}";
+			var result = await Fetch<SeasonDetailDto>(targetRelativeUri);
+			return SeasonDetail.FromDataModel(result);
+		}
 	}
 
 }

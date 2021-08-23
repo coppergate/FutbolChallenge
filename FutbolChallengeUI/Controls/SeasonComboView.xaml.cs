@@ -1,21 +1,11 @@
-﻿using FutbolChallenge.Data.Repository.Model;
+﻿using FutbolChallenge.Data.Model;
 using FutbolChallengeUI.ViewModels;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using System;
-using System.ComponentModel;
-using Windows.UI;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace FutbolChallengeUI.Controls
 {
 	public sealed partial class SeasonComboView : BindableUserControlBase
 	{
-		static public event EditPanelEventHandler<Season> EditSeason;
-		static public event DeleteOrAddPanelEventHandler DeleteOrAddSeason;
+		public event SelectedSeasonChangedEventHandler SelectedSeasonChanged;
 
 		private SeasonListViewModel _SeasonListViewModel = new SeasonListViewModel();
 
@@ -34,9 +24,21 @@ namespace FutbolChallengeUI.Controls
 			this.InitializeComponent();
 		}
 
-
-		public System.Collections.Generic.IEnumerable<Season> Seasons => 
+		public System.Collections.Generic.IEnumerable<Season> Seasons =>
 			SeasonListViewModel?.Seasons;
 
+		public int SelectedSeason
+		{
+			get => _SeasonListViewModel.SelectedSeasonIndex;
+			set
+			{
+				if (_SeasonListViewModel.Seasons?.Count > value)
+				{
+					_SeasonListViewModel.SelectedSeasonIndex =value;
+					SelectedSeasonChanged?.Invoke(this, new SelectedSeasonChangedEventArgs(_SeasonListViewModel.Seasons[value]));
+					OnPropertyChanged();
+				}
+			}
+		}
 	}
 }
