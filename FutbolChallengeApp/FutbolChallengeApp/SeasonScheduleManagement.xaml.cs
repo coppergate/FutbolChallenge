@@ -8,9 +8,8 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System;
 using System.IO;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using FutbolChallengeDataRepository.Composites;
+using FutbolChallengeUI.Controls;
 
 namespace FutbolChallengeApp
 {
@@ -21,6 +20,27 @@ namespace FutbolChallengeApp
 		private IntPtr m_hwnd;
 
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		public SeasonScheduleManagement(IFutbolChallengeServiceClient serviceClient)
+		{
+			this.InitializeComponent();
+			_ServiceClient = serviceClient;
+			base.Title = "Manage Schedules";
+
+			SelectSeasonComboBox.SelectedSeasonChanged += SelectSeasonComboBox_SelectedSeasonChanged;
+			SeasonPanelView.EditSeason += SeasonPanelView_EditSeason;
+
+			m_hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+			UIHelpers.SetWindowSize(m_hwnd, 1500, 700);
+
+		}
+
+		private async void SeasonPanelView_EditSeason(object sender, EditPanelEventArgs<Season> e)
+		{
+			bool ret = await _ServiceClient.UpdateSeason(e.EditTarget);
+		}
+
+
 
 		private SeasonListViewModel _SeasonListViewModel = new SeasonListViewModel();
 		public SeasonListViewModel SeasonListViewModel
@@ -44,7 +64,7 @@ namespace FutbolChallengeApp
 				this.OnPropertyChanged();
 			}
 		}
-		
+
 
 		private string _LoadingMessage;
 		public string LoadingMessage
@@ -53,17 +73,6 @@ namespace FutbolChallengeApp
 			set { _LoadingMessage = value; OnPropertyChanged(); }
 		}
 
-		public SeasonScheduleManagement(IFutbolChallengeServiceClient serviceClient)
-		{
-			this.InitializeComponent();
-			_ServiceClient = serviceClient;
-			base.Title = "Manage Schedules";
-			SelectSeasonComboBox.SelectedSeasonChanged += SelectSeasonComboBox_SelectedSeasonChanged;
-
-			m_hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-			UIHelpers.SetWindowSize(m_hwnd, 1500, 700);
-
-		}
 
 		private async void SelectSeasonComboBox_SelectedSeasonChanged(object sender, FutbolChallengeUI.Controls.SelectedSeasonChangedEventArgs e)
 		{
@@ -96,7 +105,10 @@ namespace FutbolChallengeApp
 			var seasonId = SeasonListViewModel.SelectedSeason.Id;
 
 			using FileStream strm = File.OpenRead(file);
-			await _ServiceClient.UploadScheduledGames(seasonId, strm);
+
+			var schedule = await ScheduleFromCSV.Create(seasonId, $"UploadedSeason-{seasonId}", "Premier League Week {0}", strm);
+
+			await _ServiceClient.UploadScheduledGames(seasonId, schedule);
 			UploadFilePickPanel.Visibility = Visibility.Collapsed;
 
 		}
@@ -122,7 +134,7 @@ namespace FutbolChallengeApp
 
 		private void ScheduleUploadButton_Click(object sender, RoutedEventArgs e)
 		{
-			UploadFilePickPanel.Visibility = Visibility.Visible;
+			UploadFilePickPanel.Visibility = UploadFilePickPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 		}
 	}
 }

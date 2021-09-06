@@ -25,8 +25,8 @@ DECLARE @date datetime = '2021-08-01'
 while @cnt < 21
 BEGIN
 
-INSERT MatchGroup (SeasonId, MatchGroupSequence, StartDate, EndDate) 
-SELECT s.Id, 1, @date, DATEADD(DAY, 7, @date)
+INSERT MatchGroup (SeasonId, MatchGroupSequence, MatchGroupTitle, StartDate, EndDate) 
+SELECT s.Id, @cnt, 'Week ' + cast(@cnt + 1 as varchar(10)), @date, DATEADD(DAY, 7, @date)
 FROM Season s
 WHERE s.Name = 'First Test Season';
 
@@ -78,22 +78,4 @@ SELECT g.Id,
      p.Id
 From dbo.ScheduledGame g,
 dbo.Participant p
-
-
-DECLARE @midSeason datetime = '2021-10-01'
-
-SELECT season = s.Id, home = h.Id, away = v.Id,  h.id - v.Id , h.id + v.id, dateadd(day, h.id, dateadd(WEEK, h.id - v.Id, @midSeason))
-FROM dbo.Season s,
-	dbo.Team h
-	Cross Join dbo.Team v
-where h.id != v.id
-order by h.id, v.id, dateadd(day, h.id, dateadd(WEEK, h.id - v.Id, @midSeason))
-
-
-select * from MatchGroup
-
-select * from Team
-
-select * from ScheduledGame
-order by MatchGroupID
 

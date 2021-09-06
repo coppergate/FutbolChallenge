@@ -15,6 +15,7 @@
     <None Remove="Controls\SeasonDetailPanelView.xaml" />
     <None Remove="Controls\SeasonPanelView.xaml" />
     <None Remove="FutbolChallengeUIModule.cs~RFd8b3d96.TMP" />
+    <None Remove="ViewModels\SeasonDetailViewModel.cs~RF146631b6.TMP" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,9 +6,6 @@ using Microsoft.UI.Xaml.Media;
 using System;
 using Windows.UI;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace FutbolChallengeUI.Controls
 {
 	public sealed partial class SeasonPanelView : BindableUserControlBase
@@ -16,24 +13,15 @@ namespace FutbolChallengeUI.Controls
 		static public event EditPanelEventHandler<Season> EditSeason;
 		static public event DeleteOrAddPanelEventHandler DeleteOrAddSeason;
 
-		private Season _Season = new Season();
-
-		public Season Season
-		{
-			get => _Season;
-			set
-			{
-				_Season = value;
-//				OnPropertyChanged();
-			}
-		}
 
 		public SeasonPanelView()
 		{
 			this.InitializeComponent();
+			this.LosingFocus += SeasonPanelView_LosingFocus;
 		}
 
-	
+		public Season Season { get; set; } = new Season();
+
 		public string SeasonName
 		{
 			get => Season?.Name;
@@ -42,18 +30,48 @@ namespace FutbolChallengeUI.Controls
 
 		public DateTime StartDate
 		{
-			get => Season?.StartDate ?? new DateTime(1900, 1, 1);
-			set { Season.StartDate = value; }
+			get => Season.StartDate;
+			set => Season.StartDate = value;
 		}
 
 		public DateTime EndDate
 		{
-			get => Season?.EndDate ?? new DateTime(1900, 1, 1);
-			set { Season.EndDate = value; }
+			get => Season.EndDate;
+			set => Season.EndDate = value;
 		}
 
 		public string Id =>
 			(Season?.Id ?? 0).ToString();
+
+		private async void SeasonPanelView_LosingFocus(UIElement sender, Microsoft.UI.Xaml.Input.LosingFocusEventArgs args)
+		{
+			if (args.NewFocusedElement != null)
+			{
+				switch (args.NewFocusedElement)
+				{
+					case Button bt:
+						if (bt.Parent == this.PanelOuterGrid) return;
+						break;
+					case TextBox box:
+						if (box.Parent == this.PanelInnerGrid) return;
+						break;
+				}
+
+
+				if (_EditMode == EditMode.Update)
+				{
+					ContentDialogResult result = await this.EditInProgressDialog.ShowAsync();
+
+					if (result == ContentDialogResult.Primary)
+					{
+						EditSeason?.Invoke(this, new EditPanelEventArgs<Season>(Season));
+					}
+					Mode = "Delete";
+					EnableTextEditing = "False";
+				}
+			}
+		}
+
 
 		private bool _ShowEdit;
 		public string ShowEdit
@@ -143,7 +161,7 @@ namespace FutbolChallengeUI.Controls
 		{
 			if (_EditMode == EditMode.Update)
 			{
-				EditSeason?.Invoke(this, new EditPanelEventArgs<Season>(_Season));
+				EditSeason?.Invoke(this, new EditPanelEventArgs<Season>(Season));
 				Mode = "Delete";
 				EnableTextEditing = "False";
 			}

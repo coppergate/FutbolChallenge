@@ -34,7 +34,7 @@ namespace FutbolChallengeUI.Controls
 			{
 				if (_SeasonListViewModel.Seasons?.Count > value)
 				{
-					_SeasonListViewModel.SelectedSeasonIndex =value;
+					_SeasonListViewModel.SelectedSeasonIndex = value;
 					SelectedSeasonChanged?.Invoke(this, new SelectedSeasonChangedEventArgs(_SeasonListViewModel.Seasons[value]));
 					OnPropertyChanged();
 				}

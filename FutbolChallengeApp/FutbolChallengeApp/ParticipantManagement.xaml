@@ -7,18 +7,33 @@
 	xmlns:view="using:FutbolChallengeUI.Controls"
 	mc:Ignorable="d"
 >
-	<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-				Margin="5,5,5,5"
-				MaxWidth="1600"
-				>
-		<StackPanel Margin="10,20,10,20" Padding="5,5,5,5" >
-			<view:ParticipantListView  x:Name="participantView" BorderBrush="Pink" BorderThickness="4"
-									   ParticipantListViewModel="{x:Bind Path=ParticipantListViewModel}"
-								   VerticalAlignment="Top" />
-			<view:ParticipantPanelView Mode="Add" EnableTextEditing="True" ShowEdit="False" 
-								   Margin="15" Padding="5,0" x:Name="participantAddView" 
-								    VerticalAlignment="Bottom" HorizontalAlignment="Left"  />
-		</StackPanel>
-		<Button	VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Close" Margin="0,0,20,30"  Click="CloseButton_Click"/>
-	</StackPanel>
+
+	<Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="80"  />
+		</Grid.RowDefinitions>
+
+		<Grid Grid.Row="0"   BorderBrush="White" BorderThickness="0,0,0,1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="120" />
+			</Grid.RowDefinitions>
+
+			<view:ParticipantListView Grid.Row="0" x:Name="participantView" 
+										ParticipantListViewModel="{x:Bind Path=ParticipantListViewModel}"
+										VerticalAlignment="Top" />
+			<StackPanel Grid.Row="1"  Orientation="Vertical">
+
+				<TextBox Text="Add Participant" BorderThickness="0"  AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False" IsReadOnly="True" />
+				<view:ParticipantPanelView Mode="Add" EnableTextEditing="True" ShowEdit="False" 
+										Margin ="5,0,10,10" x:Name="participantAddView" 
+										VerticalAlignment="Center" HorizontalAlignment="Left"  />
+				
+			</StackPanel>
+		</Grid>
+
+		<Button	Grid.Row ="1" VerticalAlignment="Bottom"  HorizontalAlignment="Right" Content="Close" Margin="0,10,20,10"  Click="CloseButton_Click"/>
+	</Grid>
+
 </Window>

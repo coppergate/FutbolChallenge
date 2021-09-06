@@ -1,9 +1,10 @@
-﻿using FutbolChallenge.Data.Repository;
+﻿using FutbolChallenge.Data.Dto;
+using FutbolChallenge.Data.Repository;
+using FutbolChallengeDataRepository.Composites;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FutbolChallenge.Data.Dto;
 
 namespace DataControllers.Controllers
 {
@@ -22,34 +23,101 @@ namespace DataControllers.Controllers
 		}
 
 		[HttpGet("full-schedule")]
-		public async Task<IEnumerable<SeasonScheduleDto>> GetFullSchedule()
+		public async Task<IActionResult> GetFullSchedule()
 		{
 			var ret = await _repositoryProvider.SeasonScheduleRepository.GetList("", null);
-			return ret;
+			return Ok(ret);
 		}
 
 		[HttpGet("all-seasons")]
-		public async Task<IEnumerable<SeasonDto>> GetAllSeasons()
+		public async Task<IActionResult> GetAllSeasons()
 		{
 			var ret = await _repositoryProvider.SeasonRepository.GetList("", null);
-			return ret;
+			return Ok(ret);
 		}
 
 		[HttpPost("upload-schedule/{seasonId}")]
-		public async Task<IEnumerable<SeasonScheduleDto>> UploadSchedule(int seasonId)
+		public async Task<IActionResult> UploadSchedule(int seasonId, [FromBody] ScheduleComposite scheduleData)
 		{
-			using System.IO.MemoryStream memoryStrm = new System.IO.MemoryStream();
-			await Request.Body.CopyToAsync(memoryStrm);
-			string bodyString = System.Text.Encoding.UTF8.GetString(memoryStrm.GetBuffer());
-			var ret = await _repositoryProvider.SeasonScheduleRepository.GetList($"id = {seasonId}", null);
-			return ret;
+			SeasonDto seasonDto = new() {
+				Id = seasonId,
+				Name = scheduleData.SeasonName,
+				StartDate = scheduleData.SeasonStart,
+				EndDate = scheduleData.SeasonEnd,
+			};
+
+			var seasonUpdateRet = await _repositoryProvider.SeasonRepository.MergeWithKeep(seasonDto);
+			if (seasonUpdateRet != 0)
+			{
+				//	This is a problem... the merge with keep should return 0 if the merge updates
+				//	if it didn't that means we just inserted a new season which shouldn't happen when uploading a 
+				//	schedule for a season.
+			}
+
+			foreach (var group in scheduleData.SeasonGroups)
+			{
+				MatchGroupDto matchGroupDto = new() {
+					MatchGroupSequence = group.Sequence,
+					SeasonId = seasonId,
+					MatchGroupTitle = group.Name,
+					StartDate = group.GroupStart,
+					EndDate = group.GroupEnd,
+				};
+				var matchGroup = await _repositoryProvider.MatchGroupRepository.Insert(matchGroupDto);
+
+				Dictionary<string, int> teamMap = new Dictionary<string, int>();
+				foreach (var match in group.Games)
+				{
+					int homeTeamId;
+					if (!teamMap.TryGetValue(match.HomeTeam, out homeTeamId))
+					{
+						var homeTeamDto = await _repositoryProvider.TeamRepository.Get($"[Name] = @TeamName", new { TeamName = match.HomeTeam })
+							?? new();
+
+						if (homeTeamDto.Id == 0)
+						{
+							homeTeamDto.Name = match.HomeTeam;
+							homeTeamDto.Id = await _repositoryProvider.TeamRepository.Insert(homeTeamDto);
+						}
+						homeTeamId= homeTeamDto.Id;
+						teamMap.Add(match.HomeTeam, homeTeamId);
+					}
+
+					int awayTeamId;
+					if (!teamMap.TryGetValue(match.AwayTeam, out awayTeamId))
+					{
+						var awayTeamDto = await _repositoryProvider.TeamRepository.Get($"[Name] = @TeamName", new { TeamName = match.AwayTeam })
+							?? new();
+
+						if (awayTeamDto.Id == 0)
+						{
+							awayTeamDto.Name = match.AwayTeam;
+							awayTeamDto.Id = await _repositoryProvider.TeamRepository.Insert(awayTeamDto);
+						}
+						awayTeamId = awayTeamDto.Id;
+						teamMap.Add(match.AwayTeam, awayTeamId);
+					}
+
+					ScheduledGameDto scheduledGame = new() {
+						HomeTeamId = homeTeamId,
+						VisitingTeamId = awayTeamId,
+						MatchDate = match.GameDate,
+						MatchGroupId = matchGroup,
+					};
+					var game = await _repositoryProvider.ScheduledGameRepository.Insert(scheduledGame);
+				}
+
+			}
+
+			var ret = await _repositoryProvider.SeasonScheduleRepository.GetList($"SeasonId = @seasonId", new { seasonId } );
+			return Ok(ret);
 		}
 
 		[HttpGet("season-details/{seasonId}")]
-		public async Task<SeasonDetailDto> GetSeasonDetails(int seasonId)
+		public async Task<IActionResult> GetSeasonDetails(int seasonId)
 		{
-			var ret = await _repositoryProvider.SeasonDetailRepository.Get($"id = {seasonId}",null);
-			return ret;
+			var ret = await _repositoryProvider.SeasonDetailRepository.Get($"id = {seasonId}", null);
+			return Ok(ret);
 		}
 
 

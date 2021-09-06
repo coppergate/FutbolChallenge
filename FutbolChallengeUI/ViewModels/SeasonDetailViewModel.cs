@@ -1,4 +1,5 @@
 ﻿using FutbolChallenge.Data.Model;
+using System;
 
 namespace FutbolChallengeUI.ViewModels
 {
@@ -7,14 +8,14 @@ namespace FutbolChallengeUI.ViewModels
 		private SeasonDetail _SeasonDetail;
 		public SeasonDetail SeasonDetail { get { return _SeasonDetail; } set { _SeasonDetail = value; OnPropertyChanged(); } }
 
-		public string StartDate =>
-			SeasonDetail?.StartDate.ToString("yyyy-MM-dd");
+		public DateTime? StartDate =>
+			SeasonDetail?.StartDate;
 
-		public string EndDate =>
-			SeasonDetail?.EndDate.ToString("yyyy-MM-dd");
+		public DateTime? EndDate =>
+			SeasonDetail?.EndDate;
 
-		public string NextMatchDate =>
-			SeasonDetail?.NextMatchDate?.ToString("yyyy-MM-dd") ?? string.Empty;
+		public DateTime? NextMatchDate =>
+			SeasonDetail?.NextMatchDate;
 
 
 	}

@@ -5,28 +5,40 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:model="using:FutbolChallenge.Data.Repository.Model"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	xmlns:local="using:FutbolChallengeUI.Converters"
 	mc:Ignorable="d"
     HorizontalAlignment="Left"
 	VerticalAlignment="Top"
-	DataContext="{x:Bind SeasonDetailViewModel}"
 	>
-	<ContentControl HorizontalAlignment="Left"
-					HorizontalContentAlignment="Left"
-					Padding="5,5,5,5">
-		<StackPanel Orientation="Vertical"
-					HorizontalAlignment="Stretch" VerticalAlignment="Top"
-					 BorderBrush="WhiteSmoke" BorderThickness="1"
-					Padding="5,2,5,5"
-					x:Name="ControlsStackPanel">
+		<UserControl.Resources>
+			<local:DateToStringConverter x:Key="DateConverter"/>
+		</UserControl.Resources>
 
-			<StackPanel Orientation="Vertical">
+		<Grid >
+			<Grid.RowDefinitions>
+				<RowDefinition Height="70" />
+				<RowDefinition Height="110"  />
+			</Grid.RowDefinitions>
 
-				<StackPanel Orientation="Horizontal" Height="25">
+			<Grid Grid.Row="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="15" />
+					<RowDefinition Height="45"  />
+				</Grid.RowDefinitions>
 
-					<TextBox x:Name="SeasonIdLabel" Width="10"
-						 VerticalAlignment="Top" HorizontalAlignment="Left" 
-						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="80" />
+					<ColumnDefinition Width="250" />
+					<ColumnDefinition Width="120" />
+					<ColumnDefinition Width="120" />
+					<ColumnDefinition Width="120" />
+				</Grid.ColumnDefinitions>
+
+
+				<TextBox Grid.Row="0" Grid.Column="0" x:Name="SeasonIdLabel" Width="10"
+						 VerticalAlignment="Top"
+						 BorderBrush="Transparent" Padding="0"  Margin="0" 
 						 Text="Season Id" 
 						 FontSize="10" Foreground="Yellow" 
 						 IsReadOnly="True"
@@ -34,36 +46,40 @@
 						AllowFocusWhenDisabled="False"
 						 IsHitTestVisible="False"
 						/>
-					<TextBox x:Name="SeasonNameLabel" Width="200"
-						 VerticalAlignment="Top" HorizontalAlignment="Left" 
-						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+
+				<TextBox Grid.Row="0" Grid.Column="1" x:Name="SeasonNameLabel" Width="200"
+						 VerticalAlignment="Top"
+						 BorderBrush="Transparent" Padding="0"  Margin="0" 
 						 Text="Season Name" 
 						 FontSize="10" Foreground="Yellow" 
 						 IsReadOnly="True"
 						AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						 IsHitTestVisible="False"/>
-					<TextBox x:Name="SeasonStartDateLabel" Width="200"
-						 VerticalAlignment="Top" HorizontalAlignment="Left" 
-						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+
+				<TextBox Grid.Row="0" Grid.Column="2" x:Name="SeasonStartDateLabel" Width="200"
+						 VerticalAlignment="Top" 
+						 BorderBrush="Transparent" Padding="0"  Margin="0" 
 						 Text="Start Date" 
 						 FontSize="10" Foreground="Yellow" 
 						 IsReadOnly="True"
 						 AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						IsHitTestVisible="False"/>
-					<TextBox x:Name="SeasonEndDateLabel" Width="200"
-						 VerticalAlignment="Top" HorizontalAlignment="Left" 
-						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+
+				<TextBox Grid.Row="0" Grid.Column="3" x:Name="SeasonEndDateLabel" Width="200"
+						 VerticalAlignment="Top" 
+						 BorderBrush="Transparent" Padding="0"  Margin="0" 
 						 Text="End Date" 
 						 FontSize="10" Foreground="Yellow" 
 						 IsReadOnly="True"
 						 AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						IsHitTestVisible="False"/>
-					<TextBox x:Name="SeasonNextMatchDateLabel" Width="200"
-						 VerticalAlignment="Top" HorizontalAlignment="Left" 
-						 BorderBrush="Transparent" Padding="0"  Margin="5" 
+
+				<TextBox Grid.Row="0" Grid.Column="4" x:Name="SeasonNextMatchDateLabel" Width="200"
+						 VerticalAlignment="Top"
+						 BorderBrush="Transparent" Padding="0"  Margin="0" 
 						 Text="Next Match Date" 
 						 FontSize="10" Foreground="Yellow" 
 						 IsReadOnly="True"
@@ -71,41 +87,43 @@
 						AllowFocusWhenDisabled="False"
 						IsHitTestVisible="False"/>
 
-				</StackPanel>
 
-				<StackPanel Orientation="Horizontal">
-
-					<TextBox x:Name="SeasonId" Width="10" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.Id}"  Margin="5"
+				<TextBox Grid.Row="1" Grid.Column="0" x:Name="SeasonId" Width="10" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.Id}"  Margin="5"
 							 AllowFocusOnInteraction="False"
 							AllowFocusWhenDisabled="False"
 							IsHitTestVisible="False"/>
-					<TextBox x:Name="SeasonName" Width="200" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.Name}"  Margin="5"
+				<TextBox Grid.Row="1" Grid.Column="1" x:Name="SeasonName" Width="200" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.Name}"  Margin="5"
 							 AllowFocusOnInteraction="False"
 							AllowFocusWhenDisabled="False"
 							 IsHitTestVisible="False"/>
-					<TextBox x:Name="SeasonStartDate" Width="200" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.StartDate}"  Margin="5"
+				<TextBox Grid.Row="1" Grid.Column="2" x:Name="SeasonStartDate" Width="100" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.StartDate, Converter={StaticResource DateConverter}}"  Margin="5"
 							 AllowFocusOnInteraction="False"
 							AllowFocusWhenDisabled="False"
 							 IsHitTestVisible="False"/>
-					<TextBox x:Name="SeasonEndDate" Width="200" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.EndDate}"  Margin="5"
+				<TextBox Grid.Row="1" Grid.Column="3" x:Name="SeasonEndDate" Width="100" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.EndDate, Converter={StaticResource DateConverter}}"  Margin="5"
 							 AllowFocusOnInteraction="False"
 							AllowFocusWhenDisabled="False"
 							IsHitTestVisible="False"/>
-					<TextBox x:Name="SeasonNextMatchDate" Width="200" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.NextMatchDate}"  Margin="5"
+				<TextBox Grid.Row="1" Grid.Column="4" x:Name="SeasonNextMatchDate" Width="100" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.NextMatchDate, Converter={StaticResource DateConverter}}"  Margin="5"
 							 AllowFocusOnInteraction="False"
 							AllowFocusWhenDisabled="False"
 							IsHitTestVisible="False"/>
 
-				</StackPanel>
+			</Grid>
 
+			<Grid Grid.Row="1">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="15" />
+					<RowDefinition Height="35"  />
+				</Grid.RowDefinitions>
 
-			</StackPanel>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="180" />
+					<ColumnDefinition Width="180" />
+					<ColumnDefinition Width="180" />
+				</Grid.ColumnDefinitions>
 
-			<StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-
-				<StackPanel Orientation="Vertical"  Padding="0" Margin="0">
-					
-					<TextBox x:Name="SeasonGameLabel" Width="120" Height="10"
+				<TextBox Grid.Row="0" Grid.Column="0" x:Name="SeasonGameLabel" Width="120" Height="10"
 						 BorderBrush="Transparent" Padding="0,0,0,0"  Margin="0,0,0,0" 
 						 Text="Total Games In Season" 
 						 FontSize="10" Foreground="Yellow" 
@@ -115,14 +133,12 @@
 						 IsHitTestVisible="False"
 						/>
 
-					<TextBox x:Name="SeasonTotalGames" Width="120" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.SeasonGameCount}"  Margin="0,0,0,0"
+				<TextBox  Grid.Row="1" Grid.Column="0" x:Name="SeasonTotalGames" Width="120" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.SeasonGameCount}"  Margin="0,0,0,0"
 							 AllowFocusOnInteraction="False"
 							AllowFocusWhenDisabled="False"
 							IsHitTestVisible="False"/>
-				</StackPanel>
 
-				<StackPanel Orientation="Vertical">
-					<TextBox x:Name="SeasonGamesRemainingLabel" Width="120" Height="10"
+				<TextBox  Grid.Row="0" Grid.Column="1" x:Name="SeasonGamesRemainingLabel" Width="120" Height="10"
 						 BorderBrush="Transparent" Padding="0,0,0,0"  Margin="0,0,0,0" 
 						 Text="Games Played To Date" 
 						 FontSize="10" Foreground="Yellow" 
@@ -131,14 +147,12 @@
 						AllowFocusWhenDisabled="False"
 						 IsHitTestVisible="False"/>
 
-					<TextBox x:Name="SeasonGamesPlayed" Width="120" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.SeasonGamesPlayedCount}"  Margin="0,0,0,0"
+				<TextBox  Grid.Row="1" Grid.Column="1" x:Name="SeasonGamesPlayed" Width="120" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.SeasonGamesPlayedCount}"  Margin="0,0,0,0"
 							 AllowFocusOnInteraction="False"
 							AllowFocusWhenDisabled="False"
 							 IsHitTestVisible="False"/>
-				</StackPanel>
-				
-				<StackPanel Orientation="Vertical">
-					<TextBox x:Name="ParticipantCountLabel" Width="120" Height="10"
+
+				<TextBox  Grid.Row="0" Grid.Column="2" x:Name="ParticipantCountLabel" Width="120" Height="10"
 						 BorderBrush="Transparent" Padding="0,0,0,0"  Margin="0,0,0,0" 
 						 Text="Number of Participants" 
 						 FontSize="10" Foreground="Yellow" 
@@ -146,18 +160,13 @@
 						 AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						IsHitTestVisible="False"/>
-					<TextBox x:Name="SeasonParticipants" Width="120" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.ParticipantCount}"  Margin="0,0,0,0"
+
+				<TextBox  Grid.Row="1" Grid.Column="2" x:Name="SeasonParticipants" Width="120" x:DefaultBindMode="OneWay" Text="{x:Bind SeasonDetailViewModel.SeasonDetail.ParticipantCount}"  Margin="0,0,0,0"
 							 AllowFocusOnInteraction="False"
 							AllowFocusWhenDisabled="False"
 							 IsHitTestVisible="False"/>
 
+			</Grid>
 
-				</StackPanel>
-
-
-			</StackPanel>
-
-		</StackPanel>
-	</ContentControl>
-
+		</Grid>
 </viewmodels:BindableUserControlBase>

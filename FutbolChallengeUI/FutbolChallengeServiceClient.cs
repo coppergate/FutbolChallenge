@@ -1,6 +1,7 @@
 ﻿using FutbolChallenge.Data.Dto;
 using FutbolChallenge.Data.Model;
 using FutbolChallenge.Data.Repository;
+using FutbolChallengeDataRepository.Composites;
 using Helpers.Core;
 using System;
 using System.Collections.Generic;
@@ -24,13 +25,16 @@ namespace FutbolChallengeUI
 
 		Task<int> InsertParticipant(Participant data);
 
-		Task<IEnumerable<ScheduledGame>> UploadScheduledGames(int seasonId, System.IO.Stream scheduledGames);
+		Task<bool> UploadScheduledGames(int seasonId, ScheduleComposite scheduledGames);
 
 		Task<IEnumerable<ScheduledGame>> GetSeasonGames(int seasonId);
 	
 		Task<IEnumerable<Season>> FetchAllSeasons();
 
 		Task<SeasonDetail> FetchSeasonDetails(int seasionId);
+
+		Task<bool> UpdateSeason(Season season);
+
 
 	}
 
@@ -93,16 +97,11 @@ namespace FutbolChallengeUI
 			return seasons?.Select(p => Season.FromDataModel(p)) ?? Enumerable.Empty<Season>();
 		}
 
-		async public Task<IEnumerable<ScheduledGame>> UploadScheduledGames(int seasonId, System.IO.Stream scheduledGames)
+		async public Task<bool> UploadScheduledGames(int seasonId, ScheduleComposite seasonSchedule)
 		{
 			var targetRelativeUri = $"schedule/upload-schedule/{seasonId}";
-			var result = await UploadStream(targetRelativeUri, scheduledGames);
-			if(result == true)
-			{
-				var fetchResult = await GetSeasonGames(seasonId);
-				return fetchResult;
-			}
-			return Enumerable.Empty<ScheduledGame>();
+			var result = await Upload(targetRelativeUri, seasonSchedule);
+			return result;
 		}
 
 		async public Task<IEnumerable<ScheduledGame>> GetSeasonGames(int seasonId)
@@ -117,6 +116,13 @@ namespace FutbolChallengeUI
 			var targetRelativeUri = $"schedule/season-details/{seasonId}";
 			var result = await Fetch<SeasonDetailDto>(targetRelativeUri);
 			return SeasonDetail.FromDataModel(result);
+		}
+
+		async public Task<bool> UpdateSeason(Season season)
+		{
+			var targetRelativeUri = $"season/update/{season.Id}";
+			var result = await Update(targetRelativeUri, season.ToDataModel());
+			return result;
 		}
 	}
 

@@ -13,14 +13,14 @@
 	>
 
 
-	<Grid CanBeScrollAnchor="True"	>
+	<Grid CanBeScrollAnchor="True"	Height="Auto" >
 
 			<GridView x:Name="ParticipantViewGrid" TabIndex="1"
 				Margin="10,0,20,0" 
 				VerticalAlignment="Top" 
 				HorizontalAlignment="Stretch"
 				SelectionMode="None" 
-				Height="550"
+				Height="Auto"
 				Padding="10,0,0,0"
 				BorderBrush="White" BorderThickness="2"
 				ItemsSource="{x:Bind Participants, Mode=OneWay}"

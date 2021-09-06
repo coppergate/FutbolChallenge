@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -116,15 +117,13 @@ namespace FutbolChallengeUI
 			}
 		}
 
-		async public Task<bool> UploadStream(string targetRelativeUri, System.IO.Stream stream)
+		async public Task<bool> Upload<TDto>(string targetRelativeUri, TDto typeToUpload)
 		{
 			Uri target = GetTarget(targetRelativeUri);
 			try
 			{
-				using MemoryStream memStrm = new MemoryStream();
-				await stream.CopyToAsync(memStrm);
-				ByteArrayContent streamContent = new ByteArrayContent(memStrm.ToArray());
-				var response = await this.PostAsync(target, streamContent);
+				HttpContent content = JsonContent.Create<TDto>(typeToUpload, null, SerialzationOptions);
+				var response = await this.PostAsync(target, content);
 				response.EnsureSuccessStatusCode();
 
 				return true;

@@ -11,14 +11,24 @@
 	>
 	<ContentControl HorizontalAlignment="Left"
 					HorizontalContentAlignment="Left"
-					Padding="5,5,5,5">
-		<StackPanel Orientation="Horizontal"
-					HorizontalAlignment="Stretch" VerticalAlignment="Top"
-					 BorderBrush="WhiteSmoke" BorderThickness="1"
-					Padding="5,2,5,5"
-					x:Name="ControlsStackPanel">
+					Padding="5,5,5,5"
+					BorderBrush="White"
+					BorderThickness="1">
 
-			<Button x:Name="EditParticipantButton" FontSize="12" 
+		<Grid BorderBrush="White" BorderThickness="1" Padding="5"
+			  x:Name="ControlsOuterGrid">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="65" />
+			</Grid.RowDefinitions>
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="40" />
+				<ColumnDefinition Width="650" />
+				<ColumnDefinition Width="34" />
+			</Grid.ColumnDefinitions>
+
+
+			<Button Grid.Row="0" Grid.Column="0" x:Name="EditParticipantButton" FontSize="12" 
 					Content="{x:Bind Id}" Tag="{x:Bind Id}" 
 					x:DefaultBindMode="OneWay"
 					Margin="0,0,5,0" 
@@ -28,12 +38,20 @@
 					Click="EditParticipantButton_Click"
 					/>
 
-			<StackPanel Orientation="Vertical">
+			<Grid Grid.Row="0" Grid.Column="1"
+					x:Name="GridControlInner">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="15" />
+					<RowDefinition Height="33" />
+				</Grid.RowDefinitions>
 
-				<StackPanel Orientation="Horizontal" Height="15">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="210" />
+					<ColumnDefinition Width="210" />
+					<ColumnDefinition Width="210" />
+				</Grid.ColumnDefinitions>
 
-					
-					<TextBox x:Name="ParticipantEmailLabel" Width="200"
+				<TextBox Grid.Row="0" Grid.Column="0" x:Name="ParticipantEmailLabel" Width="200"
 						 VerticalAlignment="Top" HorizontalAlignment="Left" 
 						 BorderBrush="Transparent" Padding="0"  Margin="0" 
 						 Text="Email Address" 
@@ -43,7 +61,7 @@
 						AllowFocusWhenDisabled="False"
 						 IsHitTestVisible="False"
 						/>
-					<TextBox x:Name="ParticipantFNameLabel" Width="200"
+				<TextBox Grid.Row="0" Grid.Column="1" x:Name="ParticipantFNameLabel" Width="200"
 						 VerticalAlignment="Top" HorizontalAlignment="Left" 
 						 BorderBrush="Transparent" Padding="0"  Margin="0" 
 						 Text="First Name" 
@@ -52,8 +70,8 @@
 						AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						 IsHitTestVisible="False"/>
-					
-					<TextBox x:Name="ParticipantLNameLabel" Width="200"
+
+				<TextBox  Grid.Row="0" Grid.Column="2" x:Name="ParticipantLNameLabel" Width="200"
 						 VerticalAlignment="Top" HorizontalAlignment="Left" 
 						 BorderBrush="Transparent" Padding="0"  Margin="0" 
 						 Text="Last Name" 
@@ -63,21 +81,14 @@
 						AllowFocusWhenDisabled="False"
 						IsHitTestVisible="False"/>
 
-				</StackPanel>
 
-				<StackPanel Orientation="Horizontal">
+				<TextBox Grid.Row="1" Grid.Column="0" x:Name="ParticipantEmail" Width="200" x:DefaultBindMode="TwoWay" Text="{x:Bind EmailAddress}" />
+				<TextBox Grid.Row="1" Grid.Column="1" x:Name="ParticipantFName" Width="200" x:DefaultBindMode="TwoWay" Text="{x:Bind FirstName}" />
+				<TextBox Grid.Row="1" Grid.Column="2" x:Name="ParticipantLName" Width="200" x:DefaultBindMode="TwoWay" Text="{x:Bind LastName}" />
 
-					<TextBox x:Name="ParticipantEmail" Width="200" x:DefaultBindMode="TwoWay" Text="{x:Bind EmailAddress}" />
-					<TextBox x:Name="ParticipantFName" Width="200" x:DefaultBindMode="TwoWay" Text="{x:Bind FirstName}" />
-					<TextBox x:Name="ParticipantLName" Width="200" x:DefaultBindMode="TwoWay" Text="{x:Bind LastName}" />
+			</Grid>
 
-				</StackPanel>
-
-
-			</StackPanel>
-
-
-			<Button x:Name="ParticipantActionButton" FontSize="15" 
+			<Button Grid.Row="0" Grid.Column="2" x:Name="ParticipantActionButton" FontSize="15" 
 					x:DefaultBindMode="OneWay" 
 					Margin="5,0,5,0" 
 					Height="30" Width="30" 
@@ -93,8 +104,7 @@
 						PrimaryButtonText = "Yes"
 						CloseButtonText = "No" />
 
-
-		</StackPanel>
+		</Grid>
 	</ContentControl>
 
 </UserControl>
