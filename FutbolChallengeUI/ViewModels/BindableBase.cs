@@ -12,6 +12,11 @@ namespace FutbolChallengeUI.ViewModels
 		{
 			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+		public void NotifyAllOnPropertyChanged()
+		{
+			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+		}
 	}
 
 	public class BindableUserControlBase : UserControl, INotifyPropertyChanged

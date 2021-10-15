@@ -1,22 +1,15 @@
 ﻿using FutbolChallenge.Data.Model;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
-using System;
-using System.ComponentModel;
-using Windows.UI;
+using FutbolChallengeUI.Enums;
+using FutbolChallengeUI.EventHandlers;
+using FutbolChallengeUI.EventHandlers.EventArgs;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
-namespace FutbolChallengeUI.Controls
+namespace FutbolChallengeUI.ViewModels
 {
-	public sealed partial class ParticipantPanelView : UserControl, INotifyPropertyChanged
+	public sealed partial class ParticipantPanelViewModel : BindableBase
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		static public event EditPanelEventHandler<Participant> EditParticipant;
-		static public event DeleteOrAddPanelEventHandler DeleteAddParticipant;
+		static public event EditEntityEventHandler<Participant> EditParticipant;
+		static public event DeleteEntityEventHandler DeleteParticipant;
+		static public event AddEntityEventHandler<Participant> AddParticipant;
 
 		private Participant _Participant = new Participant();
 
@@ -26,43 +19,13 @@ namespace FutbolChallengeUI.Controls
 			set
 			{
 				_Participant = value;
-				OnPropertyChanged();
+				NotifyAllOnPropertyChanged();
 			}
 		}
 
-		public ParticipantPanelView()
+		public ParticipantPanelViewModel()
 		{
-			this.InitializeComponent();
-			this.LosingFocus += ParticipantPanelView_LosingFocus;
-		}
 
-		private async void ParticipantPanelView_LosingFocus(UIElement sender, Microsoft.UI.Xaml.Input.LosingFocusEventArgs args)
-		{
-			if (args.NewFocusedElement != null)
-			{
-				switch (args.NewFocusedElement)
-				{
-					case Button bt:
-						if (bt.Parent == this.ControlsOuterGrid) return;
-						break;
-					case TextBox box:
-						if (box.Parent == this.GridControlInner) return;
-						break;
-				}
-
-
-				if (_EditMode == EditMode.Update)
-				{
-					ContentDialogResult result = await this.EditInProgressDialog.ShowAsync();
-
-					if (result == ContentDialogResult.Primary)
-					{
-						EditParticipant?.Invoke(this, new EditPanelEventArgs<Participant>(Participant));
-					}
-					Mode = "Delete";
-					EnableTextEditing = "False";
-				}
-			}
 		}
 
 		public void Clear()
@@ -81,6 +44,7 @@ namespace FutbolChallengeUI.Controls
 			get => Participant?.FirstName;
 			set { if (Participant != null) Participant.FirstName = value; }
 		}
+
 		public string LastName
 		{
 			get => Participant?.LastName;
@@ -90,110 +54,60 @@ namespace FutbolChallengeUI.Controls
 		public string Id =>
 			(Participant?.Id ?? 0).ToString();
 
-		private bool _ShowEdit;
-		public string ShowEdit
+		private bool _ShowEdit = true;
+		public bool ShowEdit
 		{
-			get { return _ShowEdit.ToString(); }
+			get { return _ShowEdit; }
 			set
 			{
-				_ShowEdit = bool.Parse(value);
-				EditParticipantButton.Visibility = _ShowEdit ? Visibility.Visible : Visibility.Collapsed;
+				_ShowEdit = value;
+				OnPropertyChanged();
 			}
 		}
 
-		private bool _EnableTextEditing;
-		public string EnableTextEditing
+		private bool _EnableTextEditing = false;
+		public bool EnableTextEditing
 		{
-			get { return _EnableTextEditing.ToString(); }
+			get { return _EnableTextEditing; }
 			set
 			{
-				_EnableTextEditing = bool.Parse(value);
-				ParticipantEmail.IsReadOnly = !_EnableTextEditing;
-				ParticipantFName.IsReadOnly = !_EnableTextEditing;
-				ParticipantLName.IsReadOnly = !_EnableTextEditing;
+				_EnableTextEditing = value;
+				OnPropertyChanged();
 			}
 		}
 
-		enum EditMode
+		private EditMode _EditMode = EditMode.Delete;
+		public EditMode EditMode
 		{
-			Add,
-			Delete,
-			Update,
-			None,
-		}
-
-		private EditMode _EditMode;
-		public string Mode
-		{
-			get { return _EditMode.ToString(); }
+			get { return _EditMode; }
 			set
 			{
-				_EditMode = EditMode.None;
-				object? parseOut;
-				if (Enum.TryParse(typeof(EditMode), value, out parseOut))
-				{
-					_EditMode = (EditMode)parseOut;
-				}
-				var editBackground = new SolidColorBrush(Color.FromArgb(128, 45, 45, 45));
-
-				if (_EditMode == EditMode.Delete)
-				{
-					ParticipantActionButton.Visibility = Visibility.Visible;
-					ParticipantActionButton.Content = "X";
-					ParticipantActionButton.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 0, 0));
-				}
-				else if (_EditMode == EditMode.Add)
-				{
-					ParticipantActionButton.Visibility = Visibility.Visible;
-					ParticipantActionButton.Content = "+";
-					ParticipantActionButton.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
-					editBackground = new SolidColorBrush(Color.FromArgb(128, 0, 0, 123));
-				}
-				else if (_EditMode == EditMode.Update)
-				{
-					ParticipantActionButton.Visibility = Visibility.Visible;
-					ParticipantActionButton.Content = "^";
-					ParticipantActionButton.Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 0, 255));
-					editBackground = new SolidColorBrush(Color.FromArgb(128, 123, 0, 0));
-				}
-				else
-				{
-					ParticipantActionButton.Visibility = Visibility.Collapsed;
-					ParticipantActionButton.Content = "";
-				}
-
-				ParticipantEmail.Background = editBackground;
-				ParticipantFName.Background = editBackground;
-				ParticipantLName.Background = editBackground;
-				ParticipantEmail.Background = editBackground;
+				_EditMode = value;
+				OnPropertyChanged();
 			}
 		}
 
-
-		public void OnPropertyChanged()
+		public void EditModeClick()
 		{
-			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
+			EditMode = EditMode == EditMode.Edit ? EditMode.Delete : EditMode.Edit;
+			EnableTextEditing = !EnableTextEditing;
 		}
 
-		private void EditParticipantButton_Click(object sender, RoutedEventArgs e)
+		public void ParticipantActionClick()
 		{
-			Mode = "Update";
-			EnableTextEditing = "True";
-		}
-
-		private void ParticipantActionButton_Click(object sender, RoutedEventArgs e)
-		{
-			if (_EditMode == EditMode.Update)
+			if (_EditMode == EditMode.Edit)
 			{
-				EditParticipant?.Invoke(this, new EditPanelEventArgs<Participant>(_Participant));
-				Mode = "Delete";
-				EnableTextEditing = "False";
+				EditParticipant?.Invoke(this, new EditEntityEventArgs<Participant>(Participant));
+			}
+			else if(_EditMode == EditMode.Add)
+			{
+				AddParticipant?.Invoke(this, new AddEntityEventArgs<Participant>(Participant));
 			}
 			else
 			{
-				int id = int.Parse(((Button)sender).Tag.ToString());
-				DeleteAddParticipant?.Invoke(this, new DeleteOrAddPanelEventArgs(id));
+				DeleteParticipant?.Invoke(this, new DeleteEntityEventArgs(Participant.Id));
 			}
 		}
+
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using FutbolChallenge.Data.Model;
 
-namespace FutbolChallengeUI.Controls
+namespace FutbolChallengeUI.EventHandlers.EventArgs
 {
 	public class SelectedSeasonChangedEventArgs
 	{

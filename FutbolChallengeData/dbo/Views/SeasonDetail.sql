@@ -1,15 +1,29 @@
-﻿CREATE VIEW dbo.SeasonSchedule
+﻿CREATE VIEW dbo.SeasonDetail
 AS
-SELECT        dbo.Season.Id AS SeasonId, dbo.MatchGroup.MatchGroupSequence, dbo.ScheduledGame.MatchDate, HomeTeam.Stadium, HomeTeam.Name AS HomeTeam, VisitingTeam.Name AS VistingTeam
-FROM            dbo.ScheduledGame INNER JOIN
-                         dbo.MatchGroup ON dbo.ScheduledGame.MatchGroupId = dbo.MatchGroup.Id INNER JOIN
-                         dbo.Season ON dbo.MatchGroup.SeasonId = dbo.Season.Id INNER JOIN
-                         dbo.Team AS HomeTeam ON dbo.ScheduledGame.HomeTeamId = HomeTeam.Id INNER JOIN
-                         dbo.Team AS VisitingTeam ON dbo.ScheduledGame.VisitingTeamId = VisitingTeam.Id
+WITH GameCount AS (SELECT        SeasonId, COUNT(1) AS TotalGameCount
+                                                FROM            dbo.SeasonGame
+                                                GROUP BY SeasonId), GamesPlayedCount AS
+    (SELECT        SeasonId, COUNT(1) AS GamesPlayedCount
+      FROM            dbo.SeasonGame AS SeasonGame_2
+      WHERE        (MatchDate < GETUTCDATE())
+      GROUP BY SeasonId), ParticipantCount AS
+    (SELECT        SeasonId, COUNT(1) AS ParticipantCount
+      FROM            dbo.ParticipatingInSeason
+      WHERE        (Removed IS NULL)
+      GROUP BY SeasonId), NextMatchDate AS
+    (SELECT        SeasonId, MIN(MatchDate) AS NextMatchDate
+      FROM            dbo.SeasonGame AS SeasonGame_1
+      WHERE        (MatchDate >= GETUTCDATE())
+      GROUP BY SeasonId)
+    SELECT        s.Id, s.Name, s.StartDate, s.EndDate, ISNULL(g.TotalGameCount, 0) AS SeasonGameCount, ISNULL(gp.GamesPlayedCount, 0) AS SeasonGamesPlayedCount, ISNULL(pc.ParticipantCount, 0) AS ParticipantCount, 
+                              n.NextMatchDate
+     FROM            dbo.Season AS s LEFT OUTER JOIN
+                              GameCount AS g ON s.Id = g.SeasonId LEFT OUTER JOIN
+                              GamesPlayedCount AS gp ON s.Id = gp.SeasonId LEFT OUTER JOIN
+                              ParticipantCount AS pc ON s.Id = pc.SeasonId LEFT OUTER JOIN
+                              NextMatchDate AS n ON s.Id = n.SeasonId
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'SeasonSchedule';
-
-
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 1, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'SeasonDetail';
 
 
 GO
@@ -84,52 +98,52 @@ Begin DesignProperties =
          Left = 0
       End
       Begin Tables = 
-         Begin Table = "Season"
+         Begin Table = "s"
             Begin Extent = 
-               Top = 199
-               Left = 54
-               Bottom = 329
-               Right = 224
+               Top = 6
+               Left = 38
+               Bottom = 136
+               Right = 208
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "HomeTeam"
+         Begin Table = "g"
             Begin Extent = 
-               Top = 204
-               Left = 1159
-               Bottom = 317
-               Right = 1329
+               Top = 6
+               Left = 246
+               Bottom = 102
+               Right = 425
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "VisitingTeam"
+         Begin Table = "gp"
             Begin Extent = 
-               Top = 447
-               Left = 1161
-               Bottom = 560
-               Right = 1331
+               Top = 6
+               Left = 463
+               Bottom = 102
+               Right = 656
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "MatchGroup"
+         Begin Table = "pc"
             Begin Extent = 
-               Top = 253
-               Left = 368
-               Bottom = 421
-               Right = 575
+               Top = 6
+               Left = 694
+               Bottom = 102
+               Right = 873
             End
             DisplayFlags = 280
             TopColumn = 0
          End
-         Begin Table = "ScheduledGame"
+         Begin Table = "n"
             Begin Extent = 
-               Top = 320
-               Left = 679
-               Bottom = 529
-               Right = 865
+               Top = 6
+               Left = 911
+               Bottom = 102
+               Right = 1083
             End
             DisplayFlags = 280
             TopColumn = 0
@@ -141,29 +155,12 @@ Begin DesignProperties =
    Begin DataPane = 
       Begin ParameterDefaults = ""
       End
-      Begin ColumnWidths = 9
-         Width = 284
-         Width = 1500
-         Width = 2325
-         Width = 2985
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-         Width = 1500
-      End
    End
    Begin CriteriaPane = 
       Begin ColumnWidths = 11
-         Column = 2460
-       ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'SeasonSchedule';
-
-
-
-
-GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  Alias = 2055
-         Table = 1980
+         Column = 1440
+         Alias = 900
+         Table = 1170
          Output = 720
          Append = 1400
          NewValue = 1170
@@ -177,5 +174,5 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'  Alias = 
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'SeasonSchedule';
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'SeasonDetail';
 

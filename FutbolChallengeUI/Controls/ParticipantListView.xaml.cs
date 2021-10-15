@@ -1,9 +1,4 @@
-﻿using FutbolChallenge.Data.Model;
-using FutbolChallengeUI.ViewModels;
-using System.Collections.Generic;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+﻿using FutbolChallengeUI.ViewModels;
 
 namespace FutbolChallengeUI.Controls
 {
@@ -23,9 +18,6 @@ namespace FutbolChallengeUI.Controls
 		}
 
 
-		public IEnumerable<Participant> Participants =>
-			_ParticipantListViewModel?.Participants;
-
 		public ParticipantListView()
 		{
 			this.InitializeComponent();
@@ -34,7 +26,6 @@ namespace FutbolChallengeUI.Controls
 		public void Reload()
 		{
 			OnPropertyChanged("ParticipantListViewModel");
-			OnPropertyChanged("Participants");
 		}
 	}
 }

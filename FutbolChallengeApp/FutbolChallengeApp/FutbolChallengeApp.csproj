@@ -11,6 +11,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="FutbolChallengeAppModule.cs~RFdf7c1fb.TMP" />
+    <None Remove="GameManagement.xaml" />
     <None Remove="ParticipantManagement.xaml" />
     <None Remove="SeasonScheduleManagement.xaml" />
   </ItemGroup>
@@ -30,6 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="GameManagement.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="SeasonScheduleManagement.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

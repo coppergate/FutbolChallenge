@@ -1,5 +1,4 @@
-﻿using FutbolChallenge.Data.Model;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace FutbolChallengeUI.ViewModels
 {
@@ -10,9 +9,9 @@ namespace FutbolChallengeUI.ViewModels
 			
 		}
 
-		private ObservableCollection<Participant> _Participants;
+		private ObservableCollection<ParticipantPanelViewModel> _Participants;
 
-		public ObservableCollection<Participant> Participants
+		public ObservableCollection<ParticipantPanelViewModel> Participants
 		{
 			get { return _Participants; }
 			set

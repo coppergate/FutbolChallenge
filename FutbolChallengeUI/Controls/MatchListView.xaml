@@ -1,0 +1,88 @@
+﻿<viewmodels:BindableUserControlBase
+	xmlns:viewmodels="using:FutbolChallengeUI.ViewModels"
+    x:Class="FutbolChallengeUI.Controls.MatchListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FutbolChallengeUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	mc:Ignorable="d"
+	DataContext="{x:Bind MatchListViewModel, Mode=OneWay}"
+	 x:Name="MatchListViewControl"
+	VerticalAlignment="Top"
+	>
+
+
+	<Grid CanBeScrollAnchor="True"	Height="Auto" >
+
+		<GridView x:Name="ParticipantViewGrid" TabIndex="1"
+				Margin="10,0,20,0" 
+				VerticalAlignment="Top" 
+				HorizontalAlignment="Stretch"
+				SelectionMode="None" 
+				Height="Auto"
+				Width="850"
+				Padding="10,0,0,0"
+				BorderBrush="White" BorderThickness="2"
+				ItemsSource="{x:Bind MatchListViewModel.Matches, Mode=OneWay}"
+				CanBeScrollAnchor="True"
+				ShowsScrollingPlaceholders="True"
+				ScrollViewer.VerticalScrollBarVisibility="Auto" 
+		>
+			<GridView.HeaderTemplate>
+				<DataTemplate x:DataType="viewmodels:MatchListViewModel" >
+					<GridViewHeaderItem HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Top">
+						<Grid x:Name="GridHeaderView" HorizontalAlignment="Center">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="120" />
+								<ColumnDefinition Width="200" />
+								<ColumnDefinition Width="200" />
+							</Grid.ColumnDefinitions>
+							<TextBox Grid.Column="0" Text="Matches" 
+									IsReadOnly="True"
+									AllowFocusOnInteraction="False"
+									AllowFocusWhenDisabled="False"
+									IsHitTestVisible="False"/>
+							<TextBox Grid.Column="1" Text="{x:Bind SeasonName, Mode=OneWay}" 
+									IsReadOnly="True"
+									AllowFocusOnInteraction="False"
+									AllowFocusWhenDisabled="False"
+									IsHitTestVisible="False"/>
+							<Button Grid.Column="2" x:Name="MatchSequenceAccessButton"
+									Content="{x:Bind MatchGroupName, Mode=OneWay}" 
+									AllowFocusOnInteraction="False"
+									AllowFocusWhenDisabled="False"
+									IsHitTestVisible="True"
+									 Click="{x:Bind MatchGroupButtonClick}" />
+						</Grid>
+					</GridViewHeaderItem>
+				</DataTemplate>
+			</GridView.HeaderTemplate>
+
+
+			<GridView.ItemTemplate>
+
+				<DataTemplate x:DataType="viewmodels:MatchPanelViewModel" >
+
+					<local:MatchPanelView  
+						x:Name="matchPanel"
+						EditMode="{x:Bind EditMode, Mode=OneWay}" ShowEdit="{x:Bind  ShowEdit, Mode=OneWay}" EnableTextEditing="{x:Bind EnableTextEditing, Mode=OneWay}" 
+						ShowScores="{x:Bind ShowScores, Mode=OneWay}"
+						BorderBrush="WhiteSmoke" BorderThickness="1" 
+						HorizontalAlignment="Center"  
+						VerticalAlignment="Center"
+						MatchPanelViewModel="{x:Bind Mode= OneWay}" 
+						Width="775"
+					  />
+
+				</DataTemplate>
+			</GridView.ItemTemplate>
+
+			<GridView.ItemsPanel>
+				<ItemsPanelTemplate>
+					<ItemsWrapGrid Orientation="Horizontal" Width="800" HorizontalAlignment="Center"  MaximumRowsOrColumns="1" />
+				</ItemsPanelTemplate>
+			</GridView.ItemsPanel>
+		</GridView>
+	</Grid>
+</viewmodels:BindableUserControlBase>

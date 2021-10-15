@@ -170,30 +170,70 @@ namespace FutbolChallenge.Data.Dto {
 
 
 	/// <summary>
-	/// A class which represents the SeasonSchedule view.
+	/// A class which represents the SeasonGame view.
 	/// </summary>
-	[Dapper.Table("SeasonSchedule", Schema="dbo")]
-	sealed public partial class SeasonScheduleDto  : WorkspaceModelBase {
+	[Dapper.Table("SeasonGame", Schema="dbo")]
+	sealed public partial class SeasonGameDto  : WorkspaceModelBase {
 
 		[DataColumn(DataType="varchar(50)", UnderlyingColumn="HomeTeam", AllowNulls=false, MaxLength=50 )]
 		public string HomeTeam { get; set; }
 		public static string HomeTeamColumnName { get; } = "HomeTeam";
 
+		[DataColumn(DataType="int", UnderlyingColumn="HomeTeamId", AllowNulls=false, NumericPrecision=10 )]
+		public int? HomeTeamId { get; set; }
+		public static string HomeTeamIdColumnName { get; } = "HomeTeamId";
+
+		[DataColumn(DataType="int", UnderlyingColumn="HomeTeamScore", AllowNulls=true, NumericPrecision=10 )]
+		public int? HomeTeamScore { get; set; }
+		public static string HomeTeamScoreColumnName { get; } = "HomeTeamScore";
+
 		[DataColumn(DataType="datetime2", UnderlyingColumn="MatchDate", AllowNulls=true )]
 		public DateTime? MatchDate { get; set; }
 		public static string MatchDateColumnName { get; } = "MatchDate";
+
+		[DataColumn(DataType="datetime2", UnderlyingColumn="MatchGroupEndDate", AllowNulls=false )]
+		public DateTime? MatchGroupEndDate { get; set; }
+		public static string MatchGroupEndDateColumnName { get; } = "MatchGroupEndDate";
+
+		[DataColumn(DataType="int", UnderlyingColumn="MatchGroupId", AllowNulls=false, NumericPrecision=10 )]
+		public int? MatchGroupId { get; set; }
+		public static string MatchGroupIdColumnName { get; } = "MatchGroupId";
 
 		[DataColumn(DataType="int", UnderlyingColumn="MatchGroupSequence", AllowNulls=false, NumericPrecision=10 )]
 		public int? MatchGroupSequence { get; set; }
 		public static string MatchGroupSequenceColumnName { get; } = "MatchGroupSequence";
 
+		[DataColumn(DataType="datetime2", UnderlyingColumn="MatchGroupStartDate", AllowNulls=false )]
+		public DateTime? MatchGroupStartDate { get; set; }
+		public static string MatchGroupStartDateColumnName { get; } = "MatchGroupStartDate";
+
+		[DataColumn(DataType="varchar(50)", UnderlyingColumn="MatchGroupTitle", AllowNulls=true, MaxLength=50 )]
+		public string MatchGroupTitle { get; set; }
+		public static string MatchGroupTitleColumnName { get; } = "MatchGroupTitle";
+
+		[DataColumn(DataType="int", UnderlyingColumn="MatchId", AllowNulls=false, NumericPrecision=10 )]
+		public int? MatchId { get; set; }
+		public static string MatchIdColumnName { get; } = "MatchId";
+
 		[DataColumn(DataType="int", UnderlyingColumn="SeasonId", AllowNulls=false, NumericPrecision=10 )]
 		public int? SeasonId { get; set; }
 		public static string SeasonIdColumnName { get; } = "SeasonId";
 
+		[DataColumn(DataType="varchar(100)", UnderlyingColumn="SeasonName", AllowNulls=false, MaxLength=100 )]
+		public string SeasonName { get; set; }
+		public static string SeasonNameColumnName { get; } = "SeasonName";
+
 		[DataColumn(DataType="varchar(50)", UnderlyingColumn="Stadium", AllowNulls=true, MaxLength=50 )]
 		public string Stadium { get; set; }
 		public static string StadiumColumnName { get; } = "Stadium";
+
+		[DataColumn(DataType="int", UnderlyingColumn="VisitingTeamId", AllowNulls=false, NumericPrecision=10 )]
+		public int? VisitingTeamId { get; set; }
+		public static string VisitingTeamIdColumnName { get; } = "VisitingTeamId";
+
+		[DataColumn(DataType="int", UnderlyingColumn="VisitingTeamScore", AllowNulls=true, NumericPrecision=10 )]
+		public int? VisitingTeamScore { get; set; }
+		public static string VisitingTeamScoreColumnName { get; } = "VisitingTeamScore";
 
 		[DataColumn(DataType="varchar(50)", UnderlyingColumn="VistingTeam", AllowNulls=false, MaxLength=50 )]
 		public string VistingTeam { get; set; }
@@ -203,9 +243,9 @@ namespace FutbolChallenge.Data.Dto {
 
 
 	/// <summary>
-	/// A class which represents the ParticipantGamePredictions view.
+	/// A class which represents the ParticipantGamePrediction view.
 	/// </summary>
-	[Dapper.Table("ParticipantGamePredictions", Schema="dbo")]
+	[Dapper.Table("ParticipantGamePrediction", Schema="dbo")]
 	sealed public partial class ParticipantGamePredictionDto  : WorkspaceModelBase {
 
 		[DataColumn(DataType="datetime2", UnderlyingColumn="EndDate", AllowNulls=false )]
@@ -377,9 +417,9 @@ namespace FutbolChallenge.Data.Dto {
 
 
 	/// <summary>
-	/// A class which represents the SeasonDetails view.
+	/// A class which represents the SeasonDetail view.
 	/// </summary>
-	[Dapper.Table("SeasonDetails", Schema="dbo")]
+	[Dapper.Table("SeasonDetail", Schema="dbo")]
 	sealed public partial class SeasonDetailDto  : WorkspaceModelBase {
 
 		[DataColumn(DataType="datetime2", UnderlyingColumn="EndDate", AllowNulls=false )]
@@ -498,24 +538,34 @@ namespace FutbolChallenge.Data.Dto {
 		
 	}
 	/// <summary>
-	/// A class which Extends the SeasonSchedule view.
+	/// A class which Extends the SeasonGame view.
 	/// </summary>
-	public partial class SeasonScheduleDto : IEquatable<SeasonScheduleDto> {
+	public partial class SeasonGameDto : IEquatable<SeasonGameDto> {
 
-		public bool Equals(SeasonScheduleDto? other) {
+		public bool Equals(SeasonGameDto? other) {
 				return other != null &&
 					DataCompare.CheckEqual(this.HomeTeam, other.HomeTeam) &&
+					DataCompare.CheckEqual(this.HomeTeamId, other.HomeTeamId) &&
+					DataCompare.CheckEqual<int>(this.HomeTeamScore, other.HomeTeamScore) &&
 					DataCompare.CheckEqual<DateTime>(this.MatchDate, other.MatchDate) &&
+					DataCompare.CheckEqual(this.MatchGroupEndDate, other.MatchGroupEndDate) &&
+					DataCompare.CheckEqual(this.MatchGroupId, other.MatchGroupId) &&
 					DataCompare.CheckEqual(this.MatchGroupSequence, other.MatchGroupSequence) &&
+					DataCompare.CheckEqual(this.MatchGroupStartDate, other.MatchGroupStartDate) &&
+					DataCompare.CheckEqual(this.MatchGroupTitle, other.MatchGroupTitle) &&
+					DataCompare.CheckEqual(this.MatchId, other.MatchId) &&
 					DataCompare.CheckEqual(this.SeasonId, other.SeasonId) &&
+					DataCompare.CheckEqual(this.SeasonName, other.SeasonName) &&
 					DataCompare.CheckEqual(this.Stadium, other.Stadium) &&
+					DataCompare.CheckEqual(this.VisitingTeamId, other.VisitingTeamId) &&
+					DataCompare.CheckEqual<int>(this.VisitingTeamScore, other.VisitingTeamScore) &&
 					DataCompare.CheckEqual(this.VistingTeam, other.VistingTeam) &&
 					true;
 		}
 		
 	}
 	/// <summary>
-	/// A class which Extends the ParticipantGamePredictions view.
+	/// A class which Extends the ParticipantGamePrediction view.
 	/// </summary>
 	public partial class ParticipantGamePredictionDto : IEquatable<ParticipantGamePredictionDto> {
 
@@ -592,7 +642,7 @@ namespace FutbolChallenge.Data.Dto {
 		
 	}
 	/// <summary>
-	/// A class which Extends the SeasonDetails view.
+	/// A class which Extends the SeasonDetail view.
 	/// </summary>
 	public partial class SeasonDetailDto : IEquatable<SeasonDetailDto> {
 
@@ -922,70 +972,132 @@ namespace FutbolChallenge.Data.Model {
 		}
 
 	}
-	public partial class SeasonSchedule  : DomainModelBase {
+	public partial class SeasonGame  : DomainModelBase {
 
-		public  SeasonSchedule() { }
-		public  SeasonSchedule(
+		public  SeasonGame() { }
+		public  SeasonGame(
 					string  hometeam,
+					int  hometeamid,
+					int?  hometeamscore,
 					DateTime?  matchdate,
+					DateTime  matchgroupenddate,
+					int  matchgroupid,
 					int  matchgroupsequence,
+					DateTime  matchgroupstartdate,
+					string  matchgrouptitle,
+					int  matchid,
 					int  seasonid,
+					string  seasonname,
 					string  stadium,
+					int  visitingteamid,
+					int?  visitingteamscore,
 					string  vistingteam) {
 			this.HomeTeam = hometeam;
+			this.HomeTeamId = hometeamid;
+			this.HomeTeamScore = hometeamscore;
 			this.MatchDate = matchdate;
+			this.MatchGroupEndDate = matchgroupenddate;
+			this.MatchGroupId = matchgroupid;
 			this.MatchGroupSequence = matchgroupsequence;
+			this.MatchGroupStartDate = matchgroupstartdate;
+			this.MatchGroupTitle = matchgrouptitle;
+			this.MatchId = matchid;
 			this.SeasonId = seasonid;
+			this.SeasonName = seasonname;
 			this.Stadium = stadium;
+			this.VisitingTeamId = visitingteamid;
+			this.VisitingTeamScore = visitingteamscore;
 			this.VistingTeam = vistingteam;
 		}
  
 		private string  HomeTeamField;
 		[StringLength(50)]
 		public string  HomeTeam { get { return HomeTeamField; } set { HomeTeamField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  HomeTeamIdField;
+		public int  HomeTeamId { get { return HomeTeamIdField; } set { HomeTeamIdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int?  HomeTeamScoreField;
+		public int?  HomeTeamScore { get { return HomeTeamScoreField; } set { HomeTeamScoreField = value; CurrentState = ObjectRecordState.MODIFIED;} }
 		private DateTime?  MatchDateField;
 		public DateTime?  MatchDate { get { return MatchDateField; } set { MatchDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private DateTime  MatchGroupEndDateField;
+		public DateTime  MatchGroupEndDate { get { return MatchGroupEndDateField; } set { MatchGroupEndDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  MatchGroupIdField;
+		public int  MatchGroupId { get { return MatchGroupIdField; } set { MatchGroupIdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
 		private int  MatchGroupSequenceField;
 		public int  MatchGroupSequence { get { return MatchGroupSequenceField; } set { MatchGroupSequenceField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private DateTime  MatchGroupStartDateField;
+		public DateTime  MatchGroupStartDate { get { return MatchGroupStartDateField; } set { MatchGroupStartDateField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private string  MatchGroupTitleField;
+		[StringLength(50)]
+		public string  MatchGroupTitle { get { return MatchGroupTitleField; } set { MatchGroupTitleField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  MatchIdField;
+		public int  MatchId { get { return MatchIdField; } set { MatchIdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
 		private int  SeasonIdField;
 		public int  SeasonId { get { return SeasonIdField; } set { SeasonIdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private string  SeasonNameField;
+		[StringLength(100)]
+		public string  SeasonName { get { return SeasonNameField; } set { SeasonNameField = value; CurrentState = ObjectRecordState.MODIFIED;} }
 		private string  StadiumField;
 		[StringLength(50)]
 		public string  Stadium { get { return StadiumField; } set { StadiumField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int  VisitingTeamIdField;
+		public int  VisitingTeamId { get { return VisitingTeamIdField; } set { VisitingTeamIdField = value; CurrentState = ObjectRecordState.MODIFIED;} }
+		private int?  VisitingTeamScoreField;
+		public int?  VisitingTeamScore { get { return VisitingTeamScoreField; } set { VisitingTeamScoreField = value; CurrentState = ObjectRecordState.MODIFIED;} }
 		private string  VistingTeamField;
 		[StringLength(50)]
 		public string  VistingTeam { get { return VistingTeamField; } set { VistingTeamField = value; CurrentState = ObjectRecordState.MODIFIED;} }
 
-		public SeasonScheduleDto ToDataModel() {
-			return new SeasonScheduleDto(){
+		public SeasonGameDto ToDataModel() {
+			return new SeasonGameDto(){
 				HomeTeam = this.HomeTeam, 
+				HomeTeamId = this.HomeTeamId, 
+				HomeTeamScore = this.HomeTeamScore, 
 				MatchDate = this.MatchDate, 
+				MatchGroupEndDate = this.MatchGroupEndDate, 
+				MatchGroupId = this.MatchGroupId, 
 				MatchGroupSequence = this.MatchGroupSequence, 
+				MatchGroupStartDate = this.MatchGroupStartDate, 
+				MatchGroupTitle = this.MatchGroupTitle, 
+				MatchId = this.MatchId, 
 				SeasonId = this.SeasonId, 
+				SeasonName = this.SeasonName, 
 				Stadium = this.Stadium, 
+				VisitingTeamId = this.VisitingTeamId, 
+				VisitingTeamScore = this.VisitingTeamScore, 
 				VistingTeam = this.VistingTeam, 
 				CurrentState = CurrentState,
 			};
 		}
 
-		static public SeasonSchedule FromDataModel(SeasonScheduleDto source) {
+		static public SeasonGame FromDataModel(SeasonGameDto source) {
 			if(source == null) {
-				return new SeasonSchedule();
+				return new SeasonGame();
 			}
 
-			return new SeasonSchedule() {
+			return new SeasonGame() {
 				HomeTeam = source.HomeTeam,
+				HomeTeamId = source.HomeTeamId.Value,
+				HomeTeamScore = source.HomeTeamScore,
 				MatchDate = source.MatchDate,
+				MatchGroupEndDate = source.MatchGroupEndDate.Value,
+				MatchGroupId = source.MatchGroupId.Value,
 				MatchGroupSequence = source.MatchGroupSequence.Value,
+				MatchGroupStartDate = source.MatchGroupStartDate.Value,
+				MatchGroupTitle = source.MatchGroupTitle,
+				MatchId = source.MatchId.Value,
 				SeasonId = source.SeasonId.Value,
+				SeasonName = source.SeasonName,
 				Stadium = source.Stadium,
+				VisitingTeamId = source.VisitingTeamId.Value,
+				VisitingTeamScore = source.VisitingTeamScore,
 				VistingTeam = source.VistingTeam,
 				CurrentState = source.CurrentState,
 			};
 		}
 
-		static public SeasonSchedule FromJSON(string json) {
-			var retVal = JsonSerializer.Deserialize<SeasonSchedule>(json);
+		static public SeasonGame FromJSON(string json) {
+			var retVal = JsonSerializer.Deserialize<SeasonGame>(json);
 			retVal.CurrentState = ObjectRecordState.EXISTING;
 			return retVal;
 		}
@@ -1555,18 +1667,18 @@ namespace FutbolChallenge.Data.Repository {
 	}
  
 
-	//	[dbo].[SeasonSchedule] 
-	 public partial interface ISeasonScheduleRepository {	 
+	//	[dbo].[SeasonGame] 
+	 public partial interface ISeasonGameRepository {	 
 		
-		Task<SeasonScheduleDto> Get( );
-		Task<SeasonScheduleDto> Get(string whereClause, object parameters);
-		Task<List<SeasonScheduleDto>> GetList(dynamic filter);
-		Task<List<SeasonScheduleDto>> GetList(string whereClause, object parameters); 
+		Task<SeasonGameDto> Get( );
+		Task<SeasonGameDto> Get(string whereClause, object parameters);
+		Task<List<SeasonGameDto>> GetList(dynamic filter);
+		Task<List<SeasonGameDto>> GetList(string whereClause, object parameters); 
 
 	}
  
 
-	//	[dbo].[ParticipantGamePredictions] 
+	//	[dbo].[ParticipantGamePrediction] 
 	 public partial interface IParticipantGamePredictionRepository {	 
 		
 		Task<ParticipantGamePredictionDto> Get( );
@@ -1636,7 +1748,7 @@ namespace FutbolChallenge.Data.Repository {
 	}
  
 
-	//	[dbo].[SeasonDetails] 
+	//	[dbo].[SeasonDetail] 
 	 public partial interface ISeasonDetailRepository {	 
 		
 		Task<SeasonDetailDto> Get( );
@@ -1658,7 +1770,7 @@ namespace FutbolChallenge.Data.Repository {
  
 		IParticipantPredictionRepository ParticipantPredictionRepository { get; } 
  
-		ISeasonScheduleRepository SeasonScheduleRepository { get; } 
+		ISeasonGameRepository SeasonGameRepository { get; } 
  
 		IParticipantGamePredictionRepository ParticipantGamePredictionRepository { get; } 
  
@@ -1680,24 +1792,24 @@ namespace FutbolChallenge.Data.Repository {
 			IParticipantRepository participantRepo, 
 			IParticipatingInSeasonRepository participatingInSeasonRepo, 
 			IParticipantPredictionRepository participantPredictionRepo, 
-			ISeasonScheduleRepository seasonScheduleRepo, 
-			IParticipantGamePredictionRepository participantGamePredictionsRepo, 
+			ISeasonGameRepository seasonGameRepo, 
+			IParticipantGamePredictionRepository participantGamePredictionRepo, 
 			IScheduledGameRepository scheduledGameRepo, 
 			IMatchGroupRepository matchGroupRepo, 
 			ISeasonMatchGroupDetailRepository seasonMatchGroupDetailRepo, 
-			ISeasonDetailRepository seasonDetailsRepo
+			ISeasonDetailRepository seasonDetailRepo
 		) { 
 			TeamRepository = teamRepo; 
 			SeasonRepository = seasonRepo; 
 			ParticipantRepository = participantRepo; 
 			ParticipatingInSeasonRepository = participatingInSeasonRepo; 
 			ParticipantPredictionRepository = participantPredictionRepo; 
-			SeasonScheduleRepository = seasonScheduleRepo; 
-			ParticipantGamePredictionRepository = participantGamePredictionsRepo; 
+			SeasonGameRepository = seasonGameRepo; 
+			ParticipantGamePredictionRepository = participantGamePredictionRepo; 
 			ScheduledGameRepository = scheduledGameRepo; 
 			MatchGroupRepository = matchGroupRepo; 
 			SeasonMatchGroupDetailRepository = seasonMatchGroupDetailRepo; 
-			SeasonDetailRepository = seasonDetailsRepo;		
+			SeasonDetailRepository = seasonDetailRepo;		
 		}
 
  
@@ -1711,7 +1823,7 @@ namespace FutbolChallenge.Data.Repository {
  
 		public IParticipantPredictionRepository ParticipantPredictionRepository { get; } 
  
-		public ISeasonScheduleRepository SeasonScheduleRepository { get; } 
+		public ISeasonGameRepository SeasonGameRepository { get; } 
  
 		public IParticipantGamePredictionRepository ParticipantGamePredictionRepository { get; } 
  
@@ -2114,36 +2226,36 @@ namespace FutbolChallenge.Data.Repository {
 		}
 
 	}
-	//	[dbo].[SeasonSchedule] 
-	 public partial class SeasonScheduleRepository : ImplementedDataServiceProvider, ISeasonScheduleRepository {
+	//	[dbo].[SeasonGame] 
+	 public partial class SeasonGameRepository : ImplementedDataServiceProvider, ISeasonGameRepository {
 
-		public SeasonScheduleRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory)  {
+		public SeasonGameRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory)  {
 		}
 
 		
-		async public Task<SeasonScheduleDto> Get() {
-			SeasonScheduleDto value = await FetchValueWithSql<SeasonScheduleDto>("SELECT [HomeTeam],[MatchDate],[MatchGroupSequence],[SeasonId],[Stadium],[VistingTeam] FROM [dbo].[SeasonSchedule] ", new {  });
+		async public Task<SeasonGameDto> Get() {
+			SeasonGameDto value = await FetchValueWithSql<SeasonGameDto>("SELECT [HomeTeam],[HomeTeamId],[HomeTeamScore],[MatchDate],[MatchGroupEndDate],[MatchGroupId],[MatchGroupSequence],[MatchGroupStartDate],[MatchGroupTitle],[MatchId],[SeasonId],[SeasonName],[Stadium],[VisitingTeamId],[VisitingTeamScore],[VistingTeam] FROM [dbo].[SeasonGame] ", new {  });
 			if(null != value) {
 				value.CurrentState = ObjectRecordState.EXISTING;
 			}
 			return value;
 		}
 
-		async public Task<SeasonScheduleDto> Get(string whereClause, object parameters) {
+		async public Task<SeasonGameDto> Get(string whereClause, object parameters) {
 			return (await GetList(whereClause, parameters)).SingleOrDefault();
 		}
 
-		async public Task<SeasonScheduleDto> FetchSingleWithSql(string sql, object parameters) {
+		async public Task<SeasonGameDto> FetchSingleWithSql(string sql, object parameters) {
 			
-			SeasonScheduleDto retVal = await FetchValueWithSql<SeasonScheduleDto>(sql, parameters);
+			SeasonGameDto retVal = await FetchValueWithSql<SeasonGameDto>(sql, parameters);
 			if (null != retVal) {
 				retVal.CurrentState = ObjectRecordState.EXISTING;
 			}
 			return retVal;
 		}
 
-		async public Task<List<SeasonScheduleDto>> GetList(dynamic filter) {
-			List<SeasonScheduleDto> localList = await FetchListEntity<SeasonScheduleDto>(filter);
+		async public Task<List<SeasonGameDto>> GetList(dynamic filter) {
+			List<SeasonGameDto> localList = await FetchListEntity<SeasonGameDto>(filter);
 			if(null != localList)
 			{
 				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
@@ -2151,15 +2263,15 @@ namespace FutbolChallenge.Data.Repository {
 			return localList;
 		}
 
-		async public Task<List<SeasonScheduleDto>> GetList(string whereClause, object parameters) {
-			StringBuilder bldr = new StringBuilder("SELECT [HomeTeam],[MatchDate],[MatchGroupSequence],[SeasonId],[Stadium],[VistingTeam] FROM [dbo].[SeasonSchedule] ");
+		async public Task<List<SeasonGameDto>> GetList(string whereClause, object parameters) {
+			StringBuilder bldr = new StringBuilder("SELECT [HomeTeam],[HomeTeamId],[HomeTeamScore],[MatchDate],[MatchGroupEndDate],[MatchGroupId],[MatchGroupSequence],[MatchGroupStartDate],[MatchGroupTitle],[MatchId],[SeasonId],[SeasonName],[Stadium],[VisitingTeamId],[VisitingTeamScore],[VistingTeam] FROM [dbo].[SeasonGame] ");
 			if(!string.IsNullOrEmpty(whereClause)) {
 				if(!whereClause.Trim().StartsWith("where",System.StringComparison.OrdinalIgnoreCase)) {
 					bldr.Append(" WHERE ");
 				}
 				bldr.Append($" {whereClause} ");
 			}
-			List<SeasonScheduleDto> localList = await FetchListEntityWithSql<SeasonScheduleDto>(bldr.ToString(), parameters);
+			List<SeasonGameDto> localList = await FetchListEntityWithSql<SeasonGameDto>(bldr.ToString(), parameters);
 			if(null != localList) {
 				localList.ForEach(i => i.CurrentState = ObjectRecordState.EXISTING);
 			}
@@ -2168,7 +2280,7 @@ namespace FutbolChallenge.Data.Repository {
 
 
 	}
-	//	[dbo].[ParticipantGamePredictions] 
+	//	[dbo].[ParticipantGamePrediction] 
 	 public partial class ParticipantGamePredictionRepository : ImplementedDataServiceProvider, IParticipantGamePredictionRepository {
 
 		public ParticipantGamePredictionRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory)  {
@@ -2176,7 +2288,7 @@ namespace FutbolChallenge.Data.Repository {
 
 		
 		async public Task<ParticipantGamePredictionDto> Get() {
-			ParticipantGamePredictionDto value = await FetchValueWithSql<ParticipantGamePredictionDto>("SELECT [EndDate],[FirstName],[HomeTeamActualResult],[HomeTeamName],[HomeTeamPredictedResult],[LastName],[MatchGroupSequence],[ParticipantId],[ScheduledGameId],[SeasonId],[StartDate],[VisitingTeamActualResult],[VisitingTeamName],[VisitingTeamPredictedResult] FROM [dbo].[ParticipantGamePredictions] ", new {  });
+			ParticipantGamePredictionDto value = await FetchValueWithSql<ParticipantGamePredictionDto>("SELECT [EndDate],[FirstName],[HomeTeamActualResult],[HomeTeamName],[HomeTeamPredictedResult],[LastName],[MatchGroupSequence],[ParticipantId],[ScheduledGameId],[SeasonId],[StartDate],[VisitingTeamActualResult],[VisitingTeamName],[VisitingTeamPredictedResult] FROM [dbo].[ParticipantGamePrediction] ", new {  });
 			if(null != value) {
 				value.CurrentState = ObjectRecordState.EXISTING;
 			}
@@ -2206,7 +2318,7 @@ namespace FutbolChallenge.Data.Repository {
 		}
 
 		async public Task<List<ParticipantGamePredictionDto>> GetList(string whereClause, object parameters) {
-			StringBuilder bldr = new StringBuilder("SELECT [EndDate],[FirstName],[HomeTeamActualResult],[HomeTeamName],[HomeTeamPredictedResult],[LastName],[MatchGroupSequence],[ParticipantId],[ScheduledGameId],[SeasonId],[StartDate],[VisitingTeamActualResult],[VisitingTeamName],[VisitingTeamPredictedResult] FROM [dbo].[ParticipantGamePredictions] ");
+			StringBuilder bldr = new StringBuilder("SELECT [EndDate],[FirstName],[HomeTeamActualResult],[HomeTeamName],[HomeTeamPredictedResult],[LastName],[MatchGroupSequence],[ParticipantId],[ScheduledGameId],[SeasonId],[StartDate],[VisitingTeamActualResult],[VisitingTeamName],[VisitingTeamPredictedResult] FROM [dbo].[ParticipantGamePrediction] ");
 			if(!string.IsNullOrEmpty(whereClause)) {
 				if(!whereClause.Trim().StartsWith("where",System.StringComparison.OrdinalIgnoreCase)) {
 					bldr.Append(" WHERE ");
@@ -2432,7 +2544,7 @@ namespace FutbolChallenge.Data.Repository {
 
 
 	}
-	//	[dbo].[SeasonDetails] 
+	//	[dbo].[SeasonDetail] 
 	 public partial class SeasonDetailRepository : ImplementedDataServiceProvider, ISeasonDetailRepository {
 
 		public SeasonDetailRepository(IDbConnectionFactory connectionFactory) : base(connectionFactory)  {
@@ -2440,7 +2552,7 @@ namespace FutbolChallenge.Data.Repository {
 
 		
 		async public Task<SeasonDetailDto> Get() {
-			SeasonDetailDto value = await FetchValueWithSql<SeasonDetailDto>("SELECT [EndDate],[Id],[Name],[NextMatchDate],[ParticipantCount],[SeasonGameCount],[SeasonGamesPlayedCount],[StartDate] FROM [dbo].[SeasonDetails] ", new {  });
+			SeasonDetailDto value = await FetchValueWithSql<SeasonDetailDto>("SELECT [EndDate],[Id],[Name],[NextMatchDate],[ParticipantCount],[SeasonGameCount],[SeasonGamesPlayedCount],[StartDate] FROM [dbo].[SeasonDetail] ", new {  });
 			if(null != value) {
 				value.CurrentState = ObjectRecordState.EXISTING;
 			}
@@ -2470,7 +2582,7 @@ namespace FutbolChallenge.Data.Repository {
 		}
 
 		async public Task<List<SeasonDetailDto>> GetList(string whereClause, object parameters) {
-			StringBuilder bldr = new StringBuilder("SELECT [EndDate],[Id],[Name],[NextMatchDate],[ParticipantCount],[SeasonGameCount],[SeasonGamesPlayedCount],[StartDate] FROM [dbo].[SeasonDetails] ");
+			StringBuilder bldr = new StringBuilder("SELECT [EndDate],[Id],[Name],[NextMatchDate],[ParticipantCount],[SeasonGameCount],[SeasonGamesPlayedCount],[StartDate] FROM [dbo].[SeasonDetail] ");
 			if(!string.IsNullOrEmpty(whereClause)) {
 				if(!whereClause.Trim().StartsWith("where",System.StringComparison.OrdinalIgnoreCase)) {
 					bldr.Append(" WHERE ");

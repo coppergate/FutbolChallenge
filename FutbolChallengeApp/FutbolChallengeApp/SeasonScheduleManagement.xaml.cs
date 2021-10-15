@@ -1,15 +1,17 @@
 ﻿using FutbolChallenge.Data.Model;
+using FutbolChallengeDataRepository.Composites;
 using FutbolChallengeUI;
+using FutbolChallengeUI.Controls;
+using FutbolChallengeUI.EventHandlers.EventArgs;
 using FutbolChallengeUI.ViewModels;
 using Microsoft.UI.Xaml;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
-using FutbolChallengeDataRepository.Composites;
-using FutbolChallengeUI.Controls;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace FutbolChallengeApp
 {
@@ -18,6 +20,8 @@ namespace FutbolChallengeApp
 	{
 		private readonly IFutbolChallengeServiceClient _ServiceClient;
 		private IntPtr m_hwnd;
+
+		private MatchListView _MatchListView;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -28,19 +32,17 @@ namespace FutbolChallengeApp
 			base.Title = "Manage Schedules";
 
 			SelectSeasonComboBox.SelectedSeasonChanged += SelectSeasonComboBox_SelectedSeasonChanged;
-			SeasonPanelView.EditSeason += SeasonPanelView_EditSeason;
+			SeasonPanelViewModel.EditSeason += SeasonPanelView_EditSeason;
 
 			m_hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
 			UIHelpers.SetWindowSize(m_hwnd, 1500, 700);
 
 		}
 
-		private async void SeasonPanelView_EditSeason(object sender, EditPanelEventArgs<Season> e)
+		private async void SeasonPanelView_EditSeason(object sender, EditEntityEventArgs<Season> e)
 		{
 			bool ret = await _ServiceClient.UpdateSeason(e.EditTarget);
 		}
-
-
 
 		private SeasonListViewModel _SeasonListViewModel = new SeasonListViewModel();
 		public SeasonListViewModel SeasonListViewModel
@@ -65,6 +67,16 @@ namespace FutbolChallengeApp
 			}
 		}
 
+		private MatchListViewModel _MatchListViewModel = new MatchListViewModel();
+		public MatchListViewModel MatchListViewModel
+		{
+			get { return _MatchListViewModel; }
+			set
+			{
+				_MatchListViewModel = value;
+				this.OnPropertyChanged();
+			}
+		}
 
 		private string _LoadingMessage;
 		public string LoadingMessage
@@ -73,8 +85,7 @@ namespace FutbolChallengeApp
 			set { _LoadingMessage = value; OnPropertyChanged(); }
 		}
 
-
-		private async void SelectSeasonComboBox_SelectedSeasonChanged(object sender, FutbolChallengeUI.Controls.SelectedSeasonChangedEventArgs e)
+		private async void SelectSeasonComboBox_SelectedSeasonChanged(object sender, SelectedSeasonChangedEventArgs e)
 		{
 			var season = e.SelectedSeason;
 			var seasonDetail = await _ServiceClient.FetchSeasonDetails(season.Id);
@@ -106,7 +117,7 @@ namespace FutbolChallengeApp
 
 			using FileStream strm = File.OpenRead(file);
 
-			var schedule = await ScheduleFromCSV.Create(seasonId, $"UploadedSeason-{seasonId}", "Premier League Week {0}", strm);
+			var schedule = await ScheduleFromCSV.Create(seasonId, $@"UploadedSeason-{seasonId}", $"UploadedSeason-{seasonId} {{0}}", strm);
 
 			await _ServiceClient.UploadScheduledGames(seasonId, schedule);
 			UploadFilePickPanel.Visibility = Visibility.Collapsed;
@@ -116,7 +127,13 @@ namespace FutbolChallengeApp
 		internal async Task LoadSeasons()
 		{
 			var seasons = await _ServiceClient.FetchAllSeasons();
-			_SeasonListViewModel.Seasons = new ObservableCollection<Season>(seasons);
+			_SeasonListViewModel.Seasons = new ObservableCollection<SeasonPanelViewModel>(seasons.Select(s => new SeasonPanelViewModel() 
+																															{ 
+																																Season = s, 
+																																EditMode= FutbolChallengeUI.Enums.EditMode.None, 
+																																EnableTextEditing=false, 
+																																ShowEdit=false 
+																															}));
 			SeasonListViewModel = _SeasonListViewModel;
 		}
 
@@ -135,6 +152,11 @@ namespace FutbolChallengeApp
 		private void ScheduleUploadButton_Click(object sender, RoutedEventArgs e)
 		{
 			UploadFilePickPanel.Visibility = UploadFilePickPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+		}
+
+		private void ShowSeasonSchedule_Click(object sender, RoutedEventArgs e)
+		{
+			
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using FutbolChallenge.Data.Dto;
+﻿using Exceptions;
+using FutbolChallenge.Data.Dto;
 using FutbolChallenge.Data.Repository;
 using FutbolChallengeDataRepository.Composites;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace DataControllers.Controllers
 		[HttpGet("full-schedule")]
 		public async Task<IActionResult> GetFullSchedule()
 		{
-			var ret = await _repositoryProvider.SeasonScheduleRepository.GetList("", null);
+			var ret = await _repositoryProvider.ScheduledGameRepository.GetList("", null);
 			return Ok(ret);
 		}
 
@@ -79,7 +80,7 @@ namespace DataControllers.Controllers
 							homeTeamDto.Name = match.HomeTeam;
 							homeTeamDto.Id = await _repositoryProvider.TeamRepository.Insert(homeTeamDto);
 						}
-						homeTeamId= homeTeamDto.Id;
+						homeTeamId = homeTeamDto.Id;
 						teamMap.Add(match.HomeTeam, homeTeamId);
 					}
 
@@ -109,17 +110,46 @@ namespace DataControllers.Controllers
 
 			}
 
-			var ret = await _repositoryProvider.SeasonScheduleRepository.GetList($"SeasonId = @seasonId", new { seasonId } );
+			List<SeasonGameDto> ret = await _repositoryProvider.SeasonGameRepository.GetList($"SeasonId = @seasonId", new { seasonId });
 			return Ok(ret);
 		}
 
-		[HttpGet("season-details/{seasonId}")]
-		public async Task<IActionResult> GetSeasonDetails(int seasonId)
+
+		[HttpGet("get-all-games/{seasonId}")]
+		public async Task<IActionResult> GetSeasonGames(int seasonId)
 		{
-			var ret = await _repositoryProvider.SeasonDetailRepository.Get($"id = {seasonId}", null);
+			var where = "SeasonId = @seasonId";
+			var ret = await _repositoryProvider.SeasonGameRepository.GetList(where, new { seasonId });
 			return Ok(ret);
 		}
 
+		[HttpDelete("delete-game/{id}")]
+		async public Task<IActionResult> DeleteMatch(int id)
+		{
+			var match = new ScheduledGameDto() {
+				Id = id
+			};
+			var result = await _repositoryProvider.ScheduledGameRepository.Delete(match);
+			return Ok(result);
+		}
+
+		[HttpPatch("update-game/{id}")]
+		async public Task<IActionResult> UpdateMatch(int id, [FromBody] ScheduledGameDto match)
+		{
+			if (id != match.Id)
+			{
+				throw new InvalidArgumentException($"REST path id disagrees with match id");
+			}
+			var result = await _repositoryProvider.ScheduledGameRepository.MergeWithKeep(match);
+			return Ok(result);
+		}
+
+		[HttpPost("insert-game")]
+		async public Task<IActionResult> InsertMatch([FromBody] ScheduledGameDto match)
+		{
+			var result = await _repositoryProvider.ScheduledGameRepository.Insert(match);
+			return Ok(result);
+		}
 
 
 	}

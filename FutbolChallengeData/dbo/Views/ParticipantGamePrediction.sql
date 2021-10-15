@@ -1,4 +1,4 @@
-﻿CREATE VIEW dbo.ParticipantGamePredictions
+﻿CREATE VIEW dbo.[ParticipantGamePrediction]
 AS
 SELECT        dbo.ParticipatingInSeason.SeasonId, dbo.ParticipantPrediction.ParticipantId, dbo.Participant.FirstName, dbo.Participant.LastName, dbo.MatchGroup.MatchGroupSequence, dbo.MatchGroup.EndDate, dbo.MatchGroup.StartDate, 
                          dbo.ParticipantPrediction.ScheduledGameId, HomeTeam.Name AS HomeTeamName, dbo.ParticipantPrediction.HomeTeamScore AS HomeTeamPredictedResult, dbo.ScheduledGame.HomeTeamScore AS HomeTeamActualResult,
@@ -13,7 +13,7 @@ FROM            dbo.Season INNER JOIN
                          dbo.Team AS VistingTeam ON dbo.ScheduledGame.VisitingTeamId = VistingTeam.Id
 WHERE        (dbo.ParticipatingInSeason.Removed IS NULL)
 GO
-EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'ParticipantGamePredictions';
+EXECUTE sp_addextendedproperty @name = N'MS_DiagramPaneCount', @value = 2, @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'ParticipantGamePrediction';
 
 
 GO
@@ -69,9 +69,7 @@ EXECUTE sp_addextendedproperty @name = N'MS_DiagramPane2', @value = N'          
       End
    End
 End
-', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'ParticipantGamePredictions';
-
-
+', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'ParticipantGamePrediction';
 
 
 GO
@@ -212,7 +210,5 @@ Begin DesignProperties =
                Left = 51
                Bottom = 283
                Right = 221
- ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'ParticipantGamePredictions';
-
-
+ ', @level0type = N'SCHEMA', @level0name = N'dbo', @level1type = N'VIEW', @level1name = N'ParticipantGamePrediction';
 

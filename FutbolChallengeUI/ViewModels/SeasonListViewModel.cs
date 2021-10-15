@@ -10,9 +10,9 @@ namespace FutbolChallengeUI.ViewModels
 			
 		}
 
-		private ObservableCollection<Season> _Seasons;
+		private ObservableCollection<SeasonPanelViewModel> _Seasons;
 
-		public ObservableCollection<Season> Seasons
+		public ObservableCollection<SeasonPanelViewModel> Seasons
 		{
 			get { return _Seasons; }
 			set
@@ -25,7 +25,7 @@ namespace FutbolChallengeUI.ViewModels
 		public int SelectedSeasonIndex {  get; set; }
 
 		public Season SelectedSeason =>
-			Seasons?[SelectedSeasonIndex];
+			Seasons?[SelectedSeasonIndex].Season;
 	}
 
 }

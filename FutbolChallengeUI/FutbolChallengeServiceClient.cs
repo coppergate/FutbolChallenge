@@ -27,7 +27,7 @@ namespace FutbolChallengeUI
 
 		Task<bool> UploadScheduledGames(int seasonId, ScheduleComposite scheduledGames);
 
-		Task<IEnumerable<ScheduledGame>> GetSeasonGames(int seasonId);
+		Task<IEnumerable<SeasonGame>> GetSeasonGames(int seasonId);
 	
 		Task<IEnumerable<Season>> FetchAllSeasons();
 
@@ -35,6 +35,11 @@ namespace FutbolChallengeUI
 
 		Task<bool> UpdateSeason(Season season);
 
+		Task<bool> DeleteMatch(int id);
+
+		Task<bool> UpdateMatch(ScheduledGame match);
+
+		Task<int> InsertMatch(ScheduledGame match);
 
 	}
 
@@ -89,7 +94,6 @@ namespace FutbolChallengeUI
 			return result;
 		}
 
-
 		async public Task<IEnumerable<Season>> FetchAllSeasons()
 		{
 			var targetRelativeUri = $"schedule/all-seasons";
@@ -104,16 +108,16 @@ namespace FutbolChallengeUI
 			return result;
 		}
 
-		async public Task<IEnumerable<ScheduledGame>> GetSeasonGames(int seasonId)
+		async public Task<IEnumerable<SeasonGame>> GetSeasonGames(int seasonId)
 		{
-			var targetRelativeUri = $"schedule/season-schedule/{seasonId}";
-			var result = await FetchList<ScheduledGameDto>(targetRelativeUri);
-			return result?.Select(g => ScheduledGame.FromDataModel(g));
+			var targetRelativeUri = $"schedule/get-all-games/{seasonId}";
+			var result = await FetchList<SeasonGameDto>(targetRelativeUri);
+			return result?.Select(g => SeasonGame.FromDataModel(g));
 		}
 
 		async public Task<SeasonDetail> FetchSeasonDetails(int seasonId)
 		{
-			var targetRelativeUri = $"schedule/season-details/{seasonId}";
+			var targetRelativeUri = $"season/season-details/{seasonId}";
 			var result = await Fetch<SeasonDetailDto>(targetRelativeUri);
 			return SeasonDetail.FromDataModel(result);
 		}
@@ -122,6 +126,28 @@ namespace FutbolChallengeUI
 		{
 			var targetRelativeUri = $"season/update/{season.Id}";
 			var result = await Update(targetRelativeUri, season.ToDataModel());
+			return result;
+		}
+
+		async public Task<bool> DeleteMatch(int id)
+		{
+			var targetRelativeUri = $"schedule/delete-game/{id}";
+			var result = await Delete(targetRelativeUri);
+			return result;
+		}
+
+		async public Task<bool> UpdateMatch(ScheduledGame match)
+		{
+			var targetRelativeUri = $"schedule/update-game/{match.Id}";
+			var result = await Update(targetRelativeUri, match.ToDataModel());
+			return result;
+		}
+
+		async public Task<int> InsertMatch(ScheduledGame match)
+		{
+			var targetRelativeUri = $"schedule/insert-game";
+
+			var result = await Insert(targetRelativeUri, match.ToDataModel());
 			return result;
 		}
 	}

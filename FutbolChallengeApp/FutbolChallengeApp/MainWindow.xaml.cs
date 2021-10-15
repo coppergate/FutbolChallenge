@@ -1,4 +1,5 @@
 ﻿using FutbolChallengeUI;
+using Helpers.Core.DateTimeProvider;
 using Microsoft.UI.Xaml;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -10,13 +11,17 @@ namespace FutbolChallengeApp
 	public sealed partial class MainWindow : Window
 	{
 		private readonly IFutbolChallengeServiceClient _ServiceClient;
-		private ParticipantManagement _ParticipantManagementViewModel;
-		private SeasonScheduleManagement _DisplaySeasonScheduleManagementViewModel;
+		private readonly IDateTimeProvider _DateTimeProvider;
 
-		public MainWindow(IFutbolChallengeServiceClient serviceClient)
+		private ParticipantManagement _ParticipantManagement;
+		private SeasonScheduleManagement _SeasonScheduleManagement;
+		private GameManagement _GameManagement;
+
+		public MainWindow(IFutbolChallengeServiceClient serviceClient, IDateTimeProvider dateTimeProvider)
 		{
 			this.InitializeComponent();
 			_ServiceClient = serviceClient;
+			_DateTimeProvider = dateTimeProvider;
 		}
 
 		private async void ParticipantMaintenanceButton_Click(object sender, RoutedEventArgs e)
@@ -28,40 +33,62 @@ namespace FutbolChallengeApp
 		{
 			DisplaySeasonScheduleManagement();
 		}
-		
+		private async void GameMaintenanceButton_Click(object sender, RoutedEventArgs e)
+		{
+			DisplayGameManagement();
+		}
 
+		
 		private async void DisplayParticipantManagement()
 		{
-			if (_ParticipantManagementViewModel is null)
+			if (_ParticipantManagement is null)
 			{
-				_ParticipantManagementViewModel = new ParticipantManagement(_ServiceClient);
-				_ParticipantManagementViewModel.Closed += _ParticipantManagementViewModel_Closed;
+				_ParticipantManagement = new ParticipantManagement(_ServiceClient);
+				_ParticipantManagement.Closed += _ParticipantManagementViewModel_Closed;
 			}
 
-			await _ParticipantManagementViewModel.LoadParticipants();
-			_ParticipantManagementViewModel.Activate();
+			await _ParticipantManagement.LoadParticipants();
+			_ParticipantManagement.Activate();
 		}
 
 		private void _ParticipantManagementViewModel_Closed(object sender, WindowEventArgs args)
 		{
-			_ParticipantManagementViewModel = null;
+			_ParticipantManagement = null;
 		}
 
 
 		private async void DisplaySeasonScheduleManagement()
 		{
-			if (_DisplaySeasonScheduleManagementViewModel is null)
+			if (_SeasonScheduleManagement is null)
 			{
-				_DisplaySeasonScheduleManagementViewModel = new SeasonScheduleManagement(_ServiceClient);
-				_DisplaySeasonScheduleManagementViewModel.Closed += _DisplaySeasonScheduleManagementViewModel_Closed;
+				_SeasonScheduleManagement = new SeasonScheduleManagement(_ServiceClient);
+				_SeasonScheduleManagement.Closed += _DisplaySeasonScheduleManagementViewModel_Closed;
 			}
-			await _DisplaySeasonScheduleManagementViewModel.LoadSeasons();
-			_DisplaySeasonScheduleManagementViewModel.Activate();
+			await _SeasonScheduleManagement.LoadSeasons();
+			_SeasonScheduleManagement.Activate();
 		}
 
 		private void _DisplaySeasonScheduleManagementViewModel_Closed(object sender, WindowEventArgs args)
 		{
-			_DisplaySeasonScheduleManagementViewModel = null;
+			_SeasonScheduleManagement = null;
+		}
+
+
+		private async void DisplayGameManagement()
+		{
+			if (_GameManagement is null)
+			{
+				_GameManagement = new GameManagement(_ServiceClient, _DateTimeProvider);
+				_GameManagement.Closed += _GameManagementViewModel_Closed;
+			}
+
+			await _GameManagement.LoadMatches();
+			_GameManagement.Activate();
+		}
+
+		private void _GameManagementViewModel_Closed(object sender, WindowEventArgs args)
+		{
+			_GameManagement = null;
 		}
 	}
 }

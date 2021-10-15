@@ -3,6 +3,7 @@ using FutbolChallenge.Data.Dto;
 using FutbolChallenge.Data.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DataControllers.Controllers
@@ -30,6 +31,14 @@ namespace DataControllers.Controllers
 			var ret = await _repositoryProvider.SeasonRepository.Update(seasonDto);
 			return ret;
 		}
+
+		[HttpGet("season-details/{seasonId}")]
+		public async Task<IActionResult> GetSeasonDetails(int seasonId)
+		{
+			var ret = await _repositoryProvider.SeasonDetailRepository.Get($"id = {seasonId}", null);
+			return Ok(ret);
+		}
+
 
 	}
 }

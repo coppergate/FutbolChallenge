@@ -29,7 +29,7 @@ namespace FutbolChallenge.Data
  			Bind<IParticipantRepository>().To<ParticipantRepository>();
  			Bind<IParticipatingInSeasonRepository>().To<ParticipatingInSeasonRepository>();
  			Bind<IParticipantPredictionRepository>().To<ParticipantPredictionRepository>();
- 			Bind<ISeasonScheduleRepository>().To<SeasonScheduleRepository>();
+ 			Bind<ISeasonGameRepository>().To<SeasonGameRepository>();
  			Bind<IParticipantGamePredictionRepository>().To<ParticipantGamePredictionRepository>();
  			Bind<IScheduledGameRepository>().To<ScheduledGameRepository>();
  			Bind<IMatchGroupRepository>().To<MatchGroupRepository>();

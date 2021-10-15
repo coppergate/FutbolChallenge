@@ -9,11 +9,16 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\EditParticipantEventArgs.cs~RF5b65099.TMP" />
+    <None Remove="Controls\MatchListView.xaml" />
+    <None Remove="Controls\MatchListView.xaml.cs~RFa339cd0.TMP" />
+    <None Remove="Controls\MatchListView.xaml.cs~RFf6165a2.TMP" />
+    <None Remove="Controls\MatchPanelView.xaml" />
     <None Remove="Controls\ParticipantListView.xaml" />
     <None Remove="Controls\ParticpantPanelView.xaml" />
     <None Remove="Controls\SeasonComboView.xaml" />
     <None Remove="Controls\SeasonDetailPanelView.xaml" />
     <None Remove="Controls\SeasonPanelView.xaml" />
+    <None Remove="EventHandlers\EventArgs\AddPanelEventArgs.cs~RF3599bd.TMP" />
     <None Remove="FutbolChallengeUIModule.cs~RFd8b3d96.TMP" />
     <None Remove="ViewModels\SeasonDetailViewModel.cs~RF146631b6.TMP" />
   </ItemGroup>
@@ -33,11 +38,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Controls\MatchListView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\SeasonDetailPanelView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\SeasonComboView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\MatchPanelView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

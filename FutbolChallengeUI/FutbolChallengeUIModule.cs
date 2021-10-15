@@ -1,4 +1,5 @@
 ﻿using Helpers.Core;
+using Helpers.Core.DateTimeProvider;
 using Ninject.Modules;
 using System.Collections.Generic;
 
@@ -9,7 +10,6 @@ namespace FutbolChallengeUI
 		public override void Load()
 		{
 			Bind<IFutbolChallengeServiceClient>().To<FutbolChallengeServiceClient>();
-
 		}
 	}
 

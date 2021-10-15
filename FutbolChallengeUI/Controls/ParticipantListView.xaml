@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:FutbolChallengeUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:collections="using:System.Collections" xmlns:model="using:FutbolChallenge.Data.Model"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	mc:Ignorable="d"
 	DataContext="{x:Bind ParticipantListViewModel, Mode=OneWay}"
 	 x:Name="ParticipantListViewControl"
@@ -15,7 +15,7 @@
 
 	<Grid CanBeScrollAnchor="True"	Height="Auto" >
 
-			<GridView x:Name="ParticipantViewGrid" TabIndex="1"
+		<GridView x:Name="ParticipantViewGrid" TabIndex="1"
 				Margin="10,0,20,0" 
 				VerticalAlignment="Top" 
 				HorizontalAlignment="Stretch"
@@ -23,41 +23,41 @@
 				Height="Auto"
 				Padding="10,0,0,0"
 				BorderBrush="White" BorderThickness="2"
-				ItemsSource="{x:Bind Participants, Mode=OneWay}"
+				ItemsSource="{x:Bind ParticipantListViewModel.Participants, Mode=OneWay}"
 				CanBeScrollAnchor="True"
 				ShowsScrollingPlaceholders="True"
 				ScrollViewer.VerticalScrollBarVisibility="Auto" 
-				
-		  >
-				<GridView.HeaderTemplate>
-					<DataTemplate>
-						<GridViewHeaderItem HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+		>
+			<GridView.HeaderTemplate>
+				<DataTemplate>
+					<GridViewHeaderItem HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
 						<TextBox Text="Participants" />
 					</GridViewHeaderItem>
-					</DataTemplate>
-				</GridView.HeaderTemplate>
-				
-				<GridView.ItemTemplate>
+				</DataTemplate>
+			</GridView.HeaderTemplate>
 
-					<DataTemplate x:DataType="model:Participant" >
+			<GridView.ItemTemplate>
 
-						<local:ParticipantPanelView  
-							x:Name="participantPanel"
-						Mode="Delete" ShowEdit="True" EnableTextEditing="False" 
+				<DataTemplate x:DataType="viewmodels:ParticipantPanelViewModel" >
+
+					<local:ParticipantPanelView  
+						x:Name="participantPanel"
+						EditMode="{x:Bind EditMode, Mode=OneWay}" ShowEdit="{x:Bind  ShowEdit, Mode=OneWay}" EnableTextEditing="{x:Bind EnableTextEditing, Mode=OneWay}" 
 						BorderBrush="WhiteSmoke" BorderThickness="1" 
 						HorizontalAlignment="Stretch"  
 						VerticalAlignment="Stretch"
-						Participant="{x:Bind Mode=OneWay}" />
+						ParticipantPanelViewModel="{x:Bind Mode= OneWay}" 
+					  />
 
-					</DataTemplate>
-				</GridView.ItemTemplate>
+				</DataTemplate>
+			</GridView.ItemTemplate>
 
-				<GridView.ItemsPanel>
+			<GridView.ItemsPanel>
 
-					<ItemsPanelTemplate>
-						<ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Left"  MaximumRowsOrColumns="2" />
-					</ItemsPanelTemplate>
-				</GridView.ItemsPanel>
-			</GridView>
+				<ItemsPanelTemplate>
+					<ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Left"  MaximumRowsOrColumns="2" />
+				</ItemsPanelTemplate>
+			</GridView.ItemsPanel>
+		</GridView>
 	</Grid>
 </viewmodels:BindableUserControlBase>

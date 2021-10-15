@@ -10,5 +10,6 @@
 	<StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
 		<Button x:Name="ParticipantMaintenanceButton" Click="ParticipantMaintenanceButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Center">Participants</Button>
 		<Button x:Name="SeasonScheduleMaintenanceButton" Click="SeasonScheduleMaintenanceButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Center">Seasons</Button>
+		<Button x:Name="GameMaintenanceButton" Click="GameMaintenanceButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Center">Games</Button>
 	</StackPanel>
 </Window>

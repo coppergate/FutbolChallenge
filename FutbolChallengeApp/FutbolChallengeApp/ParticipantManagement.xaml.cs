@@ -1,15 +1,14 @@
 ﻿using FutbolChallenge.Data.Model;
 using FutbolChallengeUI;
-using FutbolChallengeUI.Controls;
+using FutbolChallengeUI.EventHandlers.EventArgs;
 using FutbolChallengeUI.ViewModels;
 using Microsoft.UI.Xaml;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace FutbolChallengeApp
 {
@@ -45,33 +44,31 @@ namespace FutbolChallengeApp
 			_ServiceClient = serviceClient;
 			base.Title = "Manage Participants";
 
-			ParticipantPanelView.EditParticipant += ParticpantPanelView_EditParticipant;
-			ParticipantPanelView.DeleteAddParticipant += ParticipantPanelView_DeleteOrAddParticipant;
-
-			
-
+			ParticipantPanelViewModel.EditParticipant += ParticpantPanelView_EditParticipant;
+			ParticipantPanelViewModel.DeleteParticipant += ParticipantPanelView_DeleteParticipant;
+			ParticipantPanelViewModel.AddParticipant += ParticipantPanelView_AddParticipant;
 		}
 
-		private async void ParticipantPanelView_DeleteOrAddParticipant(object sender, DeleteOrAddPanelEventArgs e)
+		private async void ParticipantPanelView_DeleteParticipant(object sender, DeleteEntityEventArgs e)
 		{
-			if (e.Id > 0)
-			{
-				await _ServiceClient.DeleteParticipant(e.Id);
-			}
-			else
-			{
-				Participant local = new () {
-					EmailAddress = participantAddView.EmailAddress,
-					LastName = participantAddView.LastName,
-					FirstName = participantAddView.FirstName,
-				};
-
-				await _ServiceClient.InsertParticipant(local);
-			}
+			await _ServiceClient.DeleteParticipant(e.Id);
 			await LoadParticipants();
 		}
 
-		private async void ParticpantPanelView_EditParticipant(object sender, EditPanelEventArgs<Participant> e)
+		private async void ParticipantPanelView_AddParticipant(object sender, AddEntityEventArgs<Participant> e)
+		{
+			Participant local = new() {
+				EmailAddress = e.AddTarget.EmailAddress,
+				LastName = e.AddTarget.LastName,
+				FirstName = e.AddTarget.FirstName,
+			};
+
+			await _ServiceClient.InsertParticipant(local);
+			await LoadParticipants();
+		}
+
+
+		private async void ParticpantPanelView_EditParticipant(object sender, EditEntityEventArgs<Participant> e)
 		{
 			await _ServiceClient.UpdateParticipant(e.EditTarget);
 			await LoadParticipants();
@@ -81,7 +78,8 @@ namespace FutbolChallengeApp
 		{
 			LoadingMessage = "Loading...";
 			var participants = await _ServiceClient.FetchAllParticipants();
-			ParticipantListViewModel.Participants = new ObservableCollection<Participant>(participants);
+
+			ParticipantListViewModel.Participants = new ObservableCollection<ParticipantPanelViewModel>(participants.Select(p => new ParticipantPanelViewModel() { Participant = p }));
 			participantView.Reload();
 			participantAddView.Clear();
 			LoadingMessage = "Loaded";

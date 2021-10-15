@@ -6,7 +6,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-	xmlns:model="using:FutbolChallenge.Data.Model"
 	xmlns:view="using:FutbolChallengeUI.Controls"
 	mc:Ignorable="d"
     HorizontalAlignment="Left"
@@ -17,22 +16,21 @@
 	<ContentControl HorizontalAlignment="Left"
 					HorizontalContentAlignment="Left"
 					Padding="5,5,5,5">
-	
 
-			<ComboBox Header="Seasons" PlaceholderText="Select a Season" 
-					  ItemsSource="{x:Bind Seasons, Mode=OneWay}"
+
+		<ComboBox Header="Seasons" PlaceholderText="Select a Season" 
+					  ItemsSource="{x:Bind SeasonListViewModel.Seasons, Mode=OneWay}"
 					  Margin="0,10,0,0"
 					  SelectedIndex="{x:Bind SelectedSeason, Mode=TwoWay}"
 					   >
-				<ComboBox.ItemTemplate>
-					<DataTemplate x:DataType="model:Season">
-						<view:SeasonPanelView Season="{x:Bind Mode=OneWay}"
-											  Mode="None" 
-											  EnableTextEditing="False" 
-											  ShowEdit="True"/>
-					</DataTemplate>
-				</ComboBox.ItemTemplate>
-			</ComboBox>
+			<ComboBox.ItemTemplate>
+				<DataTemplate x:DataType="viewmodels:SeasonPanelViewModel">
+					<view:SeasonPanelView SeasonViewModel="{x:Bind Mode=OneWay}"
+						EditMode="{x:Bind EditMode, Mode=OneWay}" ShowEdit="{x:Bind ShowEdit, Mode=OneWay}" EnableTextEditing="{x:Bind EnableTextEditing, Mode=OneWay}" 
+					/>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
 
 	</ContentControl>
 

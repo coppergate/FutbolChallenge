@@ -1,4 +1,5 @@
 ﻿using Helpers.Core.ConnectionFactory;
+using Helpers.Core.DateTimeProvider;
 using Microsoft.Extensions.Configuration;
 using Ninject.Modules;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Helpers.Core
 	{
 		public override void Load()
 		{
+			Bind<IDateTimeProvider>().To<DefaultDateTimeProvider>();
 			Bind<ImplementedServiceFabricDbConnectionFactory>().To<ImplementedServiceFabricDbConnectionFactory>();
 			Bind<ImplementedApplicationDbConnectionFactory>().To<ImplementedApplicationDbConnectionFactory>();
 			Bind<IConfiguration>().To<HelperConfiguration>();

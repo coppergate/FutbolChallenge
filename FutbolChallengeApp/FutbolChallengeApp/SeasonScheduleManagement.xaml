@@ -26,12 +26,24 @@
 					<RowDefinition Height="150" />
 				</Grid.RowDefinitions>
 
-
 				<view:SeasonComboView Grid.Row="0" x:Name="SelectSeasonComboBox" SeasonListViewModel="{x:Bind SeasonListViewModel, Mode=OneWay}"/>
 
 				<view:SeasonDetailPanelView VerticalAlignment="Center" Grid.Row="1" x:Name="SeasonDetailPanel" SeasonDetailViewModel="{x:Bind SeasonDetailViewModel, Mode=OneWay}" />
 
-				<Button Grid.Row="2"	VerticalAlignment="Center" HorizontalAlignment="Left" Content="Schedule Upload" Margin="10" Click="ScheduleUploadButton_Click"/>
+				<Grid Grid.Row="2">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="130" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="160" />
+						<ColumnDefinition Width="160" />
+					</Grid.ColumnDefinitions>
+					
+					<Button Grid.Row="0" Grid.Column="0"	VerticalAlignment="Center" HorizontalAlignment="Left" Content="Schedule Upload" Margin="10" Click="ScheduleUploadButton_Click"/>
+					<Button Grid.Row="0" Grid.Column="1"	VerticalAlignment="Center" HorizontalAlignment="Left" Content="Game Schedule" Margin="10" Click="ShowSeasonSchedule_Click"/>
+
+				</Grid>
+				
 
 				<StackPanel Grid.Row="3" Margin="30,20,2,2" Padding="5"  
 					Orientation="Vertical" 

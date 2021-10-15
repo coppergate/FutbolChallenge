@@ -1,4 +1,6 @@
 ﻿using FutbolChallenge.Data.Model;
+using FutbolChallengeUI.EventHandlers;
+using FutbolChallengeUI.EventHandlers.EventArgs;
 using FutbolChallengeUI.ViewModels;
 
 namespace FutbolChallengeUI.Controls
@@ -24,9 +26,6 @@ namespace FutbolChallengeUI.Controls
 			this.InitializeComponent();
 		}
 
-		public System.Collections.Generic.IEnumerable<Season> Seasons =>
-			SeasonListViewModel?.Seasons;
-
 		public int SelectedSeason
 		{
 			get => _SeasonListViewModel.SelectedSeasonIndex;
@@ -35,7 +34,7 @@ namespace FutbolChallengeUI.Controls
 				if (_SeasonListViewModel.Seasons?.Count > value)
 				{
 					_SeasonListViewModel.SelectedSeasonIndex = value;
-					SelectedSeasonChanged?.Invoke(this, new SelectedSeasonChangedEventArgs(_SeasonListViewModel.Seasons[value]));
+					SelectedSeasonChanged?.Invoke(this, new SelectedSeasonChangedEventArgs(SeasonListViewModel.Seasons[value].Season));
 					OnPropertyChanged();
 				}
 			}

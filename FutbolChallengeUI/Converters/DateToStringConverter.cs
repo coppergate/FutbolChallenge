@@ -9,7 +9,7 @@ namespace FutbolChallengeUI.Converters
 		public object Convert(object value, Type targetType,
 								object parameter, string language)
 		{
-			if(value == null)
+			if (value == null)
 			{
 				return string.Empty;
 			}
@@ -22,12 +22,13 @@ namespace FutbolChallengeUI.Converters
 								object parameter, string language)
 		{
 			string dateString = (string)value;
+			if (string.IsNullOrWhiteSpace(dateString))
+				return null;
 
-			if (DateTime.TryParse(dateString, out DateTime dateVal ))
-			{
-				return dateVal;
-			}
-			return null;
+			if (!DateTime.TryParse(dateString, out DateTime dateVal))
+				throw new InvalidCastException($"Failed converting string {dateString} to datetime");
+
+			return dateVal;
 		}
 
 	}

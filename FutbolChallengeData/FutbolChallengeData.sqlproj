@@ -70,13 +70,13 @@
     <Build Include="dbo\Tables\Participant.sql" />
     <Build Include="dbo\Tables\ParticipatingInSeason.sql" />
     <Build Include="dbo\Tables\ParticipantPrediction.sql" />
-    <Build Include="dbo\Views\SeasonSchedule.sql" />
-    <Build Include="dbo\Views\ParticipantGamePredictions.sql" />
     <Build Include="dbo\Tables\MatchGroup.sql" />
     <Build Include="Security\futbolchallenge.sql" />
     <Build Include="Security\RoleMemberships.sql" />
     <Build Include="dbo\Views\SeasonMatchGroupDetail.sql" />
-    <Build Include="dbo\Views\SeasonDetails.sql" />
+    <Build Include="dbo\Views\SeasonGame.sql" />
+    <Build Include="dbo\Views\SeasonDetail.sql" />
+    <Build Include="dbo\Views\ParticipantGamePrediction.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LocalDbToProject.scmp" />
