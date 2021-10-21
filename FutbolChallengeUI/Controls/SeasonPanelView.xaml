@@ -51,32 +51,29 @@
 			</Grid.ColumnDefinitions>
 
 
-			<TextBox Grid.Row="0" Grid.Column="0" x:Name="SeasonNameLabel" Width="300" 
+			<TextBlock Grid.Row="0" Grid.Column="0" x:Name="SeasonNameLabel" Width="300" 
 						 VerticalAlignment="Top" 
-						 BorderBrush="Transparent" Background="Transparent"  Padding="0"  Margin="0" 
+						  Padding="0"  Margin="0" 
 						 Text="Season Name" 
 						 FontSize="10" Foreground="Yellow" 
-						 IsReadOnly="True"
 						 AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						 IsHitTestVisible="False"
 						/>
-			<TextBox Grid.Row="0" Grid.Column="1" x:Name="SeasonStartDateLabel" Width="100"
+			<TextBlock Grid.Row="0" Grid.Column="1" x:Name="SeasonStartDateLabel" Width="100"
 						 VerticalAlignment="Top" 
-						 BorderBrush="Transparent" Background="Transparent" Padding="0"  Margin="0" 
+						 Padding="0"  Margin="0" 
 						 Text="Start Date" 
 						 FontSize="10" Foreground="Yellow" 
-						 IsReadOnly="True"
 						AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						 IsHitTestVisible="False"/>
 
-			<TextBox Grid.Row="0" Grid.Column="2" x:Name="SeasonEndDateLabel" Width="100"
+			<TextBlock Grid.Row="0" Grid.Column="2" x:Name="SeasonEndDateLabel" Width="100"
 						 VerticalAlignment="Top" 
-						 BorderBrush="Transparent" Background="Transparent" Padding="0"  Margin="0" 
+						 Padding="0"  Margin="0" 
 						 Text="End Date" 
 						 FontSize="10" Foreground="Yellow" 
-						 IsReadOnly="True"
 						 AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						IsHitTestVisible="False"/>

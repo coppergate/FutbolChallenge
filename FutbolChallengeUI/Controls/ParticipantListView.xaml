@@ -31,7 +31,7 @@
 			<GridView.HeaderTemplate>
 				<DataTemplate>
 					<GridViewHeaderItem HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
-						<TextBox Text="Participants" />
+						<TextBlock Text="Participants" />
 					</GridViewHeaderItem>
 				</DataTemplate>
 			</GridView.HeaderTemplate>

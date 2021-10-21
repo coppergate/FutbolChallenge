@@ -49,32 +49,29 @@
 				<ColumnDefinition Width="210" />
 			</Grid.ColumnDefinitions>
 
-			<TextBox Grid.Row="0" Grid.Column="0" x:Name="ParticipantEmailLabel" Width="200"
+			<TextBlock Grid.Row="0" Grid.Column="0" x:Name="ParticipantEmailLabel" Width="200"
 						 VerticalAlignment="Top" HorizontalAlignment="Left" 
-						 BorderBrush="Transparent" Padding="5"  Margin="0" 
+						 Padding="5"  Margin="0" 
 						 Text="Email Address" 
 						 FontSize="10" Foreground="Yellow" 
-						 IsReadOnly="True"
 						 AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						 IsHitTestVisible="False"
 						/>
-			<TextBox Grid.Row="0" Grid.Column="1" x:Name="ParticipantFNameLabel" Width="200"
+			<TextBlock Grid.Row="0" Grid.Column="1" x:Name="ParticipantFNameLabel" Width="200"
 						 VerticalAlignment="Top" HorizontalAlignment="Left" 
-						 BorderBrush="Transparent" Padding="5"  Margin="0" 
+						 Padding="5"  Margin="0" 
 						 Text="First Name" 
 						 FontSize="10" Foreground="Yellow" 
-						 IsReadOnly="True"
 						AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						 IsHitTestVisible="False"/>
 
-			<TextBox  Grid.Row="0" Grid.Column="2" x:Name="ParticipantLNameLabel" Width="200"
+			<TextBlock  Grid.Row="0" Grid.Column="2" x:Name="ParticipantLNameLabel" Width="200"
 						 VerticalAlignment="Top" HorizontalAlignment="Left" 
-						 BorderBrush="Transparent" Padding="5"  Margin="0" 
+						 Padding="5"  Margin="0" 
 						 Text="Last Name" 
 						 FontSize="10" Foreground="Yellow" 
-						 IsReadOnly="True"
 						 AllowFocusOnInteraction="False"
 						AllowFocusWhenDisabled="False"
 						IsHitTestVisible="False"/>

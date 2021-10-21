@@ -38,13 +38,10 @@
 								<ColumnDefinition Width="200" />
 								<ColumnDefinition Width="200" />
 							</Grid.ColumnDefinitions>
-							<TextBox Grid.Column="0" Text="Matches" 
-									IsReadOnly="True"
+							<TextBlock Grid.Column="0" Text="Matches" 
 									AllowFocusOnInteraction="False"
-									AllowFocusWhenDisabled="False"
 									IsHitTestVisible="False"/>
-							<TextBox Grid.Column="1" Text="{x:Bind SeasonName, Mode=OneWay}" 
-									IsReadOnly="True"
+							<TextBlock Grid.Column="1" Text="{x:Bind SeasonName, Mode=OneWay}" 
 									AllowFocusOnInteraction="False"
 									AllowFocusWhenDisabled="False"
 									IsHitTestVisible="False"/>

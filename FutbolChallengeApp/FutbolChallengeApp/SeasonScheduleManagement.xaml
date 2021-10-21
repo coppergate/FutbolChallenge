@@ -9,7 +9,7 @@
 	>
 
 
-	<Grid BorderThickness="3" VerticalAlignment="Stretch">
+	<Grid BorderThickness="3" VerticalAlignment="Stretch" Margin="10">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
 			<RowDefinition Height="80" />
@@ -17,30 +17,32 @@
 
 		<Grid Grid.Row="0" VerticalAlignment="Stretch"  BorderBrush="White" BorderThickness="0,0,0,1">
 
-			<Grid>
-
 				<Grid.RowDefinitions>
 					<RowDefinition Height="130" />
-					<RowDefinition Height="220" />
-					<RowDefinition Height="Auto" />
+					<RowDefinition Height="200" />
+					<RowDefinition Height="80" />
 					<RowDefinition Height="150" />
 				</Grid.RowDefinitions>
 
 				<view:SeasonComboView Grid.Row="0" x:Name="SelectSeasonComboBox" SeasonListViewModel="{x:Bind SeasonListViewModel, Mode=OneWay}"/>
 
-				<view:SeasonDetailPanelView VerticalAlignment="Center" Grid.Row="1" x:Name="SeasonDetailPanel" SeasonDetailViewModel="{x:Bind SeasonDetailViewModel, Mode=OneWay}" />
+				<view:SeasonDetailPanelView Grid.Row="1"  x:Name="SeasonDetailPanel"
+											BorderBrush="Yellow" BorderThickness="2"
+											Margin="5"
+											VerticalAlignment="Top"  
+											SeasonDetailViewModel="{x:Bind SeasonDetailViewModel, Mode=OneWay}" />
 
 				<Grid Grid.Row="2">
 					<Grid.RowDefinitions>
-						<RowDefinition Height="130" />
+						<RowDefinition Height="70" />
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="160" />
 						<ColumnDefinition Width="160" />
 					</Grid.ColumnDefinitions>
 					
-					<Button Grid.Row="0" Grid.Column="0"	VerticalAlignment="Center" HorizontalAlignment="Left" Content="Schedule Upload" Margin="10" Click="ScheduleUploadButton_Click"/>
-					<Button Grid.Row="0" Grid.Column="1"	VerticalAlignment="Center" HorizontalAlignment="Left" Content="Game Schedule" Margin="10" Click="ShowSeasonSchedule_Click"/>
+					<Button Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Schedule Upload" Margin="10" Click="ScheduleUploadButton_Click"/>
+					<Button Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Game Schedule" Margin="10" Click="ShowSeasonSchedule_Click"/>
 
 				</Grid>
 				
@@ -51,12 +53,11 @@
 					Visibility="Collapsed"
 					x:Name="UploadFilePickPanel">
 
-					<TextBox IsReadOnly="True" AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False" IsHitTestVisible="False"
+					<TextBlock  AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False" IsHitTestVisible="False"
 					 Text="Choose Schedule File To Upload"
-					 HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+					 HorizontalAlignment="Left" 
 					 Margin="0,0,0,5"
 					 Padding="0"
-					 BorderBrush="Black"
 					 />
 
 					<StackPanel Orientation="Horizontal">
@@ -67,9 +68,7 @@
 					<Button Content="Upload Schedule" VerticalAlignment="Bottom" HorizontalAlignment="Left"  Margin="0,10,20,30"  Click="UploadScheduleButton_Click"/>
 				</StackPanel>
 
-			</Grid>
-
 		</Grid>
-		<Button	VerticalAlignment="Bottom" Grid.Row ="1" HorizontalAlignment="Right" Content="Close" Margin="0,10,20,10" Click="CloseButton_Click"/>
+		<Button	Grid.Row ="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Close" Margin="0,10,20,10" Click="CloseButton_Click"/>
 	</Grid>
 </Window>
