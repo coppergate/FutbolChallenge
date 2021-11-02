@@ -1,5 +1,9 @@
 ﻿using FutbolChallenge.Data.Model;
 using FutbolChallengeDataRepository.Converters;
+using FutbolChallengeUI.EventHandlers.EventArgs;
+using Helpers.Core.DateTimeProvider;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -27,6 +31,7 @@ namespace FutbolChallengeUI.ViewModels
 			{
 				this._Matches = new ObservableCollection<MatchPanelViewModel>(value);
 				_MatchGroupSequenceList = GameMatchGroupExtractor.ExtractMatchGroups(_Matches.Select(m => m.Game));
+				_SeasonId = _Matches?.First().SeasonId ?? -1;
 				this.OnPropertyChanged();
 			}
 		}
@@ -45,23 +50,53 @@ namespace FutbolChallengeUI.ViewModels
 			set { _MatchGroupSequence = value; NotifyAllOnPropertyChanged(); }
 		}
 
+		internal void SliderValueSet(double newValue)
+		{
+			MatchGroupSequence = Convert.ToInt32(newValue);
+		}
+
 		public string SeasonName =>
 			_Matches?.FirstOrDefault(m => m.SeasonId == SeasonId).SeasonName ?? string.Empty;
 
 		public string MatchGroupName =>
-			_Matches?.FirstOrDefault(m => m.SeasonId == SeasonId && m.MatchGroupSequence == MatchGroupSequence).MatchGroupTitle ?? string.Empty;
+			_Matches?.FirstOrDefault(m => m.SeasonId == SeasonId && m.MatchGroupSequence == MatchGroupSequence)?.MatchGroupTitle ?? string.Empty;
 
 
-		int MatchGroupCount =>
-			_Matches?.Select(m => m.MatchGroupSequence).Distinct().Count() ?? 0;
+		public int MatchGroupCount =>
+			_Matches?.Select(m => m.MatchGroupSequence).Distinct().Count() ?? 1;
 
 
 		IEnumerable<MatchGroup> _MatchGroupSequenceList;
 		int _CurrentMatchGroupSequenceIndex = 0;
 
-		public void MatchGroupButtonClick()
+		public void MatchGroupSelectionChange(object sender, SelectedMatchGroupChangedEventArgs args)
 		{
-			MatchGroupSequence = (MatchGroupSequence + 1) % MatchGroupCount;
+			if (args.Direction == MatchGroupChangeDirection.DOWN
+				&& MatchGroupSequence > 1)
+				MatchGroupSequence--;
+
+			if (args.Direction == MatchGroupChangeDirection.UP
+				&& MatchGroupSequence < MatchGroupCount - 1)
+				MatchGroupSequence++;
+
+			OnPropertyChanged("MatchGroupName");
+		}
+
+
+		public void SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var s = e.OriginalSource;
+		}
+
+
+		public void ItemChanged(object sender, ItemClickEventArgs e)
+		{
+			var s = e.ClickedItem;
+		}
+
+		public void SetCurrentMatchGroup(IDateTimeProvider dateTimeProvider)
+		{
+			MatchGroupSequence = _Matches.FirstOrDefault(m => m.MatchDate >= dateTimeProvider.CurrentUtcDateTime)?.MatchGroupSequence ?? 0;
 		}
 	}
 

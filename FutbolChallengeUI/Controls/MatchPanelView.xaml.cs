@@ -61,8 +61,11 @@ namespace FutbolChallengeUI.Controls
 						return;
 				}
 
+
 				if (_EditMode == EditMode.Edit && TextChanged)
 				{
+					//	Raise an event here with the 'PanelInEditAndLeaving' flag set to true.
+
 					ContentDialogResult result = await this.EditInProgressDialog.ShowAsync();
 
 					if (result == ContentDialogResult.Primary)
@@ -71,10 +74,6 @@ namespace FutbolChallengeUI.Controls
 					}
 				}
 
-				ShowScores = false;
-				EditMode = EditMode.None;
-				EnableTextEditing = false;
-				TextChanged = false;
 			}
 		}
 
@@ -224,6 +223,8 @@ namespace FutbolChallengeUI.Controls
 					MatchHomeTeamScoreTextBox.Background = editScoreBackground;
 					MatchAwayTeamScoreTextBox.Background = editScoreBackground;
 				}
+
+				TextChanged = false;
 			}
 		}
 

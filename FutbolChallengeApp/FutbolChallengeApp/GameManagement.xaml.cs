@@ -4,6 +4,7 @@ using FutbolChallengeUI.EventHandlers.EventArgs;
 using FutbolChallengeUI.ViewModels;
 using Helpers.Core.DateTimeProvider;
 using Microsoft.UI.Xaml;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace FutbolChallengeApp
 	{
 		private readonly IFutbolChallengeServiceClient _ServiceClient;
 		private readonly IDateTimeProvider _DateTimeProvider;
+		private IntPtr m_hwnd;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -51,6 +53,10 @@ namespace FutbolChallengeApp
 			MatchPanelViewModel.EditMatch += MatchPanelView_EditMatch;
 			MatchPanelViewModel.DeleteMatch += MatchPanelView_DeleteMatch;
 			MatchPanelViewModel.AddMatch += MatchPanelView_AddMatch;
+
+
+			m_hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+			UIHelpers.SetWindowSize(m_hwnd, 1000, 900);
 		}
 
 		private async void MatchPanelView_DeleteMatch(object sender, DeleteEntityEventArgs e)
@@ -88,7 +94,11 @@ namespace FutbolChallengeApp
 				MatchGroupId = e.EditTarget.MatchGroupId,
 			};
 			await _ServiceClient.UpdateMatch(local);
-			await LoadMatches();
+		}
+
+		async public Task SelectCurrentMatchGroup()
+		{
+			MatchListViewModel.SetCurrentMatchGroup(_DateTimeProvider);
 		}
 
 		async public Task LoadMatches()
@@ -101,6 +111,7 @@ namespace FutbolChallengeApp
 				MatchListViewModel.SeasonId = -1;
 				matchListView.Reload();
 				LoadingMessage = "Loaded";
+				return;
 			}
 
 			MatchListViewModel.Matches = new ObservableCollection<MatchPanelViewModel>(Matches.Select(p => new MatchPanelViewModel(_DateTimeProvider) {
@@ -111,10 +122,6 @@ namespace FutbolChallengeApp
 																															ShowEdit = true,
 																															AllowScoreEdits = _DateTimeProvider.CurrentUtcDateTime <= p.MatchDate,
 																														})) ;
-
-			//	TODO: fix this.....
-			MatchListViewModel.MatchGroupSequence = 1;
-			MatchListViewModel.SeasonId = 27;
 
 
 			matchListView.Reload();

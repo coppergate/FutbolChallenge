@@ -187,6 +187,8 @@ namespace FutbolChallengeUI.ViewModels
 			{
 				DeleteMatch?.Invoke(this, new DeleteEntityEventArgs(Game.MatchId));
 			}
+			EditMode = EditMode.None;
+			EditModeClick();
 		}
 
 

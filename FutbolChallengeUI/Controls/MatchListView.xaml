@@ -12,53 +12,55 @@
 	VerticalAlignment="Top"
 	>
 
+	<Grid>
 
-	<Grid CanBeScrollAnchor="True"	Height="Auto" >
+		<Grid.RowDefinitions>
+			<RowDefinition Height="55" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
 
-		<GridView x:Name="ParticipantViewGrid" TabIndex="1"
+
+		<Grid Grid.Row="0"  x:Name="GridHeaderView" HorizontalAlignment="Center">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="120" />
+				<ColumnDefinition Width="200" />
+				<ColumnDefinition Width="500" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Column="0" Text="Matches" 
+									AllowFocusOnInteraction="False"
+									IsHitTestVisible="False"
+					   VerticalAlignment="Center"/>
+
+			<TextBlock Grid.Column="1" Text="{x:Bind MatchListViewModel.SeasonName, Mode=OneWay}" 
+									AllowFocusOnInteraction="False"
+									IsHitTestVisible="False"
+					   VerticalAlignment="Center"/>
+
+			<local:MatchGroupSelector Grid.Column="2" 
+									  MatchGroupTitle="{x:Bind MatchListViewModel.MatchGroupName, Mode=OneWay}" 
+									  SelectedMatchGroupChangedEventHandler="{x:Bind MatchListViewModel.MatchGroupSelectionChange}"/>
+
+		</Grid>
+
+		<GridView Grid.Row="1" x:Name="ParticipantViewGrid" TabIndex="1"
 				Margin="10,0,20,0" 
 				VerticalAlignment="Top" 
 				HorizontalAlignment="Stretch"
 				SelectionMode="None" 
 				Height="Auto"
 				Width="850"
-				Padding="10,0,0,0"
+				Padding="10"
 				BorderBrush="White" BorderThickness="2"
 				ItemsSource="{x:Bind MatchListViewModel.Matches, Mode=OneWay}"
 				CanBeScrollAnchor="True"
 				ShowsScrollingPlaceholders="True"
-				ScrollViewer.VerticalScrollBarVisibility="Auto" 
+				ScrollViewer.VerticalScrollBarVisibility="Auto"
+				ItemClick="ParticipantViewGrid_ItemClick"
+				IsItemClickEnabled="True"
 		>
-			<GridView.HeaderTemplate>
-				<DataTemplate x:DataType="viewmodels:MatchListViewModel" >
-					<GridViewHeaderItem HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Top">
-						<Grid x:Name="GridHeaderView" HorizontalAlignment="Center">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="120" />
-								<ColumnDefinition Width="200" />
-								<ColumnDefinition Width="200" />
-							</Grid.ColumnDefinitions>
-							<TextBlock Grid.Column="0" Text="Matches" 
-									AllowFocusOnInteraction="False"
-									IsHitTestVisible="False"/>
-							<TextBlock Grid.Column="1" Text="{x:Bind SeasonName, Mode=OneWay}" 
-									AllowFocusOnInteraction="False"
-									AllowFocusWhenDisabled="False"
-									IsHitTestVisible="False"/>
-							<Button Grid.Column="2" x:Name="MatchSequenceAccessButton"
-									Content="{x:Bind MatchGroupName, Mode=OneWay}" 
-									AllowFocusOnInteraction="False"
-									AllowFocusWhenDisabled="False"
-									IsHitTestVisible="True"
-									 Click="{x:Bind MatchGroupButtonClick}" />
-						</Grid>
-					</GridViewHeaderItem>
-				</DataTemplate>
-			</GridView.HeaderTemplate>
 
 
 			<GridView.ItemTemplate>
-
 				<DataTemplate x:DataType="viewmodels:MatchPanelViewModel" >
 
 					<local:MatchPanelView  
@@ -70,9 +72,12 @@
 						VerticalAlignment="Center"
 						MatchPanelViewModel="{x:Bind Mode= OneWay}" 
 						Width="775"
+						Padding="5"
+						GotFocus="matchPanel_GotFocus"
 					  />
 
 				</DataTemplate>
+
 			</GridView.ItemTemplate>
 
 			<GridView.ItemsPanel>
@@ -80,6 +85,27 @@
 					<ItemsWrapGrid Orientation="Horizontal" Width="800" HorizontalAlignment="Center"  MaximumRowsOrColumns="1" />
 				</ItemsPanelTemplate>
 			</GridView.ItemsPanel>
+
 		</GridView>
 	</Grid>
 </viewmodels:BindableUserControlBase>
+
+	
+	<!--
+		
+			<Slider Grid.Column="2" x:Name="matchGroupSlider" 
+					Width="500" 
+					Header="{x:Bind MatchListViewModel.MatchGroupName, Mode=OneWay}"
+					Maximum="{x:Bind MatchListViewModel.MatchGroupCount, Mode=OneWay}"
+					ValueChanged="matchGoupSlider_ValueChanged"
+					Minimum="1"
+					TickPlacement="Outside"
+					TickFrequency="5"
+					SmallChange="1"
+					LargeChange="5"
+					SnapsTo="StepValues"
+					StepFrequency="1"
+					Value="{x:Bind MatchListViewModel.MatchGroupSequence, Mode=OneWay}"
+					 IsHoldingEnabled="False"
+					/>
+	-->

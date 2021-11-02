@@ -52,7 +52,7 @@
 					HorizontalAlignment="Stretch"
 					Visibility="Collapsed"
 					x:Name="UploadFilePickPanel">
-
+					
 					<TextBlock  AllowFocusOnInteraction="False" AllowFocusWhenDisabled="False" IsHitTestVisible="False"
 					 Text="Choose Schedule File To Upload"
 					 HorizontalAlignment="Left" 

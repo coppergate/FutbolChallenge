@@ -55,7 +55,7 @@ namespace DataControllers.Controllers
 			return ret;
 		}
 
-		[HttpPut("insert")]
+		[HttpPost("insert")]
 		public async Task<int> InsertParticipant([FromBody] ParticipantDto participant)
 		{
 			var ret = await _repositoryProvider.ParticipantRepository.Insert(participant);

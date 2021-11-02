@@ -1,6 +1,7 @@
 ﻿using FutbolChallengeUI;
 using Helpers.Core.DateTimeProvider;
 using Microsoft.UI.Xaml;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,20 +27,20 @@ namespace FutbolChallengeApp
 
 		private async void ParticipantMaintenanceButton_Click(object sender, RoutedEventArgs e)
 		{
-			DisplayParticipantManagement();
+			await DisplayParticipantManagement();
 		}
 
 		private async void SeasonScheduleMaintenanceButton_Click(object sender, RoutedEventArgs e)
 		{
-			DisplaySeasonScheduleManagement();
+			await DisplaySeasonScheduleManagement();
 		}
 		private async void GameMaintenanceButton_Click(object sender, RoutedEventArgs e)
 		{
-			DisplayGameManagement();
+			await DisplayGameManagement();
 		}
 
 		
-		private async void DisplayParticipantManagement()
+		private async Task DisplayParticipantManagement()
 		{
 			if (_ParticipantManagement is null)
 			{
@@ -57,7 +58,7 @@ namespace FutbolChallengeApp
 		}
 
 
-		private async void DisplaySeasonScheduleManagement()
+		private async Task DisplaySeasonScheduleManagement()
 		{
 			if (_SeasonScheduleManagement is null)
 			{
@@ -74,7 +75,7 @@ namespace FutbolChallengeApp
 		}
 
 
-		private async void DisplayGameManagement()
+		private async Task DisplayGameManagement()
 		{
 			if (_GameManagement is null)
 			{
@@ -83,6 +84,7 @@ namespace FutbolChallengeApp
 			}
 
 			await _GameManagement.LoadMatches();
+			await _GameManagement.SelectCurrentMatchGroup();
 			_GameManagement.Activate();
 		}
 

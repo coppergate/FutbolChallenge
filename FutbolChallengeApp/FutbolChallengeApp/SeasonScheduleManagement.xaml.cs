@@ -35,7 +35,7 @@ namespace FutbolChallengeApp
 			SeasonPanelViewModel.EditSeason += SeasonPanelView_EditSeason;
 
 			m_hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-			UIHelpers.SetWindowSize(m_hwnd, 1500, 700);
+			UIHelpers.SetWindowSize(m_hwnd, 1000, 700);
 
 		}
 

@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\EditParticipantEventArgs.cs~RF5b65099.TMP" />
+    <None Remove="Controls\MatchGroupSelector.xaml" />
     <None Remove="Controls\MatchListView.xaml" />
     <None Remove="Controls\MatchListView.xaml.cs~RFa339cd0.TMP" />
     <None Remove="Controls\MatchListView.xaml.cs~RFf6165a2.TMP" />
@@ -35,6 +36,12 @@
   <ItemGroup>
     <ProjectReference Include="..\FutbolChallengeDataRepository\FutbolChallengeDataRepository.csproj" />
     <ProjectReference Include="..\HelpersCore\HelpersCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\MatchGroupSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>
