@@ -21,6 +21,10 @@
     <None Remove="Controls\SeasonPanelView.xaml" />
     <None Remove="EventHandlers\EventArgs\AddPanelEventArgs.cs~RF3599bd.TMP" />
     <None Remove="FutbolChallengeUIModule.cs~RFd8b3d96.TMP" />
+    <None Remove="Pages\GameManagement.xaml" />
+    <None Remove="Pages\MainWindow.xaml" />
+    <None Remove="Pages\ParticipantManagement.xaml" />
+    <None Remove="Pages\SeasonScheduleManagement.xaml" />
     <None Remove="ViewModels\SeasonDetailViewModel.cs~RF146631b6.TMP" />
   </ItemGroup>
 
@@ -73,6 +77,21 @@
   <ItemGroup>
     <Page Update="Controls\ParticipantListView.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\GameManagement.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\MainWindow.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Pages\ParticipantManagement.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\SeasonScheduleManagement.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
 </Project>

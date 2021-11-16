@@ -3,7 +3,6 @@ using Helpers.Core;
 using Microsoft.UI.Xaml;
 using Ninject;
 using System;
-using System.Configuration;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -15,8 +14,8 @@ namespace FutbolChallengeApp
 	/// </summary>
 	public partial class App : Application
 	{
-		private readonly StandardKernel _StandardKernel;
-
+		private readonly IKernel _StandardKernel;
+		private Window m_window;
 
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
@@ -45,10 +44,5 @@ namespace FutbolChallengeApp
 
 			m_window.Activate();
 		}
-
-
-
-
-		private Window m_window;
 	}
 }

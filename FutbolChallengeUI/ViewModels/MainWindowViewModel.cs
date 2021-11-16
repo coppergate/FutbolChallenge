@@ -1,53 +1,53 @@
-﻿using FutbolChallengeUI;
-using Helpers.Core.DateTimeProvider;
+﻿using Helpers.Core.DateTimeProvider;
 using Microsoft.UI.Xaml;
+using Ninject;
 using System.Threading.Tasks;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
-namespace FutbolChallengeApp
+namespace FutbolChallengeUI.ViewModels
 {
 
-	public sealed partial class MainWindow : Window
+	public class MainWindowViewModel
 	{
+
 		private readonly IFutbolChallengeServiceClient _ServiceClient;
 		private readonly IDateTimeProvider _DateTimeProvider;
+		private readonly IKernel _StandardKernel;
+		private  ParticipantManagement _ParticipantManagement;
+		private  SeasonScheduleManagement _SeasonScheduleManagement;
+		private  GameManagement _GameManagement;
 
-		private ParticipantManagement _ParticipantManagement;
-		private SeasonScheduleManagement _SeasonScheduleManagement;
-		private GameManagement _GameManagement;
-
-		public MainWindow(IFutbolChallengeServiceClient serviceClient, IDateTimeProvider dateTimeProvider)
+		public MainWindowViewModel(IFutbolChallengeServiceClient serviceClient,
+									IDateTimeProvider dateTimeProvider,
+									IKernel kernel
+								)
 		{
-			this.InitializeComponent();
 			_ServiceClient = serviceClient;
 			_DateTimeProvider = dateTimeProvider;
+			_StandardKernel = kernel;
 		}
 
-		private async void ParticipantMaintenanceButton_Click(object sender, RoutedEventArgs e)
+		public async Task ShowParticipantMaintenance()
 		{
 			await DisplayParticipantManagement();
 		}
 
-		private async void SeasonScheduleMaintenanceButton_Click(object sender, RoutedEventArgs e)
+		public async Task ShowSeasonScheduleMaintenance()
 		{
 			await DisplaySeasonScheduleManagement();
 		}
-		private async void GameMaintenanceButton_Click(object sender, RoutedEventArgs e)
+
+		public async Task ShowGameMaintenance()
 		{
 			await DisplayGameManagement();
 		}
 
-		
 		private async Task DisplayParticipantManagement()
 		{
-			if (_ParticipantManagement is null)
+			if(_ParticipantManagement == null)
 			{
-				_ParticipantManagement = new ParticipantManagement(_ServiceClient);
+				_ParticipantManagement = _StandardKernel.Get<ParticipantManagement>();
 				_ParticipantManagement.Closed += _ParticipantManagementViewModel_Closed;
 			}
-
 			await _ParticipantManagement.LoadParticipants();
 			_ParticipantManagement.Activate();
 		}
@@ -57,12 +57,11 @@ namespace FutbolChallengeApp
 			_ParticipantManagement = null;
 		}
 
-
 		private async Task DisplaySeasonScheduleManagement()
 		{
 			if (_SeasonScheduleManagement is null)
 			{
-				_SeasonScheduleManagement = new SeasonScheduleManagement(_ServiceClient);
+				_SeasonScheduleManagement = _StandardKernel.Get<SeasonScheduleManagement>();
 				_SeasonScheduleManagement.Closed += _DisplaySeasonScheduleManagementViewModel_Closed;
 			}
 			await _SeasonScheduleManagement.LoadSeasons();
@@ -74,12 +73,11 @@ namespace FutbolChallengeApp
 			_SeasonScheduleManagement = null;
 		}
 
-
 		private async Task DisplayGameManagement()
 		{
 			if (_GameManagement is null)
 			{
-				_GameManagement = new GameManagement(_ServiceClient, _DateTimeProvider);
+				_GameManagement = _StandardKernel.Get<GameManagement>();
 				_GameManagement.Closed += _GameManagementViewModel_Closed;
 			}
 
@@ -92,5 +90,6 @@ namespace FutbolChallengeApp
 		{
 			_GameManagement = null;
 		}
+
 	}
 }

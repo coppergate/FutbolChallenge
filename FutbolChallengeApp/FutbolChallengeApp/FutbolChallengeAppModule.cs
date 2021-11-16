@@ -26,6 +26,7 @@ namespace FutbolChallengeApp
 					new HelpersCoreModule(),
 					new DataRepositoryModule(),
 					new FutbolChallengeAppModule(),
+					new FutbolChallengeUIModule(),
 				};
 		}
 	}

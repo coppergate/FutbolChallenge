@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 
-namespace FutbolChallengeApp
+namespace FutbolChallengeUI
 {
 
 	public sealed partial class GameManagement : Window, INotifyPropertyChanged

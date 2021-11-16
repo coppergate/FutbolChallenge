@@ -33,14 +33,16 @@ namespace Helpers.Core
 			List<INinjectModule> loadedModules = new List<INinjectModule>();
 			foreach (var assembly in assemblies)
 			{
-				assembly
+				var types = assembly
 					.GetTypes()
 					.Where(t =>
 						   t.GetInterfaces()
 							   .Any(i =>
 									i.Name == typeof(INinjectBootstrapper).Name))
-					.ToList()
-					.ForEach(t => {
+					.ToList();
+					
+				
+				types.ForEach(t => {
 
 						var ninjectModuleBootstrapper = (INinjectBootstrapper)Activator.CreateInstance(t);
 						foreach (var m in ninjectModuleBootstrapper.GetModules())

@@ -1,0 +1,30 @@
+﻿<Window
+    x:Class="FutbolChallengeUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FutbolChallengeUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+	<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="200" />
+		</Grid.ColumnDefinitions>
+		
+		<Grid.RowDefinitions>
+			<RowDefinition Height="35" />
+			<RowDefinition Height="35" />
+			<RowDefinition Height="35" />
+		</Grid.RowDefinitions>
+		<Button x:Name="ParticipantMaintenanceButton" Grid.Row="0" Grid.Column="0"
+				Click="ParticipantMaintenanceButton_Click"
+				VerticalAlignment="Bottom" HorizontalAlignment="Center">Participants</Button>
+		<Button x:Name="SeasonScheduleMaintenanceButton" Grid.Row="1" Grid.Column="0"
+				Click="SeasonScheduleMaintenanceButton_Click" 
+				VerticalAlignment="Bottom" HorizontalAlignment="Center">Seasons</Button>
+		<Button x:Name="GameMaintenanceButton" Grid.Row="2" Grid.Column="0"
+				Click="GameMaintenanceButton_Click" 
+				VerticalAlignment="Bottom" HorizontalAlignment="Center">Games</Button>
+	</Grid>
+</Window>

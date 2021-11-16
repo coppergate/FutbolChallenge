@@ -8,15 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Repository\Templates\GeneratedBackend - Copy.cs" />
     <Compile Remove="Repository\Templates\GeneratedBackend.cs" />
     <Compile Remove="Repository\Templates\GeneratedNInjectModule.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <None Remove="Repository\Templates\DataModel\GeneratedModel.tt" />
     <None Remove="Repository\Templates\DomainModel\GeneratedDomainModel.tt" />
-    <None Remove="Repository\Templates\GeneratedBackend.cs~RFa9248e6.TMP" />
     <None Remove="Repository\Templates\GeneratedBackend.tt" />
     <None Remove="Repository\Templates\GeneratedNInjectModule.tt" />
     <None Remove="Repository\Templates\Repository\TaxBuildSubmitGeneratedRepository.tt" />
@@ -31,23 +28,19 @@
       <LastGenOutput>GeneratedDomainModel.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </Content>
-    <Content Include="Repository\Templates\GeneratedNInjectModule.tt">
+    <Compile Include="Repository\Templates\GeneratedNInjectModule.tt">
       <LastGenOutput>GeneratedNInjectModule.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
-    </Content>
-    <Content Include="Repository\Templates\GeneratedBackend.tt">
+    </Compile>
+    <Compile Include="Repository\Templates\GeneratedBackend.tt">
       <LastGenOutput>GeneratedBackend.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
-    </Content>
+    </Compile>
     <Content Include="Repository\Templates\Repository\TaxBuildSubmitGeneratedRepository.tt">
       <LastGenOutput>TaxBuildSubmitGeneratedRepository.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </Content>
   </ItemGroup>
-
-  <PropertyGroup>
-    <TemplateGeneratorLibFolder>D:\FutbolChallenge\TemplateCode.Generators\</TemplateGeneratorLibFolder>
-  </PropertyGroup>
 
   <ItemGroup>
     <None Include="Repository\Templates\GeneratedBackend.cs">
@@ -65,11 +58,16 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.SqlClient" Version="3.0.0" />
     <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.5164.1" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TemplateCode.Generators\TemplateCode.Generators.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <TemplateGeneratorLibFolder>D:\FutbolChallenge\TemplateCode.Generators\</TemplateGeneratorLibFolder>
+  </PropertyGroup>
 
   <ItemGroup>
     <T4ParameterValues Include="TemplateGeneratorVariables">

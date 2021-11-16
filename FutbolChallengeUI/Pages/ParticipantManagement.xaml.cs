@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 
-namespace FutbolChallengeApp
+namespace FutbolChallengeUI
 {
 
 	public sealed partial class ParticipantManagement : Window, INotifyPropertyChanged
@@ -92,7 +92,7 @@ namespace FutbolChallengeApp
 
 		private void CloseButton_Click(object sender, RoutedEventArgs e)
 		{
-			this.Close();
+			
 		}
 	}
 }

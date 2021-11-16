@@ -1,5 +1,5 @@
-﻿using Helpers.Core;
-using Helpers.Core.DateTimeProvider;
+﻿using FutbolChallengeUI.ViewModels;
+using Helpers.Core;
 using Ninject.Modules;
 using System.Collections.Generic;
 
@@ -9,7 +9,13 @@ namespace FutbolChallengeUI
 	{
 		public override void Load()
 		{
-			Bind<IFutbolChallengeServiceClient>().To<FutbolChallengeServiceClient>();
+			Bind<MainWindow>().ToSelf();
+			Bind<ParticipantManagement>().ToSelf();
+			Bind<SeasonScheduleManagement>().ToSelf();
+			Bind<GameManagement>().ToSelf();
+
+			Bind<MainWindowViewModel>().ToSelf();
+
 		}
 	}
 
