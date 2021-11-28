@@ -37,7 +37,7 @@ namespace FutbolChallengeUI.ServiceClient
 		{
 			var targetRelativeUri = $"get-all-games/{seasonId}";
 			var result = await FetchList<SeasonGameDto>(targetRelativeUri);
-			return result?.Select(g => SeasonGame.FromDataModel(g));
+			return result?.Select(g => SeasonGame.FromDataModel(g)) ?? Enumerable.Empty<SeasonGame>();
 		}
 
 

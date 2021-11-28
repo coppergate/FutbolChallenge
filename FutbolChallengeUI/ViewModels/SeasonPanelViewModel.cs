@@ -8,9 +8,9 @@ namespace FutbolChallengeUI.ViewModels
 {
 	public sealed partial class SeasonPanelViewModel : BindableBase
 	{
-		static public event EditEntityEventHandler<Season> EditSeason;
-		static public event DeleteEntityEventHandler DeleteSeason;
-		static public event AddEntityEventHandler<Season> AddSeason;
+		static public event EditEntityEventHandler<Season>? EditSeason;
+		static public event DeleteEntityEventHandler? DeleteSeason;
+		static public event AddEntityEventHandler<Season>? AddSeason;
 
 
 		public SeasonPanelViewModel()
@@ -27,7 +27,7 @@ namespace FutbolChallengeUI.ViewModels
 
 		public string SeasonName
 		{
-			get => Season?.Name;
+			get => Season?.Name ?? string.Empty;
 			set { Season.Name = value; }
 		}
 

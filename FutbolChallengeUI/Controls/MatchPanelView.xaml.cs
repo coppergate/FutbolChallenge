@@ -27,7 +27,7 @@ namespace FutbolChallengeUI.Controls
 			this.LosingFocus += SeasonPanelView_LosingFocus;
 		}
 
-		private MatchPanelViewModel _Match;
+		private MatchPanelViewModel? _Match;
 
 		public MatchPanelViewModel MatchPanelViewModel
 		{

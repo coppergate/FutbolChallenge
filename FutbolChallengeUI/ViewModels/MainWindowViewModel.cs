@@ -11,9 +11,9 @@ namespace FutbolChallengeUI.ViewModels
 
 		private readonly IDateTimeProvider _DateTimeProvider;
 		private readonly IKernel _StandardKernel;
-		private  ParticipantManagement _ParticipantManagement;
-		private  SeasonScheduleManagement _SeasonScheduleManagement;
-		private  GameManagement _GameManagement;
+		private  ParticipantManagement? _ParticipantManagement;
+		private  SeasonScheduleManagement? _SeasonScheduleManagement;
+		private  GameManagement? _GameManagement;
 
 		public MainWindowViewModel(IDateTimeProvider dateTimeProvider,
 									IKernel kernel

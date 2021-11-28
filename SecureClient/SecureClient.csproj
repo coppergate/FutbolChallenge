@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Identity.Client" Version="4.19.0" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-experimental1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="6.0.0" />

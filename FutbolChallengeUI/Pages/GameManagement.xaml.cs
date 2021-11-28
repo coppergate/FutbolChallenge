@@ -22,7 +22,7 @@ namespace FutbolChallengeUI
 		private readonly IDateTimeProvider _DateTimeProvider;
 		private IntPtr m_hwnd;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private MatchListViewModel _MatchListViewModel = new MatchListViewModel();
 		public MatchListViewModel MatchListViewModel
@@ -59,15 +59,17 @@ namespace FutbolChallengeUI
 
 			m_hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
 			UIHelpers.SetWindowSize(m_hwnd, 1000, 900);
-		}
+			
+			_LoadingMessage = "";
+		} 
 
-		private async void MatchPanelView_DeleteMatch(object sender, DeleteEntityEventArgs e)
+		private async void MatchPanelView_DeleteMatch(object? sender, DeleteEntityEventArgs e)
 		{
 			await _ScheduleClient.DeleteMatch(e.Id);
 			await LoadMatches();
 		}
 
-		private async void MatchPanelView_AddMatch(object sender, AddEntityEventArgs<SeasonGame> e)
+		private async void MatchPanelView_AddMatch(object? sender, AddEntityEventArgs<SeasonGame> e)
 		{
 			ScheduledGame local = new() {
 				Id = e.AddTarget.MatchId,
@@ -84,7 +86,7 @@ namespace FutbolChallengeUI
 		}
 
 
-		private async void MatchPanelView_EditMatch(object sender, EditEntityEventArgs<SeasonGame> e)
+		private async void MatchPanelView_EditMatch(object? sender, EditEntityEventArgs<SeasonGame> e)
 		{
 			ScheduledGame local = new() {
 				Id = e.EditTarget.MatchId,
@@ -130,7 +132,7 @@ namespace FutbolChallengeUI
 			LoadingMessage = "Loaded";
 		}
 
-		public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

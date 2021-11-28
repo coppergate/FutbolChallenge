@@ -5,9 +5,9 @@ namespace FutbolChallengeUI.Controls
 	public sealed partial class MatchListView : BindableUserControlBase
 	{
 
-		private MatchListViewModel _MatchListViewModel;
+		private MatchListViewModel? _MatchListViewModel;
 
-		public MatchListViewModel MatchListViewModel
+		public MatchListViewModel? MatchListViewModel
 		{
 			get { return _MatchListViewModel; }
 			set

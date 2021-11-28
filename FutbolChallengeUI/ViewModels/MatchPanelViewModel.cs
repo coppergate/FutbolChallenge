@@ -9,9 +9,9 @@ namespace FutbolChallengeUI.ViewModels
 {
 	public sealed partial class MatchPanelViewModel : BindableBase
 	{
-		static public event EditEntityEventHandler<SeasonGame> EditMatch;
-		static public event DeleteEntityEventHandler DeleteMatch;
-		static public event AddEntityEventHandler<SeasonGame> AddMatch;
+		static public event EditEntityEventHandler<SeasonGame>? EditMatch;
+		static public event DeleteEntityEventHandler? DeleteMatch;
+		static public event AddEntityEventHandler<SeasonGame>? AddMatch;
 
 		public MatchPanelViewModel(IDateTimeProvider dateTimeProvider)
 		{
@@ -151,7 +151,6 @@ namespace FutbolChallengeUI.ViewModels
 		}
 
 		private bool _AllowScoreEdits = false;
-		private readonly IDateTimeProvider dateProvider;
 		private readonly IDateTimeProvider _DateTimeProvider;
 
 		public bool AllowScoreEdits

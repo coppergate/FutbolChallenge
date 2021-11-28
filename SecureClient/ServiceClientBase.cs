@@ -17,17 +17,17 @@ namespace SecureClient
 		// The Redirect URI is the URI where Azure AD will return OAuth responses.
 		//
 		// The AAD Instance is the instance of Azure, for example public Azure or Azure China.
-		private static readonly string _AadInstance = ConfigurationManager.AppSettings["ida:AADInstance"];
+		private static readonly string _AadInstance = ConfigurationManager.AppSettings["ida:AADInstance"] ?? string.Empty;
 		// The Tenant is the name of the Azure AD tenant in which this application is registered.
-		private static readonly string _Tenant = ConfigurationManager.AppSettings["ida:Tenant"];
+		private static readonly string _Tenant = ConfigurationManager.AppSettings["ida:Tenant"] ?? string.Empty;
 		// The Client ID is used by the application to uniquely identify itself to Azure AD.
-		private static readonly string _ClientId = ConfigurationManager.AppSettings["ida:ClientId"];
+		private static readonly string _ClientId = ConfigurationManager.AppSettings["ida:ClientId"] ?? string.Empty;
 		// The Authority is the sign-in URL of the tenant.
 		private static readonly string _Authority = string.Format(CultureInfo.InvariantCulture, _AadInstance, _Tenant);
 
 		// To authenticate to the service, the client needs to know the service's App ID URI and URL
-		private static readonly string _AppAccessScope = ConfigurationManager.AppSettings["app:AppAcessScope"];
-		private static readonly string _AppBaseAddress = ConfigurationManager.AppSettings["app:AppBaseAddress"];
+		private static readonly string _AppAccessScope = ConfigurationManager.AppSettings["app:AppAcessScope"] ?? string.Empty;
+		private static readonly string _AppBaseAddress = ConfigurationManager.AppSettings["app:AppBaseAddress"] ?? string.Empty;
 		private static readonly string _AddressSlash = (_AppBaseAddress?.EndsWith("/") ?? false) ? "" : "/";
 		private static readonly string[] _Scopes = { _AppAccessScope };
 
@@ -35,7 +35,7 @@ namespace SecureClient
 		private readonly string _Controller;
 		private HttpClient _HttpClient = new HttpClient();
 		private List<IAccount> _Accounts = new List<IAccount>();
-		private AuthenticationResult _Result;
+		private AuthenticationResult? _Result;
 
 
 		protected long MaxResponseContentBufferSize { get; set; } = 1024 * 1024 * 20; //	20MB 
@@ -43,16 +43,16 @@ namespace SecureClient
 
 		public ServiceClientBase(string controller)
 		{
-			_App = PublicClientApplicationBuilder.Create(_ClientId)
-				  .WithAuthority(_Authority)
-				  .WithRedirectUri("http://localhost") // needed only for the system browser
-				  .Build();
+            _App = PublicClientApplicationBuilder.Create(_ClientId)
+                  .WithAuthority(_Authority)
+                  .WithRedirectUri("http://localhost") // needed only for the system browser
+                  .Build();
 
-			TokenCacheHelper.EnableSerialization(_App.UserTokenCache);
+            TokenCacheHelper.EnableSerialization(_App.UserTokenCache);
 
-			SignIn().Wait();
+            //		SignIn().Wait();
 
-			_Controller = controller;
+            _Controller = controller;
 		}
 
 		JsonSerializerOptions SerialzationOptions =>
@@ -102,7 +102,7 @@ namespace SecureClient
 			catch (MsalUiRequiredException)
 			{
 			}
-			catch (MsalException ex)
+			catch (MsalException )
 			{
 				// An unexpected error occurred.
 			}
@@ -164,7 +164,7 @@ namespace SecureClient
 			var result = await builder.ExecuteAsync();
 		}
 
-		async public Task<TDto> Fetch<TDto>(string targetRelativeUri) where TDto : class
+		async public Task<TDto?> Fetch<TDto>(string targetRelativeUri) where TDto : class
 		{
 			Uri target = GetTarget(targetRelativeUri);
 			try
@@ -213,7 +213,7 @@ namespace SecureClient
 				response.EnsureSuccessStatusCode();
 				return true;
 			}
-			catch (Exception ex)
+			catch (Exception )
 			{
 				//	Log this exception
 				return false;
@@ -231,7 +231,7 @@ namespace SecureClient
 				response.EnsureSuccessStatusCode();
 				return int.Parse(await response.Content.ReadAsStringAsync());
 			}
-			catch (Exception ex)
+			catch (Exception )
 			{
 				//	Log this exception
 				return -1;
@@ -249,7 +249,7 @@ namespace SecureClient
 
 				return true;
 			}
-			catch (Exception ex)
+			catch (Exception )
 			{
 				//	Log this exception
 				return false;
@@ -267,7 +267,7 @@ namespace SecureClient
 
 				return true;
 			}
-			catch (Exception ex)
+			catch (Exception )
 			{
 				//	Log this exception
 				return false;

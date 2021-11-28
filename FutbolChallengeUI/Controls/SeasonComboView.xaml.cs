@@ -7,7 +7,7 @@ namespace FutbolChallengeUI.Controls
 {
 	public sealed partial class SeasonComboView : BindableUserControlBase
 	{
-		public event SelectedSeasonChangedEventHandler SelectedSeasonChanged;
+		public event SelectedSeasonChangedEventHandler? SelectedSeasonChanged;
 
 		private SeasonListViewModel _SeasonListViewModel = new SeasonListViewModel();
 

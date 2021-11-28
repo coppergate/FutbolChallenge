@@ -18,7 +18,7 @@ namespace FutbolChallengeUI.Converters
 			return thisdate.ToString("yyyy-MM-dd");
 		}
 
-		public object ConvertBack(object value, Type targetType,
+		public object? ConvertBack(object value, Type targetType,
 								object parameter, string language)
 		{
 			string dateString = (string)value;

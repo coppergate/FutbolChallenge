@@ -18,11 +18,11 @@ namespace FutbolChallengeUI.Controls
 			this.LosingFocus += SeasonPanelView_LosingFocus;
 		}
 
-		private SeasonPanelViewModel _Season;
+		private SeasonPanelViewModel? _Season = null;
 
 		public SeasonPanelViewModel SeasonViewModel
 		{
-			get { return _Season; }
+			get { return _Season ??  new SeasonPanelViewModel(); } 
 			set 
 			{ 
 				_Season = value;

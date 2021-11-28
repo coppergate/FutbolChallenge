@@ -7,9 +7,9 @@ namespace FutbolChallengeUI.ViewModels
 {
 	public sealed partial class ParticipantPanelViewModel : BindableBase
 	{
-		static public event EditEntityEventHandler<Participant> EditParticipant;
-		static public event DeleteEntityEventHandler DeleteParticipant;
-		static public event AddEntityEventHandler<Participant> AddParticipant;
+		static public event EditEntityEventHandler<Participant>? EditParticipant;
+		static public event DeleteEntityEventHandler? DeleteParticipant;
+		static public event AddEntityEventHandler<Participant>? AddParticipant;
 
 		private Participant _Participant = new Participant();
 
@@ -35,19 +35,19 @@ namespace FutbolChallengeUI.ViewModels
 
 		public string EmailAddress
 		{
-			get => Participant?.EmailAddress;
+			get => Participant?.EmailAddress ?? string.Empty;
 			set { if (Participant != null) Participant.EmailAddress = value; }
 		}
 
 		public string FirstName
 		{
-			get => Participant?.FirstName;
+			get => Participant?.FirstName ?? string.Empty;
 			set { if (Participant != null) Participant.FirstName = value; }
 		}
 
 		public string LastName
 		{
-			get => Participant?.LastName;
+			get => Participant?.LastName ?? string.Empty;
 			set { if (Participant != null) Participant.LastName = value; }
 		}
 

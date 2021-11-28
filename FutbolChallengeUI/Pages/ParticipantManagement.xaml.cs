@@ -18,7 +18,7 @@ namespace FutbolChallengeUI
 	{
 		private readonly IFutbolChallengeParticipantServiceClient _ServiceClient;
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		private ParticipantListViewModel _ParticipantListViewModel = new ParticipantListViewModel();
 		public ParticipantListViewModel ParticipantListViewModel
@@ -48,15 +48,17 @@ namespace FutbolChallengeUI
 			ParticipantPanelViewModel.EditParticipant += ParticpantPanelView_EditParticipant;
 			ParticipantPanelViewModel.DeleteParticipant += ParticipantPanelView_DeleteParticipant;
 			ParticipantPanelViewModel.AddParticipant += ParticipantPanelView_AddParticipant;
+
+			_LoadingMessage = "";
 		}
 
-		private async void ParticipantPanelView_DeleteParticipant(object sender, DeleteEntityEventArgs e)
+		private async void ParticipantPanelView_DeleteParticipant(object? sender, DeleteEntityEventArgs e)
 		{
 			await _ServiceClient.DeleteParticipant(e.Id);
 			await LoadParticipants();
 		}
 
-		private async void ParticipantPanelView_AddParticipant(object sender, AddEntityEventArgs<Participant> e)
+		private async void ParticipantPanelView_AddParticipant(object? sender, AddEntityEventArgs<Participant> e)
 		{
 			Participant local = new() {
 				EmailAddress = e.AddTarget.EmailAddress,
@@ -69,7 +71,7 @@ namespace FutbolChallengeUI
 		}
 
 
-		private async void ParticpantPanelView_EditParticipant(object sender, EditEntityEventArgs<Participant> e)
+		private async void ParticpantPanelView_EditParticipant(object? sender, EditEntityEventArgs<Participant> e)
 		{
 			await _ServiceClient.UpdateParticipant(e.EditTarget);
 			await LoadParticipants();
@@ -86,7 +88,7 @@ namespace FutbolChallengeUI
 			LoadingMessage = "Loaded";
 		}
 
-		public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}

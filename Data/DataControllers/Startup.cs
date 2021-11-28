@@ -27,12 +27,12 @@ namespace DataControllers
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
-			services.AddAuthentication
-			(options => {
-				options.DefaultAuthenticateScheme = "Bearer";
-			}).AddJwtBearer();
+            services.AddAuthentication
+            (options => {
+                options.DefaultAuthenticateScheme = "Bearer";
+            }).AddJwtBearer();
 
-			services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c => {
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "DataControllers", Version = "v1" });
 			});
 
@@ -62,8 +62,9 @@ namespace DataControllers
 			app.UseHttpsRedirection();
 
 			app.UseRouting();
-			app.UseAuthentication();
-			app.UseAuthorization();
+
+		//	app.UseAuthentication();
+		//	app.UseAuthorization();
 
 			app.UseEndpoints(endpoints => {
 				endpoints.MapControllers();

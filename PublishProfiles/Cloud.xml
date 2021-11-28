@@ -20,9 +20,7 @@
                                     AzureActiveDirectory="true"
                                     ServerCertThumbprint="0123456789012345678901234567890123456789" />
   -->
-  <ClusterConnectionParameters ConnectionEndpoint="futbol-challenge.eastus.cloudapp.azure.com:19000"
-                               AzureActiveDirectory="true"
-                               ServerCertThumbprint="1D6DF4FB5799A82FAA0D66C35D914EBDCF8B0AFF" />
+  <ClusterConnectionParameters ConnectionEndpoint="futbolchallenge4.eastus.cloudapp.azure.com:19000" X509Credential="true" ServerCertThumbprint="D4430DAE7B50CDDE7EE4428FD5CD07143C8509A9" FindType="FindByThumbprint" FindValue="D4430DAE7B50CDDE7EE4428FD5CD07143C8509A9" StoreLocation="CurrentUser" StoreName="My" />
   <ApplicationParameterFile Path="..\ApplicationParameters\Cloud.xml" />
   <CopyPackageParameters CompressPackage="true" />
   <UpgradeDeployment Mode="Monitored">

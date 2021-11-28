@@ -8,14 +8,14 @@ namespace FutbolChallengeUI.Controls
 	public sealed partial class MatchGroupSelector : BindableUserControlBase
 	{
 
-		public event SelectedMatchGroupChangedEventHandler SelectedMatchGroupChangedEventHandler;
+		public event SelectedMatchGroupChangedEventHandler? SelectedMatchGroupChangedEventHandler;
 
 		public MatchGroupSelector()
 		{
 			this.InitializeComponent();
 		}
 
-		private string _MatchGroupTitle;
+		private string _MatchGroupTitle = string.Empty;
 		public string MatchGroupTitle
 		{
 			get { return _MatchGroupTitle; }

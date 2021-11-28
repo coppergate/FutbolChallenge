@@ -17,10 +17,10 @@ namespace FutbolChallengeUI.Controls
 			this.LosingFocus += ParticipantPanelView_LosingFocus;
 		}
 
-		private ParticipantPanelViewModel _ParticipantPanelViewModel;
+		private ParticipantPanelViewModel? _ParticipantPanelViewModel;
 		public ParticipantPanelViewModel ParticipantPanelViewModel
 		{
-			get { return _ParticipantPanelViewModel; }
+			get { return _ParticipantPanelViewModel ?? new ParticipantPanelViewModel(); }
 			set 
 			{ 
 				_ParticipantPanelViewModel = value;

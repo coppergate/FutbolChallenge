@@ -24,7 +24,8 @@ namespace FutbolChallengeUI.Converters
 
 			string intString = (string)value;
 			if (string.IsNullOrWhiteSpace(intString))
-				return null;
+				throw new InvalidOperationException("Attempting to convert empty/null string to int");
+		;
 
 			if (!int.TryParse(intString, out int intVal))
 				throw new InvalidCastException($"Failed converting {intString} to integer");

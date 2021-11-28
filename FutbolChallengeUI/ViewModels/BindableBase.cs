@@ -6,9 +6,9 @@ namespace FutbolChallengeUI.ViewModels
 {
 	public class BindableBase : INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged = delegate { };
+		public event PropertyChangedEventHandler? PropertyChanged = delegate { };
 
-		public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
@@ -21,9 +21,9 @@ namespace FutbolChallengeUI.ViewModels
 
 	public class BindableUserControlBase : UserControl, INotifyPropertyChanged
 	{
-		public event PropertyChangedEventHandler PropertyChanged = delegate { };
+		public event PropertyChangedEventHandler? PropertyChanged = delegate { };
 
-		public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		public void OnPropertyChanged([CallerMemberName] string? propertyName = null)
 		{
 			this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
