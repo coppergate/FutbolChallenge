@@ -26,19 +26,19 @@ jobs:
         run: dotnet build AttributesCore\AttributesCore.csproj --configuration Release
       
       - name: Build with dotnet Exceptions.csproj
-        run: dotnet build \Exceptions\Exceptions.csproj --configuration Release
+        run: dotnet build Exceptions\Exceptions.csproj --configuration Release
       
       - name: Build with dotnet SecureClient.csproj
-        run: dotnet build \SecureClient\SecureClient.csproj --configuration Release
+        run: dotnet build SecureClient\SecureClient.csproj --configuration Release
      
       - name: Build with dotnet HelpersCore.csproj
-        run: dotnet build \HelpersCore\HelpersCore.csproj --configuration Release
+        run: dotnet build HelpersCore\HelpersCore.csproj --configuration Release
      
       - name: Build with dotnet FutbolChallengeDataRepository.csproj
-        run: dotnet build \FutbolChallengeDataRepository\FutbolChallengeDataRepository.csproj --configuration Release
+        run: dotnet build FutbolChallengeDataRepository\FutbolChallengeDataRepository.csproj --configuration Release
      
       - name: Build with dotnet DataControllers.csproj
-        run: dotnet build \Data\DataControllers\DataControllers.csproj --configuration Release
+        run: dotnet build Data\DataControllers\DataControllers.csproj --configuration Release
 
       - name: dotnet publish
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
