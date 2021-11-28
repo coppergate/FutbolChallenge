@@ -20,7 +20,13 @@
                                     AzureActiveDirectory="true"
                                     ServerCertThumbprint="0123456789012345678901234567890123456789" />
   -->
-  <ClusterConnectionParameters ConnectionEndpoint="" />
+  <ClusterConnectionParameters ConnectionEndpoint="futbol-challenge.eastus.cloudapp.azure.com:19000"
+                               AzureActiveDirectory="true"
+                               ServerCertThumbprint="1D6DF4FB5799A82FAA0D66C35D914EBDCF8B0AFF" />
   <ApplicationParameterFile Path="..\ApplicationParameters\Cloud.xml" />
   <CopyPackageParameters CompressPackage="true" />
+  <UpgradeDeployment Mode="Monitored">
+    <Parameters FailureAction="Rollback" Force="True" />
+  </UpgradeDeployment>
+
 </PublishProfile>

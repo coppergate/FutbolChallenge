@@ -28,14 +28,14 @@
       <LastGenOutput>GeneratedDomainModel.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
     </Content>
-    <Compile Include="Repository\Templates\GeneratedNInjectModule.tt">
+    <Content Include="Repository\Templates\GeneratedNInjectModule.tt">
       <LastGenOutput>GeneratedNInjectModule.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
-    </Compile>
-    <Compile Include="Repository\Templates\GeneratedBackend.tt">
+    </Content>
+    <Content Include="Repository\Templates\GeneratedBackend.tt">
       <LastGenOutput>GeneratedBackend.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
-    </Compile>
+    </Content>
     <Content Include="Repository\Templates\Repository\TaxBuildSubmitGeneratedRepository.tt">
       <LastGenOutput>TaxBuildSubmitGeneratedRepository.cs</LastGenOutput>
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -56,8 +56,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="3.0.0" />
-    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.5164.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="4.0.0" />
+    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.5282.3" />
     <PackageReference Include="System.Runtime" Version="4.3.1" />
   </ItemGroup>
 

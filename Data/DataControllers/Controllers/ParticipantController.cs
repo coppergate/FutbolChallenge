@@ -1,19 +1,21 @@
 ﻿using Exceptions;
 using FutbolChallenge.Data.Dto;
 using FutbolChallenge.Data.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Web.Resource;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DataControllers.Controllers
 {
+	//[Authorize(AuthenticationSchemes = "Bearer", Roles = "Administrator")]
+	//[RequiredScope("access_as_admin")]
 	[ApiController]
 	[Route("[controller]")]
 	public class ParticipantController : ControllerBase
 	{
-
-
 		private readonly ILogger<TeamController> _logger;
 		private readonly IDataRepositoryProvider _repositoryProvider;
 

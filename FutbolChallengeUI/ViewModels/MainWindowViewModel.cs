@@ -9,19 +9,16 @@ namespace FutbolChallengeUI.ViewModels
 	public class MainWindowViewModel
 	{
 
-		private readonly IFutbolChallengeServiceClient _ServiceClient;
 		private readonly IDateTimeProvider _DateTimeProvider;
 		private readonly IKernel _StandardKernel;
 		private  ParticipantManagement _ParticipantManagement;
 		private  SeasonScheduleManagement _SeasonScheduleManagement;
 		private  GameManagement _GameManagement;
 
-		public MainWindowViewModel(IFutbolChallengeServiceClient serviceClient,
-									IDateTimeProvider dateTimeProvider,
+		public MainWindowViewModel(IDateTimeProvider dateTimeProvider,
 									IKernel kernel
 								)
 		{
-			_ServiceClient = serviceClient;
 			_DateTimeProvider = dateTimeProvider;
 			_StandardKernel = kernel;
 		}
@@ -82,7 +79,7 @@ namespace FutbolChallengeUI.ViewModels
 			}
 
 			await _GameManagement.LoadMatches();
-			await _GameManagement.SelectCurrentMatchGroup();
+			_GameManagement.SelectCurrentMatchGroup();
 			_GameManagement.Activate();
 		}
 

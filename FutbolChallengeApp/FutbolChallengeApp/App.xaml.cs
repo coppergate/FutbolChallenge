@@ -23,7 +23,7 @@ namespace FutbolChallengeApp
 		/// </summary>
 		public App()
 		{
-			this.InitializeComponent();
+			//this.InitializeComponent();
 			_StandardKernel = BootstrapHelper.LoadNinjectKernel();
 		}
 

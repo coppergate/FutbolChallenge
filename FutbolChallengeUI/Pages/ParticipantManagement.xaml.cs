@@ -1,6 +1,7 @@
 ﻿using FutbolChallenge.Data.Model;
 using FutbolChallengeUI;
 using FutbolChallengeUI.EventHandlers.EventArgs;
+using FutbolChallengeUI.ServiceClient;
 using FutbolChallengeUI.ViewModels;
 using Microsoft.UI.Xaml;
 using System.Collections.ObjectModel;
@@ -15,7 +16,7 @@ namespace FutbolChallengeUI
 
 	public sealed partial class ParticipantManagement : Window, INotifyPropertyChanged
 	{
-		private readonly IFutbolChallengeServiceClient _ServiceClient;
+		private readonly IFutbolChallengeParticipantServiceClient _ServiceClient;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -38,7 +39,7 @@ namespace FutbolChallengeUI
 			set { _LoadingMessage = value; OnPropertyChanged(); }
 		}
 
-		public ParticipantManagement(IFutbolChallengeServiceClient serviceClient)
+		public ParticipantManagement(IFutbolChallengeParticipantServiceClient serviceClient)
 		{
 			this.InitializeComponent();
 			_ServiceClient = serviceClient;
@@ -92,7 +93,7 @@ namespace FutbolChallengeUI
 
 		private void CloseButton_Click(object sender, RoutedEventArgs e)
 		{
-			
+
 		}
 	}
 }

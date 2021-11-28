@@ -2,14 +2,18 @@
 using FutbolChallenge.Data.Dto;
 using FutbolChallenge.Data.Repository;
 using FutbolChallengeDataRepository.Composites;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Web.Resource;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DataControllers.Controllers
 {
 
+	//[Authorize]
+	//[RequiredScope("access_as_admin")]
 	[ApiController]
 	[Route("[controller]")]
 	public class ScheduleController : ControllerBase
@@ -27,13 +31,6 @@ namespace DataControllers.Controllers
 		public async Task<IActionResult> GetFullSchedule()
 		{
 			var ret = await _repositoryProvider.ScheduledGameRepository.GetList("", null);
-			return Ok(ret);
-		}
-
-		[HttpGet("all-seasons")]
-		public async Task<IActionResult> GetAllSeasons()
-		{
-			var ret = await _repositoryProvider.SeasonRepository.GetList("", null);
 			return Ok(ret);
 		}
 
@@ -114,14 +111,6 @@ namespace DataControllers.Controllers
 			return Ok(ret);
 		}
 
-
-		[HttpGet("get-all-games/{seasonId}")]
-		public async Task<IActionResult> GetSeasonGames(int seasonId)
-		{
-			var where = "SeasonId = @seasonId";
-			var ret = await _repositoryProvider.SeasonGameRepository.GetList(where, new { seasonId });
-			return Ok(ret);
-		}
 
 		[HttpDelete("delete-game/{id}")]
 		async public Task<IActionResult> DeleteMatch(int id)

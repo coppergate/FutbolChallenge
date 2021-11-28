@@ -19,10 +19,10 @@
 				<RowDefinition Height="*" />
 			</Grid.RowDefinitions>
 
-			<view:MatchListView Grid.Row="0" x:Name="matchListView" 
-										MatchListViewModel="{x:Bind Path=MatchListViewModel}"
-										VerticalAlignment="Top" 
-								 Margin="0,10,0,10"/>
+			<view:MatchListView Grid.Row="0" x:Name="matchListView"
+								MatchListViewModel="{x:Bind Path=MatchListViewModel}"
+								VerticalAlignment="Top" 
+								Margin="0,10,0,10"/>
 		</Grid>
 
 		<Button	Grid.Row ="1" VerticalAlignment="Bottom"  HorizontalAlignment="Right" Content="Close" Margin="0,10,20,10"  Click="CloseButton_Click"/>

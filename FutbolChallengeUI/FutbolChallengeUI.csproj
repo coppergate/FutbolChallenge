@@ -1,97 +1,70 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0-windows10.0.19041.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>FutbolChallengeUI</RootNamespace>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
     <Platforms>AnyCPU;x64</Platforms>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
   </PropertyGroup>
+ 
   <ItemGroup>
-    <None Remove="Controls\EditParticipantEventArgs.cs~RF5b65099.TMP" />
-    <None Remove="Controls\MatchGroupSelector.xaml" />
-    <None Remove="Controls\MatchListView.xaml" />
-    <None Remove="Controls\MatchListView.xaml.cs~RFa339cd0.TMP" />
-    <None Remove="Controls\MatchListView.xaml.cs~RFf6165a2.TMP" />
-    <None Remove="Controls\MatchPanelView.xaml" />
-    <None Remove="Controls\ParticipantListView.xaml" />
-    <None Remove="Controls\ParticpantPanelView.xaml" />
-    <None Remove="Controls\SeasonComboView.xaml" />
-    <None Remove="Controls\SeasonDetailPanelView.xaml" />
-    <None Remove="Controls\SeasonPanelView.xaml" />
-    <None Remove="EventHandlers\EventArgs\AddPanelEventArgs.cs~RF3599bd.TMP" />
-    <None Remove="FutbolChallengeUIModule.cs~RFd8b3d96.TMP" />
-    <None Remove="Pages\GameManagement.xaml" />
-    <None Remove="Pages\MainWindow.xaml" />
-    <None Remove="Pages\ParticipantManagement.xaml" />
-    <None Remove="Pages\SeasonScheduleManagement.xaml" />
-    <None Remove="ViewModels\SeasonDetailViewModel.cs~RF146631b6.TMP" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-experimental1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.0.0-experimental1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.0.0-experimental1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.0.0-experimental1" />
+    <PackageReference Include="PInvoke.User32" Version="0.7.104" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup>
-      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-experimental1" />
-      <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.0.0-experimental1" />
-      <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.0.0-experimental1" />
-      <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.0.0-experimental1" />
-      <PackageReference Include="PInvoke.User32" Version="0.7.104" />
-      <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  
+    <Page Include="Pages\GameManagement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ParticipantManagement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SeasonScheduleManagement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
+    <Page Include="Controls\MatchGroupSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ParticpantPanelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ParticipantListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MatchListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    
+    <Page Include="Controls\SeasonDetailPanelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SeasonComboView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MatchPanelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SeasonPanelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FutbolChallengeDataRepository\FutbolChallengeDataRepository.csproj" />
     <ProjectReference Include="..\HelpersCore\HelpersCore.csproj" />
+    <ProjectReference Include="..\SecureClient\SecureClient.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Page Update="Controls\MatchGroupSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Controls\MatchListView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Controls\SeasonDetailPanelView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Controls\SeasonComboView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Controls\MatchPanelView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Controls\SeasonPanelView.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Controls\ParticpantPanelView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Controls\ParticipantListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Pages\GameManagement.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\MainWindow.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
-    <Page Update="Pages\ParticipantManagement.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\SeasonScheduleManagement.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
 </Project>

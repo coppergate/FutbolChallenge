@@ -1,5 +1,6 @@
 ﻿using FutbolChallenge.Data;
 using FutbolChallengeUI;
+using FutbolChallengeUI.ServiceClient;
 using Helpers.Core;
 using Helpers.Core.ConnectionFactory;
 using Ninject.Modules;
@@ -12,7 +13,10 @@ namespace FutbolChallengeApp
 		public override void Load()
 		{
 			Rebind<IDbConnectionFactory>().To<ImplementedApplicationDbConnectionFactory>();
-			Bind<IFutbolChallengeServiceClient>().To<FutbolChallengeServiceClient>();
+			Bind<IFutbolChallengeParticipantServiceClient>().To<FutbolChallengeParticipantServiceClient>();
+			Bind<IFutbolChallengeScheduleServiceClient>().To<FutbolChallengeScheduleServiceClient>();
+			Bind<IFutbolChallengeSeasonServiceClient>().To<FutbolChallengeSeasonServiceClient>();
+			Bind<IFutbolChallengeTeamServiceClient>().To<FutbolChallengeTeamServiceClient>();
 		}
 	}
 

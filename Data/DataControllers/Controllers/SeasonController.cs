@@ -1,13 +1,16 @@
 ﻿using Exceptions;
 using FutbolChallenge.Data.Dto;
 using FutbolChallenge.Data.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+using Microsoft.Identity.Web.Resource;
 using System.Threading.Tasks;
 
 namespace DataControllers.Controllers
 {
+	//[Authorize]
+	//[RequiredScope("access_as_admin")]
 	[ApiController]
 	[Route("[controller]")]
 	public class SeasonController : ControllerBase
@@ -19,6 +22,21 @@ namespace DataControllers.Controllers
 		{
 			_logger = logger;
 			_repositoryProvider = repoProvider;
+		}
+
+		[HttpGet("all-seasons")]
+		public async Task<IActionResult> GetAllSeasons()
+		{
+			var ret = await _repositoryProvider.SeasonRepository.GetList("", null);
+			return Ok(ret);
+		}
+
+		[HttpGet("get-all-games/{seasonId}")]
+		public async Task<IActionResult> GetSeasonGames(int seasonId)
+		{
+			var where = "SeasonId = @seasonId";
+			var ret = await _repositoryProvider.SeasonGameRepository.GetList(where, new { seasonId });
+			return Ok(ret);
 		}
 
 		[HttpPatch("update/{id}")]

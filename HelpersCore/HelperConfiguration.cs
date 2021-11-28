@@ -3,6 +3,7 @@ using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Fabric;
+using ConfigurationManager = System.Configuration.ConfigurationManager;
 
 namespace Helpers.Core
 {

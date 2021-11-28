@@ -1,8 +1,8 @@
 ﻿using FutbolChallenge.Data.Model;
 using FutbolChallengeDataRepository.Composites;
-using FutbolChallengeUI;
 using FutbolChallengeUI.Controls;
 using FutbolChallengeUI.EventHandlers.EventArgs;
+using FutbolChallengeUI.ServiceClient;
 using FutbolChallengeUI.ViewModels;
 using Microsoft.UI.Xaml;
 using System;
@@ -18,17 +18,19 @@ namespace FutbolChallengeUI
 
 	public sealed partial class SeasonScheduleManagement : Window, INotifyPropertyChanged
 	{
-		private readonly IFutbolChallengeServiceClient _ServiceClient;
+		private readonly IFutbolChallengeScheduleServiceClient _ScheduleClient;
+		private readonly IFutbolChallengeSeasonServiceClient _SeasonClient;
 		private IntPtr m_hwnd;
 
 		private MatchListView _MatchListView;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public SeasonScheduleManagement(IFutbolChallengeServiceClient serviceClient)
+		public SeasonScheduleManagement(IFutbolChallengeScheduleServiceClient scheduleClient, IFutbolChallengeSeasonServiceClient seasonClient)
 		{
 			this.InitializeComponent();
-			_ServiceClient = serviceClient;
+			_ScheduleClient = scheduleClient;
+			_SeasonClient = seasonClient;
 			base.Title = "Manage Schedules";
 
 			SelectSeasonComboBox.SelectedSeasonChanged += SelectSeasonComboBox_SelectedSeasonChanged;
@@ -41,7 +43,7 @@ namespace FutbolChallengeUI
 
 		private async void SeasonPanelView_EditSeason(object sender, EditEntityEventArgs<Season> e)
 		{
-			bool ret = await _ServiceClient.UpdateSeason(e.EditTarget);
+			bool ret = await _SeasonClient.UpdateSeason(e.EditTarget);
 		}
 
 		private SeasonListViewModel _SeasonListViewModel = new SeasonListViewModel();
@@ -88,7 +90,7 @@ namespace FutbolChallengeUI
 		private async void SelectSeasonComboBox_SelectedSeasonChanged(object sender, SelectedSeasonChangedEventArgs e)
 		{
 			var season = e.SelectedSeason;
-			var seasonDetail = await _ServiceClient.FetchSeasonDetails(season.Id);
+			var seasonDetail = await _SeasonClient.FetchSeasonDetails(season.Id);
 			_SeasonDetailViewModel.SeasonDetail = seasonDetail;
 
 			SeasonDetailViewModel = _SeasonDetailViewModel;
@@ -119,14 +121,14 @@ namespace FutbolChallengeUI
 
 			var schedule = await ScheduleFromCSV.Create(seasonId, $@"UploadedSeason-{seasonId}", $"UploadedSeason-{seasonId} {{0}}", strm);
 
-			await _ServiceClient.UploadScheduledGames(seasonId, schedule);
+			await _ScheduleClient.UploadScheduledGames(seasonId, schedule);
 			UploadFilePickPanel.Visibility = Visibility.Collapsed;
 
 		}
 
 		internal async Task LoadSeasons()
 		{
-			var seasons = await _ServiceClient.FetchAllSeasons();
+			var seasons = await _SeasonClient.FetchAllSeasons();
 			_SeasonListViewModel.Seasons = new ObservableCollection<SeasonPanelViewModel>(seasons.Select(s => new SeasonPanelViewModel() 
 																															{ 
 																																Season = s, 

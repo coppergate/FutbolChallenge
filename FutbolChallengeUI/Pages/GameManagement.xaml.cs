@@ -1,6 +1,6 @@
 ﻿using FutbolChallenge.Data.Model;
-using FutbolChallengeUI;
 using FutbolChallengeUI.EventHandlers.EventArgs;
+using FutbolChallengeUI.ServiceClient;
 using FutbolChallengeUI.ViewModels;
 using Helpers.Core.DateTimeProvider;
 using Microsoft.UI.Xaml;
@@ -17,7 +17,8 @@ namespace FutbolChallengeUI
 
 	public sealed partial class GameManagement : Window, INotifyPropertyChanged
 	{
-		private readonly IFutbolChallengeServiceClient _ServiceClient;
+		private readonly IFutbolChallengeScheduleServiceClient _ScheduleClient;
+		private readonly IFutbolChallengeSeasonServiceClient _SeasonClient;
 		private readonly IDateTimeProvider _DateTimeProvider;
 		private IntPtr m_hwnd;
 
@@ -42,10 +43,11 @@ namespace FutbolChallengeUI
 			set { _LoadingMessage = value; OnPropertyChanged(); }
 		}
 
-		public GameManagement(IFutbolChallengeServiceClient serviceClient, IDateTimeProvider dateTimeProvider)
+		public GameManagement(IFutbolChallengeScheduleServiceClient serviceClient, IFutbolChallengeSeasonServiceClient seasonClient, IDateTimeProvider dateTimeProvider)
 		{
 			this.InitializeComponent();
-			_ServiceClient = serviceClient;
+			_ScheduleClient = serviceClient;
+			_SeasonClient = seasonClient;
 			_DateTimeProvider = dateTimeProvider;
 
 			base.Title = "Manage Games";
@@ -61,7 +63,7 @@ namespace FutbolChallengeUI
 
 		private async void MatchPanelView_DeleteMatch(object sender, DeleteEntityEventArgs e)
 		{
-			await _ServiceClient.DeleteMatch(e.Id);
+			await _ScheduleClient.DeleteMatch(e.Id);
 			await LoadMatches();
 		}
 
@@ -77,7 +79,7 @@ namespace FutbolChallengeUI
 				MatchGroupId = e.AddTarget.MatchGroupId,
 			};
 
-			await _ServiceClient.InsertMatch(local);
+			await _ScheduleClient.InsertMatch(local);
 			await LoadMatches();
 		}
 
@@ -93,10 +95,10 @@ namespace FutbolChallengeUI
 				MatchDate = e.EditTarget.MatchDate,
 				MatchGroupId = e.EditTarget.MatchGroupId,
 			};
-			await _ServiceClient.UpdateMatch(local);
+			await _ScheduleClient.UpdateMatch(local);
 		}
 
-		async public Task SelectCurrentMatchGroup()
+		public void SelectCurrentMatchGroup()
 		{
 			MatchListViewModel.SetCurrentMatchGroup(_DateTimeProvider);
 		}
@@ -104,7 +106,7 @@ namespace FutbolChallengeUI
 		async public Task LoadMatches()
 		{
 			LoadingMessage = "Loading...";
-			var Matches = await _ServiceClient.GetSeasonGames(27);
+			var Matches = await _SeasonClient.GetSeasonGames(27);
 			if(Matches == null)
 			{
 				MatchListViewModel.MatchGroupSequence = -1;
